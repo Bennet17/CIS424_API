@@ -40,7 +40,7 @@ namespace CIS424_API.Controllers
                         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
                         command.Parameters.AddWithValue("@password", hashedPassword);
 
-
+                        //test
                         // Add output parameter
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
