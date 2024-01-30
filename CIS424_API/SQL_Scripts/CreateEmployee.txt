@@ -1,22 +1,12 @@
 USE [capstone_db_01]
 GO
-
-/** Object:  StoredProcedure [dbo].[sp_CreateEmployee]    Script Date: 1/27/2024 1:08:07 PM **/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-USE [capstone_db_01]
-GO
 /****** Object:  StoredProcedure [dbo].[sp_CreateEmployee]    Script Date: 1/30/2024 5:39:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER PROCEDURE [dbo].[sp_CreateEmployee]
+CREATE PROCEDURE [dbo].[sp_CreateEmployee]
     @username VARCHAR(50),
     @hashPassword VARCHAR(250),
     @name VARCHAR(50),
