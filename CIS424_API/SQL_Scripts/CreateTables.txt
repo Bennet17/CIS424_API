@@ -1,0 +1,218 @@
+USE [capstone_db_01]
+GO
+
+/****** Object:  Table [dbo].[Store]    Script Date: 1/30/2024 2:03:38 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Store](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[location] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Store] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+USE [capstone_db_01]
+GO
+
+/****** Object:  Table [dbo].[Employee]    Script Date: 1/30/2024 2:04:59 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Employee](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[storeID] [int] NOT NULL,
+	[name] [varchar](50) NOT NULL,
+	[position] [varchar](50) NOT NULL,
+	[username] [varchar](50) NOT NULL,
+	[hashPassword] [varchar](250) NOT NULL,
+ CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Store_Employee] FOREIGN KEY([storeID])
+REFERENCES [dbo].[Store] ([ID])
+GO
+
+ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Store_Employee]
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Shows to which store an employee belongs' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Employee', @level2type=N'CONSTRAINT',@level2name=N'FK_Store_Employee'
+GO
+
+USE [capstone_db_01]
+GO
+
+/****** Object:  Table [dbo].[Register]    Script Date: 1/30/2024 2:05:21 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Register](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[storeID] [int] NOT NULL,
+	[amount] [smallmoney] NOT NULL,
+ CONSTRAINT [PK_Register] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Register]  WITH CHECK ADD  CONSTRAINT [FK_Store_Register] FOREIGN KEY([storeID])
+REFERENCES [dbo].[Store] ([ID])
+GO
+
+ALTER TABLE [dbo].[Register] CHECK CONSTRAINT [FK_Store_Register]
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Shows to which store a register belongs' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Register', @level2type=N'CONSTRAINT',@level2name=N'FK_Store_Register'
+GO
+
+USE [capstone_db_01]
+GO
+
+/****** Object:  Table [dbo].[CashCount]    Script Date: 1/30/2024 2:05:40 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[CashCount](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[empID] [int] NOT NULL,
+	[amountExpected] [smallmoney] NOT NULL,
+	[date] [date] NOT NULL,
+ CONSTRAINT [PK_CashCount] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[CashCount]  WITH CHECK ADD  CONSTRAINT [FK_Employee_CashCount] FOREIGN KEY([empID])
+REFERENCES [dbo].[Employee] ([ID])
+GO
+
+ALTER TABLE [dbo].[CashCount] CHECK CONSTRAINT [FK_Employee_CashCount]
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Shows to which employee the counted cash relates' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'CashCount', @level2type=N'CONSTRAINT',@level2name=N'FK_Employee_CashCount'
+GO
+
+USE [capstone_db_01]
+GO
+
+/****** Object:  Table [dbo].[FundTransfer]    Script Date: 1/30/2024 2:05:58 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[FundTransfer](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[empID] [int] NOT NULL,
+	[origin] [varchar](5) NOT NULL,
+	[destination] [varchar](5) NOT NULL,
+	[date] [date] NOT NULL,
+ CONSTRAINT [PK_FundTransfer] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[FundTransfer]  WITH CHECK ADD  CONSTRAINT [FK_Employee_FundTransfer] FOREIGN KEY([empID])
+REFERENCES [dbo].[Employee] ([ID])
+GO
+
+ALTER TABLE [dbo].[FundTransfer] CHECK CONSTRAINT [FK_Employee_FundTransfer]
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Shows to which employee a record relates' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'FundTransfer', @level2type=N'CONSTRAINT',@level2name=N'FK_Employee_FundTransfer'
+GO
+
+USE [capstone_db_01]
+GO
+
+/****** Object:  Table [dbo].[Totals]    Script Date: 1/30/2024 2:06:12 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Totals](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[storeID] [int] NOT NULL,
+	[fundTransferID] [int] NOT NULL,
+	[cashCountID] [int] NOT NULL,
+	[total] [smallmoney] NOT NULL,
+	[hundred] [int] NOT NULL,
+	[fifty] [int] NOT NULL,
+	[twenty] [int] NOT NULL,
+	[ten] [int] NOT NULL,
+	[five] [int] NOT NULL,
+	[two] [int] NOT NULL,
+	[one] [int] NOT NULL,
+	[dollarCoin] [int] NOT NULL,
+	[halfDollar] [int] NOT NULL,
+	[quarter] [int] NOT NULL,
+	[dime] [int] NOT NULL,
+	[nickle] [int] NOT NULL,
+	[penny] [int] NOT NULL,
+	[quarterRoll] [int] NOT NULL,
+	[dimeRoll] [int] NOT NULL,
+	[nickleRoll] [int] NOT NULL,
+	[pennyRoll] [int] NOT NULL,
+ CONSTRAINT [PK_Totals] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Totals]  WITH CHECK ADD  CONSTRAINT [FK_CashCount_Totals] FOREIGN KEY([cashCountID])
+REFERENCES [dbo].[CashCount] ([ID])
+GO
+
+ALTER TABLE [dbo].[Totals] CHECK CONSTRAINT [FK_CashCount_Totals]
+GO
+
+ALTER TABLE [dbo].[Totals]  WITH CHECK ADD  CONSTRAINT [FK_FundTransfer_Totals] FOREIGN KEY([fundTransferID])
+REFERENCES [dbo].[FundTransfer] ([ID])
+GO
+
+ALTER TABLE [dbo].[Totals] CHECK CONSTRAINT [FK_FundTransfer_Totals]
+GO
+
+ALTER TABLE [dbo].[Totals]  WITH CHECK ADD  CONSTRAINT [FK_Store_Totals] FOREIGN KEY([storeID])
+REFERENCES [dbo].[Store] ([ID])
+GO
+
+ALTER TABLE [dbo].[Totals] CHECK CONSTRAINT [FK_Store_Totals]
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Relates the totals to the cashCount record' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Totals', @level2type=N'CONSTRAINT',@level2name=N'FK_CashCount_Totals'
+GO
+
+
+
+
+

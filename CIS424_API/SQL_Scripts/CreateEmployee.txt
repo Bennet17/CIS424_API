@@ -1,0 +1,47 @@
+USE [capstone_db_01]
+GO
+
+/** Object:  StoredProcedure [dbo].[sp_CreateEmployee]    Script Date: 1/27/2024 1:08:07 PM **/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+USE [capstone_db_01]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_CreateEmployee]    Script Date: 1/30/2024 5:39:26 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[sp_CreateEmployee]
+    @username VARCHAR(50),
+    @hashPassword VARCHAR(250),
+    @name VARCHAR(50),
+    @position VARCHAR(50),
+    @location VARCHAR(50),
+    @ResultMessage VARCHAR(255) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Check if the username already exists
+    IF NOT EXISTS (SELECT 1 FROM Employee WHERE username = @username)
+    BEGIN
+		--Get the storeID based on location entered by user
+		DECLARE @storeID INT;
+		SET @storeID = (SELECT ID FROM [dbo].[Store] WHERE location = @location);
+
+        -- Insert the new user into the Users table
+        INSERT INTO Employee (storeID, name, position, username, hashPassword)
+        VALUES (@storeID, @name, @position, @username, @hashPassword);
+
+        SET @ResultMessage = 'User created successfully.';
+    END
+    ELSE
+    BEGIN
+        SET @ResultMessage = 'Username already exists. Please choose a different username.';
+    END
+END;
