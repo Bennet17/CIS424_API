@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
@@ -19,7 +19,8 @@ namespace CIS424_API.Controllers
         [Route("CreateUser")]
         public IHttpActionResult Post([FromBody] User user)
         {
-            string connectionString = "Data Source=DESKTOP-A0KOPHR;Initial Catalog=capstone_db_01;Integrated Security=True;";
+            string connectionString = "Data Source=WIN-J95K1G8OFC7;Initial Catalog=capstone_db_01;User Id=SA_Admin;Password=Capstone424!;";
+
 
             try
             {
@@ -34,11 +35,12 @@ namespace CIS424_API.Controllers
 
                         // Add parameters for the stored procedure.
                         command.Parameters.AddWithValue("@username", user.username);
-                        command.Parameters.AddWithValue("@role", user.role);
-                        command.Parameters.AddWithValue("@location", user.location);
+                        command.Parameters.AddWithValue("@name", user.username);
+                        command.Parameters.AddWithValue("@position", user.position);
+                        command.Parameters.AddWithValue("@storeID", user.storeID);
                         // Hash the password
                         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
-                        command.Parameters.AddWithValue("@password", hashedPassword);
+                        command.Parameters.AddWithValue("@hashPassword", hashedPassword);
 
 
                         // Add output parameter
@@ -69,7 +71,7 @@ namespace CIS424_API.Controllers
         [Route("AuthenticateUser")]
         public IHttpActionResult AuthenticateUser([FromBody] User user)
         {
-            string connectionString = "Data Source=DESKTOP-A0KOPHR;Initial Catalog=capstone_db_01;Integrated Security=True;";
+            string connectionString = "Data Source=WIN-J95K1G8OFC7;Initial Catalog=capstone_db_01;User Id=SA_Admin;Password=Capstone424!;";
 
             try
             {
