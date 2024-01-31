@@ -29,16 +29,8 @@ BEGIN
     -- Delete all data from Employee table
     DELETE FROM [dbo].[Employee];
 
-    -- Delete all data from Store table, except the dummy record with ID 0
-    DELETE FROM [dbo].[Store] WHERE [ID] <> 0;
-
-    -- Reset identity columns
-    DBCC CHECKIDENT ('[dbo].[Totals]', RESEED, 0);
-    DBCC CHECKIDENT ('[dbo].[CashCount]', RESEED, 0);
-    DBCC CHECKIDENT ('[dbo].[FundTransfer]', RESEED, 0);
-    DBCC CHECKIDENT ('[dbo].[Register]', RESEED, 0);
-    DBCC CHECKIDENT ('[dbo].[Employee]', RESEED, 0);
-    DBCC CHECKIDENT ('[dbo].[Store]', RESEED, 0);
+    -- Delete all data from Store table
+    DELETE FROM [dbo].[Store];
 
     -- Insert new records
     EXEC [dbo].[sp_SetupTables] @ResultMessage OUTPUT;
