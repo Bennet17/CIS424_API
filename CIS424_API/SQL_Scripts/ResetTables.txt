@@ -1,0 +1,48 @@
+USE [capstone_db_01]
+GO
+
+/** Object: StoredProcedure [dbo].[sp_ResetTables] Script Date: 1/30/2024 **/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_ResetTables]
+    @ResultMessage VARCHAR(255) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Delete all data from Totals table
+    DELETE FROM [dbo].[Totals];
+
+    -- Delete all data from CashCount table
+    DELETE FROM [dbo].[CashCount];
+
+    -- Delete all data from FundTransfer table
+    DELETE FROM [dbo].[FundTransfer];
+
+    -- Delete all data from Register table
+    DELETE FROM [dbo].[Register];
+
+    -- Delete all data from Employee table
+    DELETE FROM [dbo].[Employee];
+
+    -- Delete all data from Store table, except the dummy record with ID 0
+    DELETE FROM [dbo].[Store] WHERE [ID] <> 0;
+
+    -- Reset identity columns
+    DBCC CHECKIDENT ('[dbo].[Totals]', RESEED, 0);
+    DBCC CHECKIDENT ('[dbo].[CashCount]', RESEED, 0);
+    DBCC CHECKIDENT ('[dbo].[FundTransfer]', RESEED, 0);
+    DBCC CHECKIDENT ('[dbo].[Register]', RESEED, 0);
+    DBCC CHECKIDENT ('[dbo].[Employee]', RESEED, 0);
+    DBCC CHECKIDENT ('[dbo].[Store]', RESEED, 0);
+
+    -- Insert new records
+    EXEC [dbo].[sp_SetupTables] @ResultMessage OUTPUT;
+
+    SET @ResultMessage = 'Tables reset successfully.';
+END;
+GO
