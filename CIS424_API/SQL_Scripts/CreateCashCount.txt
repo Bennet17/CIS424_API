@@ -1,0 +1,56 @@
+USE [capstone_db_01]
+GO
+
+/** Object:  StoredProcedure [dbo].[sp_CreateCashCount]    Script Date: 1/30/2024 **/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_CreateCashCount]
+    @empID INT,
+	@total SMALLMONEY,
+	@hundred INT, 
+	@fifty INT, 
+	@twenty INT, 
+	@ten INT, 
+	@five INT, 
+	@two INT, 
+	@one INT, 
+	@dollarCoin INT,
+	@halfDollar INT, 
+	@quarter INT, 
+	@dime INT, 
+	@nickel INT, 
+	@penny INT, 
+	@quarterRoll INT, 
+	@dimeRoll INT, 
+	@nickelRoll INT, 
+	@pennyRoll INT,
+    @ResultMessage VARCHAR(255) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+		DECLARE @amountExpected INT;
+    	    
+		SELECT TOP 1 @amountExpected = [total]
+    	FROM [dbo].[Totals]
+    	WHERE [cashCountID] IS NOT NULL
+    	ORDER BY [cashCountID] DESC;
+
+    	IF @amountExpected IS NULL
+        	SET @amountExpected = 0;
+
+        INSERT INTO [dbo].[CashCount] ([empID], [amountExpected], [date])
+        VALUES (@empID, @amountExpected, GETDATE());
+
+    	DECLARE @cashCountID INT;
+    	SET @cashCountID = SCOPE_IDENTITY();
+
+    	INSERT INTO [dbo].[Totals] ([storeID], [fundTransferID], [cashCountID], [total], [hundred], [fifty], [twenty], [ten], [five], [two], [one], [dollarCoin], [halfDollar], [quarter], [dime], [nickel], [penny], [quarterRoll], [dimeRoll], [nickelRoll], [pennyRoll])
+    	VALUES (0, 0, @cashCountID, @total, @hundred, @fifty, @twenty, @ten, @five, @two, @one, @dollarCoin, @halfDollar, @quarter, @dime, @nickel, @penny, @quarterRoll, @dimeRoll, @nickelRoll, @pennyRoll);
+
+        SET @ResultMessage = 'Cash Count created successfully.';
+END;

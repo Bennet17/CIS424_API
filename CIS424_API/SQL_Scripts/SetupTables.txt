@@ -1,0 +1,72 @@
+USE [capstone_db_01]
+GO
+
+/** Object: StoredProcedure [dbo].[sp_SetupTables] Script Date: 1/30/2024 **/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_SetupTables]
+    @ResultMessage VARCHAR(255) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    -- Check if there is no existing record with ID 0 for Store
+    IF NOT EXISTS (SELECT 1 FROM [dbo].[Store] WHERE [ID] = 0)
+    BEGIN
+        -- Temporarily allow explicit values for ID column
+        SET IDENTITY_INSERT [dbo].[Store] ON;
+
+        -- Create a record with ID 0
+        INSERT INTO [dbo].[Store] ([ID], [location])
+        VALUES (0, 'Dummy');
+
+        -- Turn off explicit values for ID column
+        SET IDENTITY_INSERT [dbo].[Store] OFF;
+    END;
+	-- Check if there is no existing record with ID 0 for Employee
+    IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE [ID] = 0)
+    BEGIN
+        -- Temporarily allow explicit values for ID column
+        SET IDENTITY_INSERT [dbo].[Employee] ON;
+
+        -- Create a record with ID 0
+        INSERT INTO [dbo].[Employee] ([ID], [storeID], [name], [position], [username], [hashPassword])
+        VALUES (0, 0, 'Dummy', 'Dummy', 'Dummy', 'Dummy');
+
+        -- Turn off explicit values for ID column
+        SET IDENTITY_INSERT [dbo].[Employee] OFF;
+    END;
+    -- Check if there is no existing record with ID 0 for CashCount
+	IF NOT EXISTS (SELECT 1 FROM [dbo].[CashCount] WHERE [ID] = 0)
+    BEGIN
+        -- Temporarily allow explicit values for ID column
+        SET IDENTITY_INSERT [dbo].[CashCount] ON;
+
+        -- Create a record with ID 0
+        INSERT INTO [dbo].[CashCount] ([ID], [empID], [amountExpected], [date])
+        VALUES (0, 0, 0.00, GETDATE());
+
+        -- Turn off explicit values for ID column
+        SET IDENTITY_INSERT [dbo].[CashCount] OFF;
+    END;
+	-- Check if there is no existing record with ID 0 for FundTransfer
+    IF NOT EXISTS (SELECT 1 FROM [dbo].[FundTransfer] WHERE [ID] = 0)
+    BEGIN
+        -- Temporarily allow explicit values for ID column
+        SET IDENTITY_INSERT [dbo].[FundTransfer] ON;
+
+        -- Create a record with ID 0
+        INSERT INTO [dbo].[FundTransfer] ([ID], [empID], [origin], [destination], [date])
+        VALUES (0, 0, 0, 0, GETDATE());
+
+        -- Turn off explicit values for ID column
+        SET IDENTITY_INSERT [dbo].[FundTransfer] OFF;
+    END;
+	-- Check if there is no existing record with ID 0 for CashCount
+   
+    SET @ResultMessage = 'Tables setup successfully.';
+END;
+GO
