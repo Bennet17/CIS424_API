@@ -16,7 +16,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER PROCEDURE [dbo].[sp_CreateEmployee]
+CREATE PROCEDURE [dbo].[sp_CreateEmployee]
     @username VARCHAR(50),
     @hashPassword VARCHAR(250),
     @name VARCHAR(50),

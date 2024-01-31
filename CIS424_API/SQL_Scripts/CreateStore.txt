@@ -26,7 +26,7 @@ BEGIN
 
     -- Insert a record into the StoreTotals table for the new store
     INSERT INTO [dbo].[Totals] ([storeID], [fundTransferID], [cashCountID], [total], [hundred], [fifty], [twenty], [ten], [five], [two], [one], [dollarCoin], [halfDollar], [quarter], [dime], [nickel], [penny], [quarterRoll], [dimeRoll], [nickelRoll], [pennyRoll])
-    VALUES (@storeID, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    VALUES (@storeID, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
     SET @ResultMessage = 'Store created successfully.';
 END;
