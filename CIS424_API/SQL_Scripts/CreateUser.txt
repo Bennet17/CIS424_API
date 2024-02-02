@@ -21,7 +21,7 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM Employee WHERE username = @username)
     BEGIN
         -- Insert the new user into the Users table
-        INSERT INTO Employee (storeID, name, position, username, hashPassword)
+        INSERT INTO Users (storeID, name, position, username, hashPassword)
         VALUES (@storeID, @name, @position, @username, @hashPassword);
 
         SET @ResultMessage = 'User created successfully.';

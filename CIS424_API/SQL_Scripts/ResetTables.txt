@@ -26,8 +26,8 @@ BEGIN
     -- Delete all data from Register table
     DELETE FROM [dbo].[Register];
 
-    -- Delete all data from User table
-    DELETE FROM [dbo].[User];
+    -- Delete all data from Users table
+    DELETE FROM [dbo].[Users];
 
     -- Delete all data from Store table
     DELETE FROM [dbo].[Store];

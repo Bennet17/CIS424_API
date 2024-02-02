@@ -26,18 +26,18 @@ BEGIN
         -- Turn off explicit values for ID column
         SET IDENTITY_INSERT [dbo].[Store] OFF;
     END;
-	-- Check if there is no existing record with ID 0 for User
-    IF NOT EXISTS (SELECT 1 FROM [dbo].[User] WHERE [ID] = 0)
+	-- Check if there is no existing record with ID 0 for Users
+    IF NOT EXISTS (SELECT 1 FROM [dbo].[Users] WHERE [ID] = 0)
     BEGIN
         -- Temporarily allow explicit values for ID column
-        SET IDENTITY_INSERT [dbo].[User] ON;
+        SET IDENTITY_INSERT [dbo].[Users] ON;
 
         -- Create a record with ID 0
-        INSERT INTO [dbo].[User] ([ID], [storeID], [name], [position], [username], [hashPassword])
+        INSERT INTO [dbo].[Users] ([ID], [storeID], [name], [position], [username], [hashPassword])
         VALUES (0, 0, 'Dummy', 'Dummy', 'Dummy', 'Dummy');
 
         -- Turn off explicit values for ID column
-        SET IDENTITY_INSERT [dbo].[User] OFF;
+        SET IDENTITY_INSERT [dbo].[Users] OFF;
     END;
     -- Check if there is no existing record with ID 0 for CashCount
 	IF NOT EXISTS (SELECT 1 FROM [dbo].[CashCount] WHERE [ID] = 0)
