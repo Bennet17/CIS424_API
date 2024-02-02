@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[sp_CreateFundTransfer]
-    @empID INT,
+    @usrID INT,
 	@origin VARCHAR(5),
 	@destination VARCHAR(5),
 	@total SMALLMONEY,
@@ -35,8 +35,8 @@ AS
 BEGIN
     SET NOCOUNT ON;
         -- Insert the new register into the Registers table
-        INSERT INTO [dbo].[FundTransfer] ([empID], [origin], [destination], [date])
-        VALUES (@empID, @origin, @destination, GETDATE());
+        INSERT INTO [dbo].[FundTransfer] ([usrID], [origin], [destination], [date])
+        VALUES (@usrID, @origin, @destination, GETDATE());
 
 		-- Get the ID of the newly created store
     	DECLARE @fundTransferID INT;
