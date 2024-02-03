@@ -38,7 +38,7 @@ namespace CIS424_API.Controllers
 
                         // Add parameters for the stored procedure.
                         command.Parameters.AddWithValue("@username", user.username);
-                        command.Parameters.AddWithValue("@name", user.username);
+                        command.Parameters.AddWithValue("@name", user.name);
                         command.Parameters.AddWithValue("@position", user.position);
                         command.Parameters.AddWithValue("@storeID", user.storeID);
                         // Hash the password
