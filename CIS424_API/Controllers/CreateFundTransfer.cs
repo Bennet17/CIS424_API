@@ -20,7 +20,7 @@ namespace CIS424_API.Controllers
         [Route("CreateFundTransfer")]
         public IHttpActionResult Post([FromBody] CreateFundTransfer createFundTransfer)
         {
-            string connectionString = "Data Source=DESKTOP-OR5B156;Initial Catalog=capstone_db_01;Integrated Security=True;";
+            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
             decimal total = (createFundTransfer.hundred ?? 0) * 100 +
                 (createFundTransfer.fifty ?? 0) * 50 +

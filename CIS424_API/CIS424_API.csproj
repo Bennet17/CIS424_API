@@ -187,6 +187,8 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\CreateCashCount.cs" />
     <Compile Include="Controllers\CreateFundTransfer.cs" />
+    <Compile Include="Controllers\ViewStoresController.cs" />
+    <Compile Include="Controllers\ViewUsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -229,6 +231,8 @@
     <Folder Include="Views\CreateRegister\" />
     <Folder Include="Views\CreateStore\" />
     <Folder Include="Views\CreateUser\" />
+    <Folder Include="Views\ViewStores\" />
+    <Folder Include="Views\ViewUsers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\Views\Web.config" />
