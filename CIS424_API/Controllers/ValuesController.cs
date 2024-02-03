@@ -41,6 +41,7 @@ namespace CIS424_API.Controllers
                         command.Parameters.AddWithValue("@position", user.position);
                         command.Parameters.AddWithValue("@storeID", user.storeID);
                         // Hash the password
+                        Console.WriteLine(user);
                         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
                         command.Parameters.AddWithValue("@hashPassword", hashedPassword);
 
