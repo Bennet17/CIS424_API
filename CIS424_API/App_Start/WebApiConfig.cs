@@ -10,6 +10,7 @@ namespace CIS424_API
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.EnableCors(); //Enable CORS for front end tests
 
             // Web API routes
             config.MapHttpAttributeRoutes();

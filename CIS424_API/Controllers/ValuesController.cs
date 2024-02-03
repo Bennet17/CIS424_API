@@ -7,11 +7,13 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Helpers;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CIS424_API.Models;
 
 namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class CIS424Controller : ApiController
     {
         //POST SVSU_CIS424/CreateUser
@@ -39,6 +41,7 @@ namespace CIS424_API.Controllers
                         command.Parameters.AddWithValue("@position", user.position);
                         command.Parameters.AddWithValue("@storeID", user.storeID);
                         // Hash the password
+                        Console.WriteLine(user);
                         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
                         command.Parameters.AddWithValue("@hashPassword", hashedPassword);
 
