@@ -180,6 +180,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AuthenticateUserController.cs" />
+    <Compile Include="Controllers\CreateRegisterController.cs" />
+    <Compile Include="Controllers\CreateStoreController.cs" />
     <Compile Include="Controllers\CreateUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -222,7 +224,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\AuthenticateEmployee\" />
     <Folder Include="Views\AuthenticateUser\" />
+    <Folder Include="Views\CreateRegister\" />
+    <Folder Include="Views\CreateStore\" />
     <Folder Include="Views\CreateUser\" />
   </ItemGroup>
   <ItemGroup>
