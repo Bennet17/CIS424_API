@@ -15,7 +15,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
-    public class AuthenticateUserController : Controller
+    public class AuthenticateUserController : ApiController
     {
         // POST SVSU_CIS424/AuthenticateUser
         [HttpPost]
