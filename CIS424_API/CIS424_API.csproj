@@ -183,6 +183,8 @@
     <Compile Include="Controllers\CreateUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\CreateCashCount.cs" />
+    <Compile Include="Controllers\CreateFundTransfer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -193,6 +195,8 @@
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\Totals.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\CreateCashCount.cs" />
+    <Compile Include="Models\CreateFundTransfer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
