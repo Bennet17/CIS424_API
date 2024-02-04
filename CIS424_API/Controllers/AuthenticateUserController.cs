@@ -52,7 +52,7 @@ namespace CIS424_API.Controllers
                         }
                         else
                         {
-                            return Ok(new { IsValid = "User Not Found" }); ; // No matching record found.
+                            return Ok(new { IsValid = "false" }); ; // No matching record found.
                         }
                     }
                 }
