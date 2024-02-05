@@ -10,7 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
 
-namespace CIS424_API.Controllers
+namespace CIS424_API.Controllers 
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
