@@ -1,0 +1,22 @@
+USE [capstone_db_01]
+GO
+
+SET ANSI_NULLS ON
+
+GO
+
+SET QUOTED_IDENTIFIER ON
+
+GO
+
+CREATE RPOCEDURE [dbo].[sp_DisableRegister]
+    @ID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE Register
+    SET enabled = 0
+    WHERE ID = @ID;
+END;
+GO

@@ -1,0 +1,22 @@
+USE [capstone_db_01]
+GO
+
+SET ANSI_NULLS ON
+
+GO
+
+SET QUOTED_IDENTIFIER ON
+
+GO
+
+CREATE RPOCEDURE [dbo].[sp_EnableEmployee]
+    @ID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE Employee
+    SET enabled = 1
+    WHERE ID = @ID;
+END;
+GO
