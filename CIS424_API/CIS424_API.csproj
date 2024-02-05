@@ -183,6 +183,12 @@
     <Compile Include="Controllers\CreateRegisterController.cs" />
     <Compile Include="Controllers\CreateStoreController.cs" />
     <Compile Include="Controllers\CreateUserController.cs" />
+    <Compile Include="Controllers\DisableEmployeeController.cs" />
+    <Compile Include="Controllers\DisableRegisterController.cs" />
+    <Compile Include="Controllers\DisableStoreController.cs" />
+    <Compile Include="Controllers\EnableEmployeeController.cs" />
+    <Compile Include="Controllers\EnableRegisterController.cs" />
+    <Compile Include="Controllers\EnableStoreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\CreateCashCount.cs" />
@@ -231,6 +237,12 @@
     <Folder Include="Views\CreateRegister\" />
     <Folder Include="Views\CreateStore\" />
     <Folder Include="Views\CreateUser\" />
+    <Folder Include="Views\DisableEmployee\" />
+    <Folder Include="Views\DisableRegister\" />
+    <Folder Include="Views\DisableStore\" />
+    <Folder Include="Views\EnableEmployee\" />
+    <Folder Include="Views\EnableRegister\" />
+    <Folder Include="Views\EnableStore\" />
     <Folder Include="Views\ViewStores\" />
     <Folder Include="Views\ViewUsers\" />
   </ItemGroup>
