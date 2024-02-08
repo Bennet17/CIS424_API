@@ -54,7 +54,8 @@ namespace CIS424_API.Controllers
             {
                 return InternalServerError(ex);
             }
-*/
+
         }
     }
 }
+*/
