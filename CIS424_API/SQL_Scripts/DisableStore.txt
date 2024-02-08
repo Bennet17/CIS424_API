@@ -13,10 +13,12 @@ CREATE RPOCEDURE [dbo].[sp_DisableStore]
     @ID INT
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     UPDATE Store
     SET enabled = 0
     WHERE ID = @ID;
+
+    UPDATE Register
+    SET enabled = 0
+    WHERE StoreID = @ID;
 END;
 GO
