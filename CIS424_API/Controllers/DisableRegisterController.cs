@@ -1,4 +1,4 @@
-/*
+
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -35,7 +35,7 @@ namespace CIS424_API.Controllers
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@ID", register.ID);
+                        command.Parameters.AddWithValue("@ID", register.RegisterID);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
@@ -58,4 +58,3 @@ namespace CIS424_API.Controllers
         }
     }
 }
-*/
