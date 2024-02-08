@@ -1,11 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
@@ -42,9 +40,10 @@ namespace CIS424_API.Controllers
                             while (reader.Read())
                             {
                                 Store store = new Store();
-                                stores.Add(store);
                                 store.storeID = Convert.ToInt32(reader["storeID"]);
                                 store.location = reader["location"].ToString();
+                                // Add more properties as needed
+                                stores.Add(store);
                             }
                             return Ok(stores);
                         }
@@ -53,7 +52,8 @@ namespace CIS424_API.Controllers
             }
             catch (Exception e)
             {
-                return Content(HttpStatusCode.InternalServerError, e);
+                // Return InternalServerError status code along with the exception message
+                return Content(HttpStatusCode.InternalServerError, e.Message);
             }
         }
     }
