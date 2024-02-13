@@ -1,0 +1,46 @@
+USE [capstone_db_01]
+GO
+
+/** Object:  StoredProcedure [dbo].[sp_GetSafeTotalsbyStoreID]    Script Date: 2/01/2024 **/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_GetSafeTotalsbyStoreID]
+    @ID int IDENTITY
+    @storeID int
+    @fundTransferID int
+    @cashCountID int
+    @total smallmoney
+    @hundred int
+    @fifty int
+    @twenty int
+    @ten int
+    @five int
+    @two int
+    @one int
+    @dollarCoin int
+    @halfDollar int
+    @quarter int
+    @dime int
+    @nickel int
+    @penny int
+    @quarterRoll int
+    @dimeRoll int
+    @nickelRoll int
+    @pennyRoll int
+
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- get the totals amount for denoms for the selected store
+    --SELECT ID, storeID, fundTransferID, cashCountID, total, hundred, fifty, twenty, ten, five, two, one, dollarCoin, halfDollar, quarter, dime, nickel, penny, quarterRoll, dimeRoll, nickelRoll, pennyRoll
+        SELECT *
+        FROM Totals
+        WHERE storeID = @storeID;
+
+END;
+GO
