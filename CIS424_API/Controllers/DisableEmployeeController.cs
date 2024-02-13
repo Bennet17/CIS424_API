@@ -36,7 +36,7 @@ namespace CIS424_API.Controllers
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@ID", employee.EmployeeID);
+                        command.Parameters.AddWithValue("@ID", employee.employeeID);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
