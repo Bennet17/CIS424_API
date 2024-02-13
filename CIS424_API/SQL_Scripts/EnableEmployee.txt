@@ -17,6 +17,6 @@ BEGIN
 
     UPDATE Employee
     SET enabled = 1
-    WHERE ID = @ID;
+    WHERE EmployeeID = @ID;
 END;
 GO
