@@ -17,6 +17,6 @@ BEGIN
 
     UPDATE Register
     SET enabled = 1
-    WHERE RegisterID = @ID;
+    WHERE registerID = @ID;
 END;
 GO
