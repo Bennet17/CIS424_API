@@ -15,7 +15,7 @@ AS
 BEGIN
     UPDATE Store
     SET enabled = 0
-    WHERE StoreID = @ID;
+    WHERE storeID = @ID;
 
     UPDATE Register
     SET enabled = 0
