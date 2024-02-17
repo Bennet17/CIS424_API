@@ -17,6 +17,6 @@ BEGIN
 
     UPDATE Store
     SET enabled = 1
-    WHERE storeID = @ID;
+    WHERE ID = @ID;
 END;
 GO

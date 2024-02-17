@@ -9,14 +9,14 @@ SET QUOTED_IDENTIFIER ON
 
 GO
 
-CREATE RPOCEDURE [dbo].[sp_EnableEmployee]
+CREATE RPOCEDURE [dbo].[sp_EnableUser]
     @ID INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    UPDATE Employee
+    UPDATE User
     SET enabled = 1
-    WHERE employeeID = @ID;
+    WHERE ID = @ID;
 END;
 GO
