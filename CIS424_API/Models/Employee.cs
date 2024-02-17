@@ -7,7 +7,7 @@ namespace CIS424_API.Models
 {
     public class Employee
     {
-        public int employeeID { get; set; }
+        public int ID { get; set; }
         public int storeID { get; set; }
         public string location { get; set; }
         public string name { get; set; }

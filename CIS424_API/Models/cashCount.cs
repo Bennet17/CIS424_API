@@ -5,10 +5,11 @@ using System.Web;
 
 namespace CIS424_API.Models
 {
-    public class cashCount
+    public class CashCount
     {
-        public int cashCountID { get; set; }
+        public int ID { get; set; }
         public int employeeID { get; set; }
+        public int registerID { get; set; }
         public int amountExpected { get; set; }
         public DateTime date { get; set; }
     }

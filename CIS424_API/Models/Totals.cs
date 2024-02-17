@@ -7,7 +7,7 @@ namespace CIS424_API.Models
 {
     public class Totals
     {
-        public int totalsID { get; set; }
+        public int ID { get; set; }
         public int storeID { get; set; }
         public int cashCountID { get; set; }
         public int total { get; set; }
