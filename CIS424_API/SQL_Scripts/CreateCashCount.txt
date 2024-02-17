@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[sp_CreateCashCount]
-    @empID INT,
+    @usrID INT,
 	@total SMALLMONEY,
 	@hundred INT, 
 	@fifty INT, 
@@ -43,8 +43,8 @@ BEGIN
     	IF @amountExpected IS NULL
         	SET @amountExpected = 0;
 
-        INSERT INTO [dbo].[CashCount] ([empID], [amountExpected], [date])
-        VALUES (@empID, @amountExpected, GETDATE());
+        INSERT INTO [dbo].[CashCount] ([usrID], [amountExpected], [date])
+        VALUES (@usrID, @amountExpected, GETDATE());
 
     	DECLARE @cashCountID INT;
     	SET @cashCountID = SCOPE_IDENTITY();

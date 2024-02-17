@@ -1,0 +1,41 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW FundTransferTotalsUserStoreView AS
+SELECT 
+    f.ID AS fundTransferID,
+    f.date,
+    f.usrID,
+    u.name AS name,
+    u.username AS username,
+    s.location AS storeLocation,
+    f.origin,
+    f.destination,
+    t.total,
+    t.hundred,
+    t.fifty,
+    t.twenty,
+    t.ten,
+    t.five,
+    t.two,
+    t.one,
+    t.dollarCoin,
+    t.halfDollar,
+    t.quarter,
+    t.dime,
+    t.nickel,
+    t.penny,
+    t.quarterRoll,
+    t.dimeRoll,
+    t.nickelRoll,
+    t.pennyRoll
+FROM 
+    FundTransfer f
+JOIN 
+    Totals t ON f.ID = t.fundTransferID AND t.fundTransferID <> 0
+JOIN
+    Users u ON f.usrID = u.ID
+JOIN
+    Store s ON u.storeID = s.ID;
+GO

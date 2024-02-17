@@ -1,0 +1,31 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW StoreTotalsView AS
+SELECT 
+    s.ID AS StoreID,
+	s.location,
+    t.total,
+    t.hundred,
+    t.fifty,
+    t.twenty,
+    t.ten,
+    t.five,
+    t.two,
+    t.one,
+    t.dollarCoin,
+    t.halfDollar,
+    t.quarter,
+    t.dime,
+    t.nickel,
+    t.penny,
+    t.quarterRoll,
+    t.dimeRoll,
+    t.nickelRoll,
+    t.pennyRoll
+FROM 
+    Store s
+JOIN 
+    Totals t ON s.ID = t.storeID AND t.storeID <> 0;
+GO

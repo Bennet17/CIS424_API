@@ -1,0 +1,40 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW CashCountTotalsView AS
+SELECT 
+    c.ID AS cashCountID,
+    c.date,
+    c.usrID,
+    u.name AS name,
+    u.username AS username,
+    s.location AS storeLocation,
+    c.amountExpected,
+    t.total,
+    t.hundred,
+    t.fifty,
+    t.twenty,
+    t.ten,
+    t.five,
+    t.two,
+    t.one,
+    t.dollarCoin,
+    t.halfDollar,
+    t.quarter,
+    t.dime,
+    t.nickel,
+    t.penny,
+    t.quarterRoll,
+    t.dimeRoll,
+    t.nickelRoll,
+    t.pennyRoll
+FROM 
+    CashCount c
+JOIN 
+    Totals t ON c.ID = t.cashCountID AND t.cashCountID <> 0
+JOIN
+    Users u ON c.usrID = u.ID
+JOIN
+    Store s ON u.storeID = s.ID;
+GO

@@ -1,15 +1,10 @@
-USE [capstone_db_01]
-GO
-
-/** Object:  StoredProcedure [dbo].[sp_CreateFundTransfer]    Script Date: 1/30/2024 **/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[sp_CreateFundTransfer]
-    @empID INT,
+    @usrID INT,
 	@origin VARCHAR(5),
 	@destination VARCHAR(5),
 	@total SMALLMONEY,
@@ -35,16 +30,70 @@ AS
 BEGIN
     SET NOCOUNT ON;
         -- Insert the new register into the Registers table
-        INSERT INTO [dbo].[FundTransfer] ([empID], [origin], [destination], [date])
-        VALUES (@empID, @origin, @destination, GETDATE());
+        INSERT INTO [dbo].[FundTransfer] ([usrID], [origin], [destination], [date])
+        VALUES (@usrID, @origin, @destination, GETDATE());
 
 		-- Get the ID of the newly created store
     	DECLARE @fundTransferID INT;
     	SET @fundTransferID = SCOPE_IDENTITY();
 
+		DECLARE @storeID INT;
+    	SELECT @storeID = u.[storeID]
+    	FROM [dbo].[Users] u
+    	WHERE u.[ID] = @usrID;
+
    	 	-- Insert a record into the StoreTotals table for the new store
     	INSERT INTO [dbo].[Totals] ([storeID], [fundTransferID], [cashCountID], [total], [hundred], [fifty], [twenty], [ten], [five], [two], [one], [dollarCoin], [halfDollar], [quarter], [dime], [nickel], [penny], [quarterRoll], [dimeRoll], [nickelRoll], [pennyRoll])
     	VALUES (0, @fundTransferID, 0, @total, @hundred, @fifty, @twenty, @ten, @five, @two, @one, @dollarCoin, @halfDollar, @quarter, @dime, @nickel, @penny, @quarterRoll, @dimeRoll, @nickelRoll, @pennyRoll);
 
+		IF (@destination = 'SAFE')
+    	BEGIN
+        UPDATE [dbo].[Totals]
+        SET
+		[total] = [total] + @total,
+        [hundred] = [hundred] + @hundred,
+        [fifty] = [fifty] + @fifty,
+        [twenty] = [twenty] + @twenty,
+        [ten] = [ten] + @ten,
+        [five] = [five] + @five,
+        [two] = [two] + @two,
+        [one] = [one] + @one,
+        [dollarCoin] = [dollarCoin] + @dollarCoin,
+        [halfDollar] = [halfDollar] + @halfDollar,
+        [quarter] = [quarter] + @quarter,
+        [dime] = [dime] + @dime,
+        [nickel] = [nickel] + @nickel,
+        [penny] = [penny] + @penny,
+        [quarterRoll] = [quarterRoll] + @quarterRoll,
+        [dimeRoll] = [dimeRoll] + @dimeRoll,
+        [nickelRoll] = [nickelRoll] + @nickelRoll,
+        [pennyRoll] = [pennyRoll] + @pennyRoll
+		WHERE [storeID] = @storeID;
+    	END
+		ELSE IF (@origin = 'SAFE')
+    	BEGIN
+        UPDATE [dbo].[Totals]
+        SET
+        [total] = [total] - @total,
+        [hundred] = [hundred] - @hundred,
+        [fifty] = [fifty] - @fifty,
+        [twenty] = [twenty] - @twenty,
+        [ten] = [ten] - @ten,
+        [five] = [five] - @five,
+        [two] = [two] - @two,
+        [one] = [one] - @one,
+        [dollarCoin] = [dollarCoin] - @dollarCoin,
+        [halfDollar] = [halfDollar] - @halfDollar,
+        [quarter] = [quarter] - @quarter,
+        [dime] = [dime] - @dime,
+        [nickel] = [nickel] - @nickel,
+        [penny] = [penny] - @penny,
+        [quarterRoll] = [quarterRoll] - @quarterRoll,
+        [dimeRoll] = [dimeRoll] - @dimeRoll,
+        [nickelRoll] = [nickelRoll] - @nickelRoll,
+        [pennyRoll] = [pennyRoll] - @pennyRoll
+		WHERE [storeID] = @storeID;
+    	END
         SET @ResultMessage = 'Fund transfer created successfully.';
 END;
+GO

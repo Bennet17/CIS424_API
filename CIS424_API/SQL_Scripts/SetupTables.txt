@@ -26,18 +26,18 @@ BEGIN
         -- Turn off explicit values for ID column
         SET IDENTITY_INSERT [dbo].[Store] OFF;
     END;
-	-- Check if there is no existing record with ID 0 for Employee
-    IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE [ID] = 0)
+	-- Check if there is no existing record with ID 0 for Users
+    IF NOT EXISTS (SELECT 1 FROM [dbo].[Users] WHERE [ID] = 0)
     BEGIN
         -- Temporarily allow explicit values for ID column
-        SET IDENTITY_INSERT [dbo].[Employee] ON;
+        SET IDENTITY_INSERT [dbo].[Users] ON;
 
         -- Create a record with ID 0
-        INSERT INTO [dbo].[Employee] ([ID], [storeID], [name], [position], [username], [hashPassword])
+        INSERT INTO [dbo].[Users] ([ID], [storeID], [name], [position], [username], [hashPassword])
         VALUES (0, 0, 'Dummy', 'Dummy', 'Dummy', 'Dummy');
 
         -- Turn off explicit values for ID column
-        SET IDENTITY_INSERT [dbo].[Employee] OFF;
+        SET IDENTITY_INSERT [dbo].[Users] OFF;
     END;
     -- Check if there is no existing record with ID 0 for CashCount
 	IF NOT EXISTS (SELECT 1 FROM [dbo].[CashCount] WHERE [ID] = 0)
@@ -46,7 +46,7 @@ BEGIN
         SET IDENTITY_INSERT [dbo].[CashCount] ON;
 
         -- Create a record with ID 0
-        INSERT INTO [dbo].[CashCount] ([ID], [empID], [amountExpected], [date])
+        INSERT INTO [dbo].[CashCount] ([ID], [usrID], [amountExpected], [date])
         VALUES (0, 0, 0.00, GETDATE());
 
         -- Turn off explicit values for ID column
@@ -59,7 +59,7 @@ BEGIN
         SET IDENTITY_INSERT [dbo].[FundTransfer] ON;
 
         -- Create a record with ID 0
-        INSERT INTO [dbo].[FundTransfer] ([ID], [empID], [origin], [destination], [date])
+        INSERT INTO [dbo].[FundTransfer] ([ID], [usrID], [origin], [destination], [date])
         VALUES (0, 0, 0, 0, GETDATE());
 
         -- Turn off explicit values for ID column

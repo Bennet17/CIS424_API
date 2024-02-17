@@ -1,0 +1,23 @@
+USE [capstone_db_01]
+GO
+
+SET ANSI_NULLS ON
+
+GO
+
+SET QUOTED_IDENTIFIER ON
+
+GO
+
+CREATE RPOCEDURE [dbo].[sp_MoveUser]
+    @EmpID INT
+    @LocID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE User
+    SET storeID = @LocID
+    WHERE ID = @EmpID;
+END;
+GO

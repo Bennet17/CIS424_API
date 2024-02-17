@@ -1,0 +1,21 @@
+USE [capstone_db_01]
+GO
+
+SET ANSI_NULLS ON
+
+GO
+
+SET QUOTED_IDENTIFIER ON
+
+GO
+
+CREATE RPOCEDURE [dbo].[sp_DisableStore]
+    @ID INT
+AS
+BEGIN
+    UPDATE Store
+    SET enabled = 0
+    WHERE ID = @ID;
+
+END;
+GO
