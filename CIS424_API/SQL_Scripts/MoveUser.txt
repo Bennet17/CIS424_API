@@ -9,15 +9,15 @@ SET QUOTED_IDENTIFIER ON
 
 GO
 
-CREATE RPOCEDURE [dbo].[sp_MoveEmployee]
+CREATE RPOCEDURE [dbo].[sp_MoveUser]
     @EmpID INT
     @LocID INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    UPDATE Employee
+    UPDATE User
     SET storeID = @LocID
-    WHERE employeeID = @EmpID;
+    WHERE ID = @EmpID;
 END;
 GO

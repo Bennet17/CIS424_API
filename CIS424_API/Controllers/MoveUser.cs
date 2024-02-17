@@ -14,14 +14,14 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
-    public class MoveEmployeeController : ApiController
+    public class MoveUserController : ApiController
     {
         // GET SVSU_CIS424/ViewStores
         // Returns a list of all stores in the database
         [HttpGet]
-        [Route("MoveEmployee")]
+        [Route("MoveUser")]
 
-        public IHttpActionResult Post([FromBody] Employee employee)
+        public IHttpActionResult Post([FromBody] User User)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -31,12 +31,12 @@ namespace CIS424_API.Controllers
                 {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand("sp_MoveEmployee", connection))
+                    using (SqlCommand command = new SqlCommand("sp_MoveUser", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@EmpID", employee.employeeID);
-                        command.Parameters.AddWithValue("@LocID", employee.storeID);
+                        command.Parameters.AddWithValue("@EmpID", User.ID);
+                        command.Parameters.AddWithValue("@LocID", User.storeID);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
