@@ -47,7 +47,7 @@ BEGIN
             INSERT INTO [dbo].[FundTransfer] ([usrID], [origin], [destination], [date])
             VALUES (@usrID, @originRegisterID, @destinationRegisterID, GETDATE());
         END
-        ELSE IF (@destination = 'SAFE' OR @destination = 'BANK')
+        ELSE IF (@destination <> 'SAFE' AND @destination <> 'BANK' AND (@origin = 'SAFE' OR @origin = 'BANK'))
         BEGIN
             SELECT @destinationRegisterID = r.ID
             FROM Register r
@@ -57,7 +57,7 @@ BEGIN
             INSERT INTO [dbo].[FundTransfer] ([usrID], [origin], [destination], [date])
             VALUES (@usrID, @origin, @destinationRegisterID, GETDATE());
         END
-        ELSE IF (@origin = 'SAFE' OR @origin = 'BANK')
+        ELSE IF (@origin <> 'SAFE' AND @origin <> 'BANK' AND (@destination = 'SAFE' OR @destination = 'BANK'))
         BEGIN
             SELECT @originRegisterID = r.ID
             FROM Register r

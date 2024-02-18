@@ -57,6 +57,7 @@ namespace CIS424_API.Controllers
                         command.Parameters.AddWithValue("@usrID", createCashCount.usrID);
                         command.Parameters.AddWithValue("@total", total);
                         command.Parameters.AddWithValue("@itemCounted", createCashCount.itemCounted);
+                        command.Parameters.AddWithValue("@amountExpected", createCashCount.amountExpected);
                         command.Parameters.AddWithValue("@hundred", createCashCount.hundred ?? 0);
                         command.Parameters.AddWithValue("@fifty", createCashCount.fifty ?? 0);
                         command.Parameters.AddWithValue("@twenty", createCashCount.twenty ?? 0);
