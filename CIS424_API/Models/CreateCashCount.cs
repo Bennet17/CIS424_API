@@ -9,6 +9,7 @@ namespace CIS424_API.Models
     {
 		public int usrID { get; set; }
 		public string itemCounted { get; set; }
+		public decimal amountExpected { get; set; }
 		public int? hundred	{ get; set; }
 		public int? fifty { get; set; }
 		public int? twenty { get; set; }
