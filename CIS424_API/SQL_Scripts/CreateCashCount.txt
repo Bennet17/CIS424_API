@@ -4,13 +4,14 @@ GO
 /** Object:  StoredProcedure [dbo].[sp_CreateCashCount]    Script Date: 1/30/2024 **/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[sp_CreateCashCount]
+ALTER PROCEDURE [dbo].[sp_CreateCashCount]
     @usrID INT,
+	@itemCounted VARCHAR(5),
 	@total SMALLMONEY,
+	@amountExpected SMALLMONEY,
 	@hundred INT, 
 	@fifty INT, 
 	@twenty INT, 
@@ -32,19 +33,23 @@ CREATE PROCEDURE [dbo].[sp_CreateCashCount]
 AS
 BEGIN
     SET NOCOUNT ON;
+		IF (@itemCounted = 'SAFE')
+		BEGIN
+			INSERT INTO [dbo].[CashCount] (usrID, registerID, amountExpected, date)
+        	VALUES (@usrID, 0, @amountExpected, GETDATE());
+		END
+		ELSE
+		BEGIN
+			DECLARE @registerID INT;
 
-		DECLARE @amountExpected INT;
-    	    
-		SELECT TOP 1 @amountExpected = [total]
-    	FROM [dbo].[Totals]
-    	WHERE [cashCountID] IS NOT NULL
-    	ORDER BY [cashCountID] DESC;
+			SELECT @registerID = r.ID
+			FROM Register r
+			JOIN Users u ON r.storeID = u.storeID
+			WHERE u.ID = @usrID AND r.name = @itemCounted;
 
-    	IF @amountExpected IS NULL
-        	SET @amountExpected = 0;
-
-        INSERT INTO [dbo].[CashCount] ([usrID], [amountExpected], [date])
-        VALUES (@usrID, @amountExpected, GETDATE());
+			INSERT INTO [dbo].[CashCount] (usrID, registerID, amountExpected, date)
+        	VALUES (@usrID, @registerID, @amountExpected, GETDATE());
+		END
 
     	DECLARE @cashCountID INT;
     	SET @cashCountID = SCOPE_IDENTITY();
@@ -54,3 +59,4 @@ BEGIN
 
         SET @ResultMessage = 'Cash Count created successfully.';
 END;
+GO

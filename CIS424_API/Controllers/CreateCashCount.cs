@@ -56,6 +56,7 @@ namespace CIS424_API.Controllers
                         // Add parameters for the stored procedure.
                         command.Parameters.AddWithValue("@usrID", createCashCount.usrID);
                         command.Parameters.AddWithValue("@total", total);
+                        command.Parameters.AddWithValue("@itemCounted", createCashCount.itemCounted);
                         command.Parameters.AddWithValue("@hundred", createCashCount.hundred ?? 0);
                         command.Parameters.AddWithValue("@fifty", createCashCount.fifty ?? 0);
                         command.Parameters.AddWithValue("@twenty", createCashCount.twenty ?? 0);

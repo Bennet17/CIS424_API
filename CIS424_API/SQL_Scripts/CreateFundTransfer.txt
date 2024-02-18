@@ -3,7 +3,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[sp_CreateFundTransfer]
+ALTER PROCEDURE [dbo].[sp_CreateFundTransfer]
     @usrID INT,
 	@origin VARCHAR(5),
 	@destination VARCHAR(5),
@@ -29,20 +29,57 @@ CREATE PROCEDURE [dbo].[sp_CreateFundTransfer]
 AS
 BEGIN
     SET NOCOUNT ON;
-        -- Insert the new register into the Registers table
-        INSERT INTO [dbo].[FundTransfer] ([usrID], [origin], [destination], [date])
-        VALUES (@usrID, @origin, @destination, GETDATE());
+        DECLARE @originRegisterID INT;
+        DECLARE @destinationRegisterID INT;
+        DECLARE @fundTransferID INT;
+        DECLARE @storeID INT;
 
-		-- Get the ID of the newly created store
-    	DECLARE @fundTransferID INT;
+
+        IF (@origin <> 'SAFE' AND @origin <> 'BANK' AND @destination <> 'SAFE' AND @destination <> 'BANK')
+        BEGIN
+            SELECT 
+                @originRegisterID = CASE WHEN r.name = @origin THEN r.ID ELSE @originRegisterID END,
+                @destinationRegisterID = CASE WHEN r.name = @destination THEN r.ID ELSE @destinationRegisterID END
+            FROM Register r
+            JOIN Users u ON r.storeID = u.storeID
+            WHERE u.ID = @usrID AND (r.name = @origin OR r.name = @destination);
+
+            INSERT INTO [dbo].[FundTransfer] ([usrID], [origin], [destination], [date])
+            VALUES (@usrID, @originRegisterID, @destinationRegisterID, GETDATE());
+        END
+        ELSE IF (@destination = 'SAFE' OR @destination = 'BANK')
+        BEGIN
+            SELECT @destinationRegisterID = r.ID
+            FROM Register r
+            JOIN Users u ON r.storeID = u.storeID
+            WHERE u.ID = @usrID AND r.name = @destination;
+
+            INSERT INTO [dbo].[FundTransfer] ([usrID], [origin], [destination], [date])
+            VALUES (@usrID, @origin, @destinationRegisterID, GETDATE());
+        END
+        ELSE IF (@origin = 'SAFE' OR @origin = 'BANK')
+        BEGIN
+            SELECT @originRegisterID = r.ID
+            FROM Register r
+            JOIN Users u ON r.storeID = u.storeID
+            WHERE u.ID = @usrID AND r.name = @origin;
+
+            INSERT INTO [dbo].[FundTransfer] ([usrID], [origin], [destination], [date])
+            VALUES (@usrID, @originRegisterID, @destination, GETDATE());
+        END
+        ELSE
+        BEGIN
+            INSERT INTO [dbo].[FundTransfer] ([usrID], [origin], [destination], [date])
+            VALUES (@usrID, @origin, @destination, GETDATE());
+        END
+
     	SET @fundTransferID = SCOPE_IDENTITY();
 
-		DECLARE @storeID INT;
     	SELECT @storeID = u.[storeID]
     	FROM [dbo].[Users] u
     	WHERE u.[ID] = @usrID;
 
-   	 	-- Insert a record into the StoreTotals table for the new store
+
     	INSERT INTO [dbo].[Totals] ([storeID], [fundTransferID], [cashCountID], [total], [hundred], [fifty], [twenty], [ten], [five], [two], [one], [dollarCoin], [halfDollar], [quarter], [dime], [nickel], [penny], [quarterRoll], [dimeRoll], [nickelRoll], [pennyRoll])
     	VALUES (0, @fundTransferID, 0, @total, @hundred, @fifty, @twenty, @ten, @five, @two, @one, @dollarCoin, @halfDollar, @quarter, @dime, @nickel, @penny, @quarterRoll, @dimeRoll, @nickelRoll, @pennyRoll);
 

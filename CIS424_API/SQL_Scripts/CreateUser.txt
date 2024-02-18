@@ -6,7 +6,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[sp_CreateUser]
+ALTER PROCEDURE [dbo].[sp_CreateUser]
     @storeID INT,
     @username VARCHAR(50),
     @hashPassword VARCHAR(250),
@@ -18,11 +18,11 @@ BEGIN
     SET NOCOUNT ON;
 
     -- Check if the username already exists
-    IF NOT EXISTS (SELECT 1 FROM Employee WHERE username = @username)
+    IF NOT EXISTS (SELECT 1 FROM Users WHERE username = @username)
     BEGIN
         -- Insert the new user into the Users table
-        INSERT INTO Users (storeID, name, position, username, hashPassword)
-        VALUES (@storeID, @name, @position, @username, @hashPassword);
+        INSERT INTO Users (storeID, name, position, username, hashPassword, enabled)
+        VALUES (@storeID, @name, @position, @username, @hashPassword, 1);
 
         SET @ResultMessage = 'User created successfully.';
     END
@@ -31,3 +31,4 @@ BEGIN
         SET @ResultMessage = 'Username already exists. Please choose a different username.';
     END
 END;
+GO

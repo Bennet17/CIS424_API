@@ -5,29 +5,36 @@ GO
 /** Object: StoredProcedure [dbo].[sp_CreateStore] Script Date: 1/30/2024 **/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[sp_CreateStore]
+ALTER PROCEDURE [dbo].[sp_CreateStore]
     @location VARCHAR(50),
     @ResultMessage VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Insert the new store into the Stores table
-    INSERT INTO [dbo].[Store] (location)
-    VALUES (@location); -- Replace with the actual location
+    -- Check if the location already exists
+    IF NOT EXISTS (SELECT 1 FROM [dbo].[Store] WHERE location = @location)
+    BEGIN
+        -- Insert the new store into the Stores table
+        INSERT INTO [dbo].[Store] (location, enabled, opened)
+        VALUES (@location, 1, 1); -- Replace with the actual location
 
-    -- Get the ID of the newly created store
-    DECLARE @storeID INT;
-    SET @storeID = SCOPE_IDENTITY();
+        -- Get the ID of the newly created store
+        DECLARE @storeID INT;
+        SET @storeID = SCOPE_IDENTITY();
 
-    -- Insert a record into the StoreTotals table for the new store
-    INSERT INTO [dbo].[Totals] ([storeID], [fundTransferID], [cashCountID], [total], [hundred], [fifty], [twenty], [ten], [five], [two], [one], [dollarCoin], [halfDollar], [quarter], [dime], [nickel], [penny], [quarterRoll], [dimeRoll], [nickelRoll], [pennyRoll])
-    VALUES (@storeID, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        -- Insert a record into the StoreTotals table for the new store
+        INSERT INTO [dbo].[Totals] ([storeID], [fundTransferID], [cashCountID], [total], [hundred], [fifty], [twenty], [ten], [five], [two], [one], [dollarCoin], [halfDollar], [quarter], [dime], [nickel], [penny], [quarterRoll], [dimeRoll], [nickelRoll], [pennyRoll])
+        VALUES (@storeID, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-    SET @ResultMessage = 'Store created successfully.';
+        SET @ResultMessage = 'Store created successfully.';
+    END
+    ELSE
+    BEGIN
+        SET @ResultMessage = 'Store with this location already exists.';
+    END
 END;
 GO

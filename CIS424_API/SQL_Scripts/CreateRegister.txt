@@ -4,23 +4,20 @@ GO
 /** Object:  StoredProcedure [dbo].[sp_CreateRegister]    Script Date: 1/30/2024 **/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[sp_CreateRegister]
-    @location VARCHAR(50),
+ALTER PROCEDURE [dbo].[sp_CreateRegister]
+    @storeID INT,
+    @name VARCHAR(5),
     @ResultMessage VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
-		--Get the storeID based on location entered by user
-		DECLARE @storeID INT;
-		SET @storeID = (SELECT ID FROM [dbo].[Store] WHERE location = @location);
-
         -- Insert the new register into the Registers table
-        INSERT INTO Register (storeID)
-        VALUES (@storeID);
+        INSERT INTO Register (storeID, name, enabled, opened)
+        VALUES (@storeID, @name, 1, 1);
 
         SET @ResultMessage = 'Register created successfully.';
 END;
+GO

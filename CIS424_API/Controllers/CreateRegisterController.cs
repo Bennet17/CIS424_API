@@ -20,7 +20,7 @@ namespace CIS424_API.Controllers
         // POST SVSU_CIS424/CreateRegister
         [HttpPost]
         [Route("CreateRegister")]
-        public IHttpActionResult CreateRegister([FromBody] Store store)
+        public IHttpActionResult CreateRegister([FromBody] Register register)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -36,7 +36,8 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameters for the stored procedure.
-                        command.Parameters.AddWithValue("@location", store.location);
+                        command.Parameters.AddWithValue("@storeID", register.storeID);
+                        command.Parameters.AddWithValue("@name", register.name);
 
                         // Add output parameter
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);

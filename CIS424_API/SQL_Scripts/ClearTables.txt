@@ -1,13 +1,13 @@
-USE [capstone_db_01]
-GO
-
-/** Object: StoredProcedure [dbo].[sp_ResetTables] Script Date: 1/30/2024 **/
+/****** Object:  StoredProcedure [dbo].[sp_ClearTables]    Script Date: 2/17/2024 7:37:41 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER PROCEDURE [dbo].[sp_ResetTables]
+
+
+CREATE PROCEDURE [dbo].[sp_ClearTables]
     @ResultMessage VARCHAR(255) OUTPUT
 AS
 BEGIN
@@ -31,12 +31,10 @@ BEGIN
     -- Delete all data from Store table
     DELETE FROM [dbo].[Store];
 
-    -- Delete all data from Managers table
-    DELETE FROM [dbo].Managers;
+	-- Delete all data from Managers table
+	DELETE FROM [dbo].[Managers];
 
-    -- Insert new records AUTOMATICALLY RUNS THE SETUP TABLES STORED PROD. UR GOOD ONCE U RUN THIS
-    EXEC [dbo].[sp_SetupTables] @ResultMessage OUTPUT;
-
-    SET @ResultMessage = 'Tables reset successfully.';
+    SET @ResultMessage = 'Tables cleared successfully.';
 END;
 GO
+

@@ -8,7 +8,7 @@ namespace CIS424_API.Models
     public class Register
     {
         public int ID { get; set; }
+        public string name { get; set; }
         public int storeID { get; set; }
-        public int amount { get; set; }
     }
 }
