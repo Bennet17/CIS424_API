@@ -40,7 +40,7 @@ namespace CIS424_API.Controllers
                             while (reader.Read())
                             {
                                 Store store = new Store();
-                                store.storeID = Convert.ToInt32(reader["ID"]);
+                                store.ID = Convert.ToInt32(reader["ID"]);
                                 store.location = reader["location"].ToString();
                                 // Add more properties as needed
                                 stores.Add(store);

@@ -78,7 +78,7 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@storeID", store.storeID);
+                        command.Parameters.AddWithValue("@storeID", store.ID);
 
                         // Create a SqlDataReader object
                         using (SqlDataReader reader = command.ExecuteReader())
