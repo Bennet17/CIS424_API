@@ -43,6 +43,7 @@ namespace CIS424_API.Controllers
                             {
                                 User user = new User();
                                 users.Add(user);
+                                user.ID = Convert.ToInt32(reader["ID"]);
                                 user.username = reader["username"].ToString();
                                 user.name = reader["name"].ToString();
                                 user.position = reader["position"].ToString();
@@ -62,7 +63,7 @@ namespace CIS424_API.Controllers
         // Returns a list of all users in the database for a store by the storeID
         [HttpGet]
         [Route("ViewUsersByStoreID")]
-        public IHttpActionResult GetUsersByStoreID([FromBody] Store store)
+        public IHttpActionResult GetUsersByStoreID([FromBody] User storeID)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -78,7 +79,7 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@storeID", store.ID);
+                        command.Parameters.AddWithValue("@storeID", storeID.storeID);
 
                         // Create a SqlDataReader object
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -89,6 +90,7 @@ namespace CIS424_API.Controllers
                                 User user = new User();
                                 users.Add(user);
                                 user.username = reader["username"].ToString();
+                                user.ID = Convert.ToInt32(reader["ID"]);
                                 user.name = reader["name"].ToString();
                                 user.position = reader["position"].ToString();
                                 user.storeID = Convert.ToInt32(reader["storeID"]);
