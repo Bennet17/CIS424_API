@@ -17,7 +17,7 @@ namespace CIS424_API.Controllers
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class DisableStoreController : ApiController
     {
-        // GET SVSU_CIS424/ViewStores
+        // POST SVSU_CIS424/DisableStore
         // Disables a store in the database
         [HttpPost]
         [Route("DisableStore")]

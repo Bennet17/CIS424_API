@@ -17,7 +17,7 @@ namespace CIS424_API.Controllers
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class EnableRegisterController : ApiController
     {
-        // GET SVSU_CIS424/ViewStores
+        // POST SVSU_CIS424/EnableRegister
         // Returns a list of all stores in the database
         [HttpPost]
         [Route("EnableRegister")]

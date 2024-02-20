@@ -13,7 +13,7 @@ namespace CIS424_API.Controllers
     public class CreateUserController : ApiController
     {
         // POST SVSU_CIS424/CreateUser
-        // Creates a user int the database
+        // Creates a user in the database
         [HttpPost]
         [Route("CreateUser")]
         public IHttpActionResult CreateStore([FromBody] User user)

@@ -12,7 +12,7 @@ namespace CIS424_API.Controllers
     public class CashCountController : ApiController
     {
 
-        //POST SVSU_CIS424/CreateCashCount
+        // POST SVSU_CIS424/CreateCashCount
         //Creates a Cash Count entry in the database
         //The stored procedure for this route has not been adjusted to include a registerID
         //So the model has not been changed to reflect that for consistency sake.

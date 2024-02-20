@@ -17,7 +17,7 @@ namespace CIS424_API.Controllers
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class DisableUserController : ApiController
     {
-        // GET SVSU_CIS424/DisableUser
+        // POST SVSU_CIS424/DisableUser
         // Disables a user in the database
         [HttpPost]
         [Route("DisableUser")]
