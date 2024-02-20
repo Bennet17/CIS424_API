@@ -18,7 +18,7 @@ namespace CIS424_API.Controllers
     public class DisableStoreController : ApiController
     {
         // GET SVSU_CIS424/ViewStores
-        // Returns a list of all stores in the database
+        // Disables a store in the database
         [HttpPost]
         [Route("DisableStore")]
 

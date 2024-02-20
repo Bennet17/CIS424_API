@@ -16,12 +16,12 @@ namespace CIS424_API.Controllers
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class DisableRegisterController : ApiController
     {
-        // GET SVSU_CIS424/ViewStores
-        // Returns a list of all stores in the database
-        [HttpGet]
+        // GET SVSU_CIS424/DisableRegister
+        // Disables a register in the database
+        [HttpPost]
         [Route("DisableRegister")]
 
-        public IHttpActionResult Post([FromBody] Register register)
+        public IHttpActionResult Post([FromBody] int registerID)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -35,7 +35,7 @@ namespace CIS424_API.Controllers
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@ID", register.ID);
+                        command.Parameters.AddWithValue("@ID", registerID);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
