@@ -19,10 +19,10 @@ namespace CIS424_API.Controllers
     {
         // GET SVSU_CIS424/ViewStores
         // Returns a list of all stores in the database
-        [HttpGet]
+        [HttpPost]
         [Route("DisableStore")]
 
-        public IHttpActionResult Post([FromBody] Store store)
+        public IHttpActionResult Post([FromBody] int storeID)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -36,7 +36,7 @@ namespace CIS424_API.Controllers
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@ID", store.ID);
+                        command.Parameters.AddWithValue("@ID", storeID);
 
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
