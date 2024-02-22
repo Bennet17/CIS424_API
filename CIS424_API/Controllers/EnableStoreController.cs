@@ -21,7 +21,7 @@ namespace CIS424_API.Controllers
         [HttpPost]
         [Route("EnableStore")]
 
-        public IHttpActionResult EnableStore([FromBody] int storeID)
+        public IHttpActionResult EnableStore([FromBody] Store Store)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -35,7 +35,7 @@ namespace CIS424_API.Controllers
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@ID", storeID);
+                        command.Parameters.AddWithValue("@ID", Store.ID);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
