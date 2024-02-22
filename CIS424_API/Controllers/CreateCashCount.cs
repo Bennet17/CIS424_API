@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
@@ -13,14 +8,17 @@ using CIS424_API.Models;
 namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CashCountController : ApiController
     {
 
-        //POST SVSU_CIS424/CreateCashCount
+        // POST SVSU_CIS424/CreateCashCount
+        //Creates a Cash Count entry in the database
+        //The stored procedure for this route has not been adjusted to include a registerID
+        //So the model has not been changed to reflect that for consistency sake.
         [HttpPost]
         [Route("CreateCashCount")]
-        public IHttpActionResult Post([FromBody] CreateCashCount createCashCount)
+        public IHttpActionResult CreateCashCount([FromBody] CreateCashCount createCashCount)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 

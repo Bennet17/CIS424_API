@@ -14,15 +14,15 @@ using CIS424_API.Models;
 namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class DisableStoreController : ApiController
     {
-        // GET SVSU_CIS424/ViewStores
-        // Returns a list of all stores in the database
-        [HttpGet]
+        // POST SVSU_CIS424/DisableStore
+        // Disables a store in the database
+        [HttpPost]
         [Route("DisableStore")]
 
-        public IHttpActionResult Post([FromBody] Store store)
+        public IHttpActionResult DisableStore([FromBody] int storeID)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -36,7 +36,7 @@ namespace CIS424_API.Controllers
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@ID", store.ID);
+                        command.Parameters.AddWithValue("@ID", storeID);
 
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
