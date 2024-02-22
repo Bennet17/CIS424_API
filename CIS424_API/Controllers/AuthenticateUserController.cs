@@ -44,26 +44,44 @@ namespace CIS424_API.Controllers
                                 // Use BCrypt to verify the entered password against the stored hashed password.
                                 bool passwordMatch = BCrypt.Net.BCrypt.Verify(user.password, storedHashedPassword);
 
-                                // Populate the AuthenticateUserResponse object with values from the result set.
-                                AuthenticateUserResponse response = new AuthenticateUserResponse
+                                if (passwordMatch)
                                 {
-                                    ID = (int)reader["ID"],
-                                    username = reader["username"].ToString(),
-                                    name = reader["name"].ToString(),
-                                    position = reader["position"].ToString(),
-                                    storeID = (int)reader["storeID"],
-                                    IsValid = passwordMatch ? true : false
-                                };
+                                    // Populate the user object with values from the result set.
+                                    var userData = new
+                                    {
+                                        ID = (int)reader["ID"],
+                                        username = reader["username"].ToString(),
+                                        name = reader["name"].ToString(),
+                                        position = reader["position"].ToString(),
+                                        storeID = (int)reader["storeID"]
+                                    };
 
-                                // Return the AuthenticateUserResponse object as JSON.
-                                return Ok(response);
+                                    // Construct the response object with nested user object and set IsValid to true.
+                                    var response = new
+                                    {
+                                        IsValid = true,
+                                        user = userData
+                                    };
+
+                                    // Return the response object as JSON.
+                                    return Ok(response);
+                                }
+                                else
+                                {
+                                    // If password doesn't match, return IsValid as false
+                                    var response = new
+                                    {
+                                        IsValid = false
+                                    };
+                                    return Ok(response);
+                                }
                             }
                             else
                             {
                                 // If no matching record found, return IsValid as false
-                                AuthenticateUserResponse response = new AuthenticateUserResponse
+                                var response = new
                                 {
-                                    IsValid = "false"
+                                    IsValid = false
                                 };
                                 return Ok(response);
                             }
