@@ -13,6 +13,6 @@ namespace CIS424_API.Models
         public string position { get; set; }
         public int storeID { get; set; }
 
-        public string IsValid { get; set; }
+        public bool IsValid { get; set; }
     }
 }

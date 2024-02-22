@@ -52,7 +52,7 @@ namespace CIS424_API.Controllers
                                     name = reader["name"].ToString(),
                                     position = reader["position"].ToString(),
                                     storeID = (int)reader["storeID"],
-                                    IsValid = passwordMatch ? "true" : "false"
+                                    IsValid = passwordMatch ? true : false
                                 };
 
                                 // Return the AuthenticateUserResponse object as JSON.
