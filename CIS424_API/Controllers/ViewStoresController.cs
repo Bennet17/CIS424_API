@@ -11,7 +11,7 @@ using CIS424_API.Models;
 namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ViewStoresController : ApiController
     {
         // GET SVSU_CIS424/ViewStores

@@ -13,7 +13,7 @@ using CIS424_API.Models;
 namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EnableStoreController : ApiController
     {
         // POST SVSU_CIS424/EnableStore
