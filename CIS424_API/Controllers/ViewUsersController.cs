@@ -105,5 +105,51 @@ namespace CIS424_API.Controllers
                 return Content(HttpStatusCode.InternalServerError, e);
             }
         }
+        // GET SVSU_CIS424/ViewRegistersByStoreID
+        // Returns a list of all users in the database for a store by the storeID
+        [HttpGet]
+        [Route("ViewRegistersByStoreID")]
+        public IHttpActionResult ViewRegistersByStoreID([FromUri] int storeID)
+        {
+            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Create a SqlCommand object for the stored procedure.
+                    using (SqlCommand command = new SqlCommand("sp_ViewRegistersByStoreID", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add parameter for the stored procedure.
+                        command.Parameters.AddWithValue("@storeID", storeID);
+
+                        // Create a SqlDataReader object
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            List<Register> registers = new List<Register>();
+                            while (reader.Read())
+                            {
+                                Register register = new Register();
+                                register.ID = Convert.ToInt32(reader["ID"]);
+                                register.storeID = Convert.ToInt32(reader["storeID"]);                 
+                                register.name = reader["name"].ToString();
+                                register.opened = Convert.ToBoolean(reader["opened"]);
+                                register.enabled = Convert.ToBoolean(reader["enabled"]);
+                                registers.Add(register);
+                            }
+                            return Ok(registers);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, e);
+            }
+        }
     }
 }
