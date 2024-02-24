@@ -200,6 +200,7 @@
     </Compile>
     <Compile Include="Models\AuthenticateUserResponse.cs" />
     <Compile Include="Models\cashCount.cs" />
+    <Compile Include="Models\CreateRegister.cs" />
     <Compile Include="Models\FundTransfer.cs" />
     <Compile Include="Models\Register.cs" />
     <Compile Include="Models\Store.cs" />
