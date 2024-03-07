@@ -9,5 +9,7 @@ namespace CIS424_API.Models
     {
         public int ID { get; set; }
         public string location { get; set; }
+
+        public bool enabled { get; set; }
     }
 }
