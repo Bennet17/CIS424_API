@@ -13,7 +13,6 @@ namespace CIS424_API.Controllers
     public class EditUserController : ApiController
     {
         // POST SVSU_CIS424/EditUser
-        // Creates a user by storeID in the database
         [HttpPost]
         [Route("EditUser")]
         public IHttpActionResult EditUser([FromBody] User user)
