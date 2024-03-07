@@ -15,7 +15,7 @@ namespace CIS424_API.Controllers
         // POST SVSU_CIS424/EditUser
         [HttpPost]
         [Route("EditUser")]
-        public IHttpActionResult EditUser([FromBody] EditUser user)
+        public IHttpActionResult EditUser([FromBody] User user)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -33,7 +33,7 @@ namespace CIS424_API.Controllers
                         // Add parameters for the stored procedure.
                         command.Parameters.AddWithValue("@name", user.name);
                         command.Parameters.AddWithValue("@storeID",user.storeID);
-                        command.Parameters.AddWithValue("@usrID",user.usrID);
+                        command.Parameters.AddWithValue("@usrID",user.ID);
                         command.Parameters.AddWithValue("@username",user.username);
                         command.Parameters.AddWithValue("@position",user.position);
 
