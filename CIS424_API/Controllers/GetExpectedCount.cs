@@ -44,6 +44,7 @@ namespace CIS424_API.Controllers
                                 return NotFound();
                             }
                         }
+                    }
                 }
             }
             catch (Exception ex)
