@@ -25,30 +25,32 @@ namespace CIS424_API.Controllers
                 {
                     connection.Open();
 
-                    // Create a SqlCommand object for the stored procedure.
                     using (SqlCommand command = new SqlCommand("sp_GetOpenExpectedAmount", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@usrID", cashCount.usrID);
+                        command.Parameters.AddWithValue("@itemCounted", cashCount.itemCounted);
 
-                        // Add parameters for the stored procedure.
-                        command.Parameters.AddWithValue("@usrID", cashCount.usrID;
-                        command.Parameters.AddWithValue("@itemCounted",cashCount.itemCounted);
-
-                        // Add output parameter
                         object result = command.ExecuteScalar();
 
-                        decimal expectedAmount = Convert.ToDecimal(result);
-
-                        // Return the expected amount in the response
-                        return Ok(expectedAmount);
+                        if (result != null && result != DBNull.Value)
+                        {
+                            decimal expectedAmount = Convert.ToDecimal(result);
+                            return Ok(expectedAmount);
+                        }
+                        else
+                        {
+                            // case where the result is null
+                            return NotFound();
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during database operations.
+                return InternalServerError(ex);
+            }
         }
     }
-}
-catch (Exception ex)
-{
-    // Handle any exceptions that may occur during database operations.
-    return InternalServerError(ex);
 }
