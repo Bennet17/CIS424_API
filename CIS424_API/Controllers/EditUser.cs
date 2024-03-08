@@ -31,11 +31,11 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameters for the stored procedure.
-                        command.Parameters.AddWithValue("@name", user.name);
-                        command.Parameters.AddWithValue("@storeID",user.storeID);
+                       // command.Parameters.AddWithValue("@name", user.name);
+                       // command.Parameters.AddWithValue("@storeID",user.storeID);
                         command.Parameters.AddWithValue("@ID",user.ID);
-                        command.Parameters.AddWithValue("@username",user.username);
-                        command.Parameters.AddWithValue("@position",user.position);
+                      //  command.Parameters.AddWithValue("@username",user.username);
+                      //  command.Parameters.AddWithValue("@position",user.position);
 
 
                         // Add output parameter
@@ -52,6 +52,22 @@ namespace CIS424_API.Controllers
 
                         // Return the response as JSON object.
                         return Ok(new { response = resultMessage });
+
+                        /*
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@ID", User.ID);
+
+                        SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
+                        resultMessageParam.Direction = ParameterDirection.Output;
+                        command.Parameters.Add(resultMessageParam);
+
+                        command.ExecuteNonQuery();
+
+                        string resultMessage = resultMessageParam.Value.ToString();
+
+                        return Ok(new { response = resultMessage });
+                        */
 
                     }
                 }
