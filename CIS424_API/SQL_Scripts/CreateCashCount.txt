@@ -1,7 +1,3 @@
-USE [capstone_db_01]
-GO
-
-/** Object:  StoredProcedure [dbo].[sp_CreateCashCount]    Script Date: 1/30/2024 **/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -35,8 +31,20 @@ BEGIN
     SET NOCOUNT ON;
 		IF (@itemCounted = 'SAFE')
 		BEGIN
+			DECLARE @storeID INT;
+
+			-- Get the storeID based on usrID
+			SELECT @storeID = storeID
+			FROM Users
+			WHERE ID = @usrID;
+
+
 			INSERT INTO [dbo].[CashCount] (usrID, registerID, amountExpected, date)
         	VALUES (@usrID, 0, @amountExpected, GETDATE());
+
+			UPDATE Store
+        	SET opened = CASE WHEN opened = 1 THEN 0 ELSE 1 END
+			WHERE ID = @storeID
 		END
 		ELSE
 		BEGIN
@@ -49,6 +57,10 @@ BEGIN
 
 			INSERT INTO [dbo].[CashCount] (usrID, registerID, amountExpected, date)
         	VALUES (@usrID, @registerID, @amountExpected, GETDATE());
+
+			UPDATE Register
+        	SET opened = CASE WHEN opened = 1 THEN 0 ELSE 1 END
+        	WHERE ID = @registerID;
 		END
 
     	DECLARE @cashCountID INT;

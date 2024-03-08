@@ -196,6 +196,7 @@
     <Compile Include="Controllers\VarianceController.cs" />
     <Compile Include="Controllers\ViewStoresController.cs" />
     <Compile Include="Controllers\ViewUsersController.cs" />
+    <Compile Include="Controllers\GetOpenExpectedAmount.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
