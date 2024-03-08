@@ -42,6 +42,8 @@ namespace CIS424_API.Controllers
                                 Store store = new Store();
                                 store.ID = Convert.ToInt32(reader["ID"]);
                                 store.location = reader["location"].ToString();
+                                store.enabled = Convert.ToBoolean(reader["enabled"]);
+                                store.opened = Convert.ToBoolean(reader["opened"]);
                                 // Add more properties as needed
                                 stores.Add(store);
                             }

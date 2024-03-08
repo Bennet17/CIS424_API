@@ -193,8 +193,11 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\CreateCashCount.cs" />
     <Compile Include="Controllers\CreateFundTransfer.cs" />
+    <Compile Include="Controllers\VarianceController.cs" />
     <Compile Include="Controllers\ViewStoresController.cs" />
     <Compile Include="Controllers\ViewUsersController.cs" />
+    <Compile Include="Controllers\GetExpectedCount.cs" />
+    <Compile Include="Controllers\EditUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,11 +206,14 @@
     <Compile Include="Models\CreateRegister.cs" />
     <Compile Include="Models\FundTransfer.cs" />
     <Compile Include="Models\Register.cs" />
+    <Compile Include="Models\SafeVarianceRequest.cs" />
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\Totals.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\CreateCashCount.cs" />
     <Compile Include="Models\CreateFundTransfer.cs" />
+    <Compile Include="Models\RegisterVarianceRequest.cs" />
+    <Compile Include="Models\VarianceResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +250,7 @@
     <Folder Include="Views\EnableEmployee\" />
     <Folder Include="Views\EnableRegister\" />
     <Folder Include="Views\EnableStore\" />
+    <Folder Include="Views\Variance\" />
     <Folder Include="Views\ViewStores\" />
     <Folder Include="Views\ViewUsers\" />
   </ItemGroup>

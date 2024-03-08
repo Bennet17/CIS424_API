@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
+using Microsoft.Win32;
 
 namespace CIS424_API.Controllers
 {
@@ -41,10 +42,11 @@ namespace CIS424_API.Controllers
                                 User user = new User();
                                 users.Add(user);
                                 user.ID = Convert.ToInt32(reader["ID"]);
+                                user.storeID = Convert.ToInt32(reader["storeID"]);
                                 user.username = reader["username"].ToString();
                                 user.name = reader["name"].ToString();
                                 user.position = reader["position"].ToString();
-                                user.storeID = Convert.ToInt32(reader["storeID"]);
+                                user.enabled = Convert.ToBoolean(reader["enabled"]);
                             }
                             return Ok(users);
                         }
@@ -90,6 +92,7 @@ namespace CIS424_API.Controllers
                                 user.username = reader["username"].ToString();
                                 user.name = reader["name"].ToString();
                                 user.position = reader["position"].ToString();
+                                user.enabled = Convert.ToBoolean(reader["enabled"]);
                                 users.Add(user);
                             }
                             return Ok(users);
