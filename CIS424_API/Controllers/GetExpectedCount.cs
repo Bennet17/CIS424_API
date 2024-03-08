@@ -31,19 +31,19 @@ namespace CIS424_API.Controllers
                         command.Parameters.AddWithValue("@usrID", cashCount.usrID);
                         command.Parameters.AddWithValue("@itemCounted", cashCount.itemCounted);
 
-                        object result = command.ExecuteScalar();
-
-                        if (result != null && result != DBNull.Value)
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            decimal expectedAmount = Convert.ToDecimal(result);
-                            return Ok(expectedAmount);
+                            if (reader.Read())
+                            {
+                                decimal expectedAmount = reader.GetDecimal(0); // Assuming the result is a decimal value
+                                return Ok(expectedAmount);
+                            }
+                            else
+                            {
+                                // No rows returned
+                                return NotFound();
+                            }
                         }
-                        else
-                        {
-                            // case where the result is null
-                            return NotFound();
-                        }
-                    }
                 }
             }
             catch (Exception ex)
