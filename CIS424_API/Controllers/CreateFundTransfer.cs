@@ -20,24 +20,24 @@ namespace CIS424_API.Controllers
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             
-            decimal total = 0.0;
-            total = (fundTransfer.hundred ?? 0) * 100 +
-                (fundTransfer.fifty ?? 0) * 50 +
-                (fundTransfer.twenty ?? 0) * 20 +
-                (fundTransfer.ten ?? 0) * 10 +
-                (fundTransfer.five ?? 0) * 5 +
-                (fundTransfer.two ?? 0) * 2 +
-                (fundTransfer.one ?? 0) +
-                (fundTransfer.dollarCoin ?? 0) +
-                (fundTransfer.halfDollar ?? 0) * 0.5m +
-                (fundTransfer.quarter ?? 0) * 0.25m +
-                (fundTransfer.dime ?? 0) * 0.1m +
-                (fundTransfer.nickel ?? 0) * 0.05m +
-                (fundTransfer.penny ?? 0) * 0.01m +
-                (fundTransfer.quarterRoll ?? 0) * 10 +
-                (fundTransfer.dimeRoll ?? 0) * 5 +
-                (fundTransfer.nickelRoll ?? 0) * 2 +
-                (fundTransfer.pennyRoll ?? 0) * 0.5m;
+            decimal total = 0.0m;
+            total = fundTransfer.hundred * 100 +
+                fundTransfer.fifty * 50 +
+                fundTransfer.twenty * 20 +
+                fundTransfer.ten * 10 +
+                fundTransfer.five * 5 +
+                fundTransfer.two * 2 +
+                fundTransfer.one +
+                fundTransfer.dollarCoin +
+                fundTransfer.halfDollar * 0.5m +
+                fundTransfer.quarter * 0.25m +
+                fundTransfer.dime * 0.1m +
+                fundTransfer.nickel * 0.05m +
+                fundTransfer.penny * 0.01m +
+                fundTransfer.quarterRoll * 10 +
+                fundTransfer.dimeRoll * 5 +
+                fundTransfer.nickelRoll * 2 +
+                fundTransfer.pennyRoll * 0.5m;
 
             Totals totals = new Totals();
 
@@ -117,7 +117,7 @@ namespace CIS424_API.Controllers
                         // Check if origin or destination is 'SAFE'
                         if (fundTransfer.origin == "SAFE")
                         {
-                            totals.total -= checkNegative(tota);
+                            totals.total -= checkNegative(total);
                             totals.hundred -= checkNegative(fundTransfer.hundred);
                             totals.fifty -= checkNegative(fundTransfer.fifty);
                             totals.twenty -= checkNegative(fundTransfer.twenty);
@@ -199,16 +199,22 @@ namespace CIS424_API.Controllers
             {
                 return 0;
             }
-            return total;
+            else
+            {
+                return total;
+            }
         }
 
-        private int checkNegative(decimal total)
+        private decimal checkNegative(decimal total)
         {
-            if (total < 0.0)
+            if (total < 0.00m)
             {
-                return 0.0;
+                return 0.00m;
             }
-            return total;
+            else
+            {
+                return total;
+            }
         }
 
         private void GenerateTransferCommand(SqlCommand command, CreateFundTransfer fundTransfer)

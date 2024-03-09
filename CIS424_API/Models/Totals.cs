@@ -17,11 +17,11 @@
         public int halfDollar { get; set; }
         public int quarter { get; set; }
         public int dime { get; set; }
-        public int nickle { get; set; }
+        public int nickel { get; set; }
         public int penny { get; set; }
         public int quarterRoll { get; set; }
         public int dimeRoll { get; set; }
-        public int nickleRoll { get; set; }
+        public int nickelRoll { get; set; }
         public int pennyRoll { get; set; }
     }
 }
