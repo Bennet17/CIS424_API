@@ -4,5 +4,8 @@
     {
         public int ID { get; set; }
         public string location { get; set; }
+        public bool enabled { get; set; }
+
+        public bool opened { get; set; }
     }
 }

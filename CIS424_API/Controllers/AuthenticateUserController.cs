@@ -17,9 +17,8 @@ namespace CIS424_API.Controllers
         [Route("AuthenticateUser")]
         public IHttpActionResult AuthenticateUser([FromBody] User user)
         {
-
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -34,20 +33,58 @@ namespace CIS424_API.Controllers
                         // Add parameter for the stored procedure.
                         command.Parameters.AddWithValue("@username", user.username);
 
-                        // Execute the stored procedure and retrieve the stored hashed password.
-                        var storedHashedPassword = command.ExecuteScalar() as string;
-
-                        if (storedHashedPassword != null)
+                        // Execute the stored procedure and retrieve the result set.
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            // Use BCrypt to verify the entered password against the stored hashed password.
-                            bool passwordMatch = BCrypt.Net.BCrypt.Verify(user.password, storedHashedPassword);
+                            if (reader.Read())
+                            {
+                                // Retrieve the hashed password from the database.
+                                string storedHashedPassword = reader["hashPassword"].ToString();
 
-                            // Return a JSON object with the key "IsValid" and the corresponding boolean value.
-                            return Ok(new { IsValid = passwordMatch });
-                        }
-                        else
-                        {
-                            return Ok(new { IsValid = "false" }); ; // No matching record found.
+                                // Use BCrypt to verify the entered password against the stored hashed password.
+                                bool passwordMatch = BCrypt.Net.BCrypt.Verify(user.password, storedHashedPassword);
+
+                                if (passwordMatch)
+                                {
+                                    // Populate the user object with values from the result set.
+                                    var userData = new
+                                    {
+                                        ID = (int)reader["ID"],
+                                        username = reader["username"].ToString(),
+                                        name = reader["name"].ToString(),
+                                        position = reader["position"].ToString(),
+                                        storeID = (int)reader["storeID"]
+                                    };
+
+                                    // Construct the response object with nested user object and set IsValid to true.
+                                    var response = new
+                                    {
+                                        IsValid = true,
+                                        user = userData
+                                    };
+
+                                    // Return the response object as JSON.
+                                    return Ok(response);
+                                }
+                                else
+                                {
+                                    // If password doesn't match, return IsValid as false
+                                    var response = new
+                                    {
+                                        IsValid = false
+                                    };
+                                    return Ok(response);
+                                }
+                            }
+                            else
+                            {
+                                // If no matching record found, return IsValid as false
+                                var response = new
+                                {
+                                    IsValid = false
+                                };
+                                return Ok(response);
+                            }
                         }
                     }
                 }

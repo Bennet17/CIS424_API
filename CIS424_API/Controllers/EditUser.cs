@@ -1,21 +1,21 @@
-﻿using System;
+using System;
 using System.Data.SqlClient;
 using System.Data;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
 
-// CreateRegister Controller route
+// EditUser Controller route
 namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class CreateRegisterController : ApiController
+    public class EditUserController : ApiController
     {
-        // POST SVSU_CIS424/CreateRegister
+        // POST SVSU_CIS424/EditUser
         [HttpPost]
-        [Route("CreateRegister")]
-        public IHttpActionResult CreateRegister([FromBody] CreateRegister register)
+        [Route("EditUser")]
+        public IHttpActionResult EditUser([FromBody] User user)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -26,13 +26,18 @@ namespace CIS424_API.Controllers
                     connection.Open();
 
                     // Create a SqlCommand object for the stored procedure.
-                    using (SqlCommand command = new SqlCommand("sp_CreateRegister", connection))
+                    using (SqlCommand command = new SqlCommand("sp_EditUser", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameters for the stored procedure.
-                        command.Parameters.AddWithValue("@storeID", register.storeID);
-                        command.Parameters.AddWithValue("@name", register.name);
+                        command.Parameters.AddWithValue("@name", user.name);
+                        command.Parameters.AddWithValue("@storeID",user.storeID);
+                        command.Parameters.AddWithValue("@ID",user.ID);
+                        command.Parameters.AddWithValue("@username",user.username);
+                        command.Parameters.AddWithValue("@position",user.position);
+                        command.Parameters.AddWithValue("@managerCSV",user.managerCSV);
+
 
                         // Add output parameter
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);

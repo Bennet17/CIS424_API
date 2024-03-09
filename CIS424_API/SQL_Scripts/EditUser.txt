@@ -1,0 +1,35 @@
+/****** Object:  StoredProcedure [dbo].[sp_CreateUser]    Script Date: 3/7/2024 12:02:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[sp_EditUser]
+    @ID INT,
+	@storeID INT,
+    @username VARCHAR(50),
+    @name VARCHAR(50),
+    @position VARCHAR(50),
+    @ResultMessage VARCHAR(255) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Check if the username already exists
+    IF EXISTS (SELECT 1 FROM Users WHERE ID = @ID)
+    BEGIN
+		-- update user with matching ID
+		UPDATE Users
+		SET name = @name,
+		storeID = @storeID,
+		username = @username,
+		position = @position
+		WHERE ID = @ID;
+
+        SET @ResultMessage = 'User Updated successfully.';
+    END
+    ELSE
+    BEGIN
+        SET @ResultMessage = 'ID does not exist. Please choose a different username.';
+    END
+END;

@@ -1,12 +1,6 @@
-
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
@@ -22,7 +16,7 @@ namespace CIS424_API.Controllers
         [HttpPost]
         [Route("DisableUser")]
 
-        public IHttpActionResult DisableUser([FromBody] int userID)
+        public IHttpActionResult DisableUser([FromBody] User User)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -36,7 +30,7 @@ namespace CIS424_API.Controllers
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@ID", userID);
+                        command.Parameters.AddWithValue("@ID", User.ID);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;

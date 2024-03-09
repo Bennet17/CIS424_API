@@ -1,0 +1,23 @@
+USE [capstone_db_01]
+GO
+
+SET ANSI_NULLS ON
+
+GO
+
+SET QUOTED_IDENTIFIER ON
+
+GO
+
+CREATE RPOCEDURE [dbo].[sp_MoveRegister]
+    @RegID INT
+    @LocID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE Register
+    SET storeID = @LocID
+    WHERE ID = @RegID;
+END;
+GO

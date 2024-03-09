@@ -16,7 +16,7 @@ namespace CIS424_API.Controllers
         [HttpPost]
         [Route("DisableRegister")]
 
-        public IHttpActionResult DisableRegister([FromBody] int registerID)
+        public IHttpActionResult DisableRegister([FromBody] Register Register)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -30,7 +30,7 @@ namespace CIS424_API.Controllers
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@ID", registerID);
+                        command.Parameters.AddWithValue("@ID", Register.ID);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
