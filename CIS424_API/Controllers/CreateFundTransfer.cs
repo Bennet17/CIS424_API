@@ -39,7 +39,7 @@ namespace CIS424_API.Controllers
                 (fundTransfer.nickelRoll ?? 0) * 2 +
                 (fundTransfer.pennyRoll ?? 0) * 0.5m;
 
-                Totals totals = new Totals();
+            Totals totals = new Totals();
 
             try
             {
@@ -86,15 +86,15 @@ namespace CIS424_API.Controllers
                         else
                         {
 
-                        GenerateTransferCommand(command, fundTransfer);
+                         GenerateTransferCommand(command, fundTransfer);
 
-                        // Execute the stored procedure
-                        command.ExecuteNonQuery();
+                         // Execute the stored procedure
+                         command.ExecuteNonQuery();
 
-                        // Retrieve the result message
-                        string resultMessage = resultMessageParam.Value.ToString();
+                         // Retrieve the result message
+                         string resultMessage = resultMessageParam.Value.ToString();
 
-                        return Ok(new { response = resultMessage });
+                         return Ok(new { response = resultMessage });
                         }
                     }
                 }
@@ -105,142 +105,144 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
             
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-
-                // Create a SqlCommand object for the stored procedure.
-                using (SqlCommand command = new SqlCommand("sp_updateSafeTotal", connection))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    // Check if origin or destination is 'SAFE'
-                    if (fundTransfer.origin == "SAFE")
+                    connection.Open();
+
+                    // Create a SqlCommand object for the stored procedure.
+                    using (SqlCommand command = new SqlCommand("sp_updateSafeTotal", connection))
                     {
-                        totals.total -= checkNegative(tota);
-                        totals.hundred -= checkNegative(fundTransfer.hundred);
-                        totals.fifty -= checkNegative(fundTransfer.fifty);
-                        totals.twenty -= checkNegative(fundTransfer.twenty);
-                        totals.ten -= checkNegative(fundTransfer.ten);
-                        totals.five -= checkNegative(fundTransfer.five);
-                        totals.two -= checkNegative(fundTransfer.two);
-                        totals.one -= checkNegative(fundTransfer.one);
-                        totals.dollarCoin -= checkNegative(fundTransfer.dollarCoin);
-                        totals.halfDollar -= checkNegative(fundTransfer.halfDollar);
-                        totals.quarter -= checkNegative(fundTransfer.quarter);
-                        totals.dime -= checkNegative(fundTransfer.dime);
-                        totals.nickel -= checkNegative(fundTransfer.nickel);
-                        totals.penny -= checkNegative(fundTransfer.penny);
-                        totals.quarterRoll -= checkNegative(fundTransfer.quarterRoll);
-                        totals.dimeRoll -= checkNegative(fundTransfer.dimeRoll);
-                        totals.nickelRoll -= checkNegative(fundTransfer.nickelRoll);
-                        totals.pennyRoll -= checkNegative(fundTransfer.pennyRoll);
-                    } 
-                    if (fundTransfer.destination == "SAFE")
-                    { 
-                        totals.total += total;
-                        totals.hundred += fundTransfer.hundred;
-                        totals.fifty += fundTransfer.fifty;
-                        totals.twenty += fundTransfer.twenty;
-                        totals.ten += fundTransfer.ten;
-                        totals.five += fundTransfer.five;
-                        totals.two += fundTransfer.two;
-                        totals.one += fundTransfer.one;
-                        totals.dollarCoin += fundTransfer.dollarCoin;
-                        totals.halfDollar += fundTransfer.halfDollar;
-                        totals.quarter += fundTransfer.quarter;
-                        totals.dime += fundTransfer.dime;
-                        totals.nickel += fundTransfer.nickel;
-                        totals.penny += fundTransfer.penny;
-                        totals.quarterRoll += fundTransfer.quarterRoll;
-                        totals.dimeRoll += fundTransfer.dimeRoll;
-                        totals.nickelRoll += fundTransfer.nickelRoll;
-                        totals.pennyRoll += fundTransfer.pennyRoll;
+                        // Check if origin or destination is 'SAFE'
+                        if (fundTransfer.origin == "SAFE")
+                        {
+                            totals.total -= checkNegative(tota);
+                            totals.hundred -= checkNegative(fundTransfer.hundred);
+                            totals.fifty -= checkNegative(fundTransfer.fifty);
+                            totals.twenty -= checkNegative(fundTransfer.twenty);
+                            totals.ten -= checkNegative(fundTransfer.ten);
+                            totals.five -= checkNegative(fundTransfer.five);
+                            totals.two -= checkNegative(fundTransfer.two);
+                            totals.one -= checkNegative(fundTransfer.one);
+                            totals.dollarCoin -= checkNegative(fundTransfer.dollarCoin);
+                            totals.halfDollar -= checkNegative(fundTransfer.halfDollar);
+                            totals.quarter -= checkNegative(fundTransfer.quarter);
+                            totals.dime -= checkNegative(fundTransfer.dime);
+                            totals.nickel -= checkNegative(fundTransfer.nickel);
+                            totals.penny -= checkNegative(fundTransfer.penny);
+                            totals.quarterRoll -= checkNegative(fundTransfer.quarterRoll);
+                            totals.dimeRoll -= checkNegative(fundTransfer.dimeRoll);
+                            totals.nickelRoll -= checkNegative(fundTransfer.nickelRoll);
+                            totals.pennyRoll -= checkNegative(fundTransfer.pennyRoll);
+                        } 
+                        if (fundTransfer.destination == "SAFE")
+                        { 
+                            totals.total += total;
+                            totals.hundred += fundTransfer.hundred;
+                            totals.fifty += fundTransfer.fifty;
+                            totals.twenty += fundTransfer.twenty;
+                            totals.ten += fundTransfer.ten;
+                            totals.five += fundTransfer.five;
+                            totals.two += fundTransfer.two;
+                            totals.one += fundTransfer.one;
+                            totals.dollarCoin += fundTransfer.dollarCoin;
+                            totals.halfDollar += fundTransfer.halfDollar;
+                            totals.quarter += fundTransfer.quarter;
+                            totals.dime += fundTransfer.dime;
+                            totals.nickel += fundTransfer.nickel;
+                            totals.penny += fundTransfer.penny;
+                            totals.quarterRoll += fundTransfer.quarterRoll;
+                            totals.dimeRoll += fundTransfer.dimeRoll;
+                            totals.nickelRoll += fundTransfer.nickelRoll;
+                            totals.pennyRoll += fundTransfer.pennyRoll;
+                        }
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@storeID", total.storeID);
+                        command.Parameters.AddWithValue("@total", total.total);
+                        command.Parameters.AddWithValue("@hundred", total.hundred);
+                        command.Parameters.AddWithValue("@fifty", total.fifty);
+                        command.Parameters.AddWithValue("@twenty", total.twenty);
+                        command.Parameters.AddWithValue("@ten", total.ten);
+                        command.Parameters.AddWithValue("@five", total.five);
+                        command.Parameters.AddWithValue("@two", total.two);
+                        command.Parameters.AddWithValue("@one", total.one);
+                        command.Parameters.AddWithValue("@dollarCoin", total.dollarCoin);
+                        command.Parameters.AddWithValue("@halfDollar", total.halfDollar);
+                        command.Parameters.AddWithValue("@quarter", total.quarter);
+                        command.Parameters.AddWithValue("@dime", total.dime);
+                        command.Parameters.AddWithValue("@nickel", total.nickel);
+                        command.Parameters.AddWithValue("@penny", total.penny);
+                        command.Parameters.AddWithValue("@quarterRoll", total.quarterRoll);
+                        command.Parameters.AddWithValue("@dimeRoll", total.dimeRoll);
+                        command.Parameters.AddWithValue("@nickelRoll", total.nickelRoll);
+                        command.Parameters.AddWithValue("@pennyRoll", total.pennyRoll);
+
+                        SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
+                        resultMessageParam.Direction = ParameterDirection.Output;
+                        command.Parameters.Add(resultMessageParam);
                     }
-
-                     command.CommandType = CommandType.StoredProcedure;
-
-                     command.Parameters.AddWithValue("@storeID", total.storeID);
-                     command.Parameters.AddWithValue("@total", total.total);
-                     command.Parameters.AddWithValue("@hundred", total.hundred);
-                     command.Parameters.AddWithValue("@fifty", total.fifty);
-                     command.Parameters.AddWithValue("@twenty", total.twenty);
-                     command.Parameters.AddWithValue("@ten", total.ten);
-                     command.Parameters.AddWithValue("@five", total.five);
-                     command.Parameters.AddWithValue("@two", total.two);
-                     command.Parameters.AddWithValue("@one", total.one);
-                     command.Parameters.AddWithValue("@dollarCoin", total.dollarCoin);
-                     command.Parameters.AddWithValue("@halfDollar", total.halfDollar);
-                     command.Parameters.AddWithValue("@quarter", total.quarter);
-                     command.Parameters.AddWithValue("@dime", total.dime);
-                     command.Parameters.AddWithValue("@nickel", total.nickel);
-                     command.Parameters.AddWithValue("@penny", total.penny);
-                     command.Parameters.AddWithValue("@quarterRoll", total.quarterRoll);
-                     command.Parameters.AddWithValue("@dimeRoll", total.dimeRoll);
-                     command.Parameters.AddWithValue("@nickelRoll", total.nickelRoll);
-                     command.Parameters.AddWithValue("@pennyRoll", total.pennyRoll);
-
-                     SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
-                     resultMessageParam.Direction = ParameterDirection.Output;
-                     command.Parameters.Add(resultMessageParam);
                 }
             }
-        }
             catch (Exception ex)
             {
                 // Handle any exceptions that may occur during database operations.
                 return InternalServerError(ex);
             }
         }
-    }
 
-    private int checkNegative(int total)
-    {
-        if (total < 0)
+        private int checkNegative(int total)
         {
-            return 0;
+            if (total < 0)
+            {
+                return 0;
+            }
+            return total;
         }
-        return total;
-    }
 
-    private int checkNegative(decimal total)
-    {
-        if (total < 0.0)
+        private int checkNegative(decimal total)
         {
-            return 0.0;
+            if (total < 0.0)
+            {
+                return 0.0;
+            }
+            return total;
         }
-        return total;
-    }
 
-    private void GenerateTransferCommand(SqlCommand command, CreateFundTransfer fundTransfer)
-    {
-        command.CommandType = CommandType.StoredProcedure;
-
-        command.Parameters.AddWithValue("@usrID", fundTransfer.usrID);
-        command.Parameters.AddWithValue("@origin", fundTransfer.origin);
-        command.Parameters.AddWithValue("@destination", fundTransfer.destination);
-        command.Parameters.AddWithValue("@total", total);
-        command.Parameters.AddWithValue("@hundred", fundTransfer.hundred ?? 0);
-        command.Parameters.AddWithValue("@fifty", fundTransfer.fifty ?? 0);
-        command.Parameters.AddWithValue("@twenty", fundTransfer.twenty ?? 0);
-        command.Parameters.AddWithValue("@ten", fundTransfer.ten ?? 0);
-        command.Parameters.AddWithValue("@five", fundTransfer.five ?? 0);
-        command.Parameters.AddWithValue("@two", fundTransfer.two ?? 0);
-        command.Parameters.AddWithValue("@one", fundTransfer.one ?? 0);
-        command.Parameters.AddWithValue("@dollarCoin", fundTransfer.dollarCoin ?? 0);
-        command.Parameters.AddWithValue("@halfDollar", fundTransfer.halfDollar ?? 0);
-        command.Parameters.AddWithValue("@quarter", fundTransfer.quarter ?? 0);
-        command.Parameters.AddWithValue("@dime", fundTransfer.dime ?? 0);
-        command.Parameters.AddWithValue("@nickel", fundTransfer.nickel ?? 0);
-        command.Parameters.AddWithValue("@penny", fundTransfer.penny ?? 0);
-        command.Parameters.AddWithValue("@quarterRoll", fundTransfer.quarterRoll ?? 0);
-        command.Parameters.AddWithValue("@dimeRoll", fundTransfer.dimeRoll ?? 0);
-        command.Parameters.AddWithValue("@nickelRoll", fundTransfer.nickelRoll ?? 0);
-        command.Parameters.AddWithValue("@pennyRoll", fundTransfer.pennyRoll ?? 0);
-
-        if (fundTransfer.origin != "SAFE" && fundTransfer.destination != "SAFE")
+        private void GenerateTransferCommand(SqlCommand command, CreateFundTransfer fundTransfer)
         {
-            SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
-            resultMessageParam.Direction = ParameterDirection.Output;
-            command.Parameters.Add(resultMessageParam);
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@usrID", fundTransfer.usrID);
+            command.Parameters.AddWithValue("@origin", fundTransfer.origin);
+            command.Parameters.AddWithValue("@destination", fundTransfer.destination);
+            command.Parameters.AddWithValue("@total", total);
+            command.Parameters.AddWithValue("@hundred", fundTransfer.hundred ?? 0);
+            command.Parameters.AddWithValue("@fifty", fundTransfer.fifty ?? 0);
+            command.Parameters.AddWithValue("@twenty", fundTransfer.twenty ?? 0);
+            command.Parameters.AddWithValue("@ten", fundTransfer.ten ?? 0);
+            command.Parameters.AddWithValue("@five", fundTransfer.five ?? 0);
+            command.Parameters.AddWithValue("@two", fundTransfer.two ?? 0);
+            command.Parameters.AddWithValue("@one", fundTransfer.one ?? 0);
+            command.Parameters.AddWithValue("@dollarCoin", fundTransfer.dollarCoin ?? 0);
+            command.Parameters.AddWithValue("@halfDollar", fundTransfer.halfDollar ?? 0);
+            command.Parameters.AddWithValue("@quarter", fundTransfer.quarter ?? 0);
+            command.Parameters.AddWithValue("@dime", fundTransfer.dime ?? 0);
+            command.Parameters.AddWithValue("@nickel", fundTransfer.nickel ?? 0);
+            command.Parameters.AddWithValue("@penny", fundTransfer.penny ?? 0);
+            command.Parameters.AddWithValue("@quarterRoll", fundTransfer.quarterRoll ?? 0);
+            command.Parameters.AddWithValue("@dimeRoll", fundTransfer.dimeRoll ?? 0);
+            command.Parameters.AddWithValue("@nickelRoll", fundTransfer.nickelRoll ?? 0);
+            command.Parameters.AddWithValue("@pennyRoll", fundTransfer.pennyRoll ?? 0);
+
+            if (fundTransfer.origin != "SAFE" && fundTransfer.destination != "SAFE")
+            {
+                SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
+                resultMessageParam.Direction = ParameterDirection.Output;
+                command.Parameters.Add(resultMessageParam);
+            }
         }
     }
-}
+} 
