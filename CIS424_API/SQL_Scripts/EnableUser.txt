@@ -3,7 +3,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[sp_EnableUsers]
+CREATE PROCEDURE [dbo].[sp_EnableUser]
     @ID INT,
     @ResultMessage VARCHAR(255) OUTPUT
 AS
