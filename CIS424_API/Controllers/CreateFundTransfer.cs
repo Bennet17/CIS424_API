@@ -20,7 +20,7 @@ namespace CIS424_API.Controllers
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             
-            decimal total = 0.0
+            decimal total = 0.0;
             total = (fundTransfer.hundred ?? 0) * 100 +
                 (fundTransfer.fifty ?? 0) * 50 +
                 (fundTransfer.twenty ?? 0) * 20 +
@@ -183,6 +183,7 @@ namespace CIS424_API.Controllers
                      command.Parameters.Add(resultMessageParam);
                 }
             }
+        }
             catch (Exception ex)
             {
                 // Handle any exceptions that may occur during database operations.
