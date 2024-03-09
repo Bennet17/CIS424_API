@@ -12,10 +12,10 @@ namespace CIS424_API.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class GetExpectedCountController : ApiController
     {
-        // POST SVSU_CIS424/GetOpenExpectedAmount
-        [HttpPost]
-        [Route("GetCount")]
-        public IHttpActionResult GetExpectedAmount([FromBody] CreateCashCount cashCount)
+        // POST SVSU_CIS424/GetOpenExpectedCount
+        [HttpGet]
+        [Route("GetExpectedCount")]
+        public IHttpActionResult GetExpectedCount([FromUri] int usrID, [FromUri] String itemCounted)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -28,8 +28,8 @@ namespace CIS424_API.Controllers
                     using (SqlCommand command = new SqlCommand("sp_GetOpenExpectedAmount", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@usrID", cashCount.usrID);
-                        command.Parameters.AddWithValue("@itemCounted", cashCount.itemCounted);
+                        command.Parameters.AddWithValue("@usrID", usrID);
+                        command.Parameters.AddWithValue("@itemCounted", itemCounted);
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
