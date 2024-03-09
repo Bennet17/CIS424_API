@@ -76,12 +76,7 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
-    }
 
-    [RoutePrefix("SVSU_CIS424")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class GeneralVarianceController : ApiController
-    {
         // POST SVSU_CIS424/GeneralVariance
         [HttpPost]
         [Route("GeneralVariance")]

@@ -3,18 +3,18 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[sp_DisableStore]
+CREATE PROCEDURE [dbo].[sp_EnableUsers]
     @ID INT,
     @ResultMessage VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
     BEGIN
-		UPDATE Store
-		SET enabled = 0
+		UPDATE Users
+		SET enabled = 1
 		WHERE ID = @ID
 
-        SET @ResultMessage = 'Disabled';
+        SET @ResultMessage = 'Enabled';
     END
 END;
 GO

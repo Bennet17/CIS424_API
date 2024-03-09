@@ -1,22 +1,20 @@
-USE [capstone_db_01]
-GO
-
 SET ANSI_NULLS ON
-
 GO
-
 SET QUOTED_IDENTIFIER ON
-
 GO
 
-CREATE RPOCEDURE [dbo].[sp_EnableStore]
-    @ID INT
+CREATE PROCEDURE [dbo].[sp_EnableStore]
+    @ID INT,
+    @ResultMessage VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
+    BEGIN
+		UPDATE Store
+		SET enabled = 1
+		WHERE ID = @ID
 
-    UPDATE Store
-    SET enabled = 1
-    WHERE ID = @ID;
+        SET @ResultMessage = 'Enabled';
+    END
 END;
 GO
