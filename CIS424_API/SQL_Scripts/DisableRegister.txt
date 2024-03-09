@@ -1,22 +1,20 @@
-USE [capstone_db_01]
-GO
-
 SET ANSI_NULLS ON
-
 GO
-
 SET QUOTED_IDENTIFIER ON
-
 GO
 
-CREATE RPOCEDURE [dbo].[sp_DisableRegister]
-    @ID INT
+CREATE PROCEDURE [dbo].[sp_DisableRegister]
+    @ID INT,
+    @ResultMessage VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
+    BEGIN
+		UPDATE Register
+		SET enabled = 0
+		WHERE ID = @ID
 
-    UPDATE Register
-    SET enabled = 0
-    WHERE ID = @ID;
+        SET @ResultMessage = 'Disabled';
+    END
 END;
 GO

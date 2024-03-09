@@ -1,0 +1,22 @@
+/****** Object:  StoredProcedure [dbo].[sp_GetGeneralVariance]    Script Date: 3/9/2024 12:06:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[sp_GetGeneralVariance]
+	@storeID INT,
+	@startDate DATE,
+	@endDate DATE
+AS
+BEGIN
+SET NOCOUNT ON;
+    SELECT 
+        amountExpected, 
+        total,
+        Variance,
+        Date
+    FROM 
+        GeneralVarianceView
+	WHERE 
+		@storeID = storeID AND Date BETWEEN @startDate AND @endDate;
+END

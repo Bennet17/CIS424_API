@@ -1,0 +1,42 @@
+/****** Object:  View [dbo].[GeneralVarianceView]    Script Date: 3/9/2024 11:57:05 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE VIEW [dbo].[GeneralVarianceView]
+AS
+SELECT 
+    CC.amountExpected, 
+    T.total,
+    T.total - CC.amountExpected AS Variance,
+    CAST(CC.date AS DATE) AS Date,
+    R.storeID AS storeID,
+    CC.registerID AS registerID
+FROM 
+    CashCount CC
+LEFT JOIN 
+    Register R ON CC.registerID = R.ID
+JOIN 
+    Totals T ON CC.ID = T.cashCountID
+WHERE 
+    CC.registerID <> 0  -- Exclude safes
+UNION ALL
+SELECT 
+    CC.amountExpected, 
+    T.total,
+    T.total - CC.amountExpected AS Variance,
+    CAST(CC.date AS DATE) AS Date,
+    u.storeID AS storeID,  
+    0 AS registerID -- Safe transactions have no registerID
+FROM 
+    CashCount CC
+JOIN 
+    Users u ON CC.usrID = u.ID
+JOIN 
+    Totals T ON CC.ID = T.cashCountID
+WHERE 
+    CC.registerID = 0 AND CC.ID <> 0; 
+GO
