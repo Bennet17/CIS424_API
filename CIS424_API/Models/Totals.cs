@@ -5,7 +5,7 @@
         public int ID { get; set; }
         public int storeID { get; set; }
         public int cashCountID { get; set; }
-        public int total { get; set; }
+        public decimal total { get; set; }
         public int hundred { get; set; }
         public int fifty { get; set; }
         public int twenty { get; set; }
