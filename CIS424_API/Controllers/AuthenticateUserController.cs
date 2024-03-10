@@ -46,7 +46,30 @@ namespace CIS424_API.Controllers
 
                                 if (passwordMatch)
                                 {
-                                    // Populate the user object with values from the result set.
+                                    if (user.position == "Manager" || user.position == "Owner")
+                                    {
+                                    var userData = new
+                                    {
+                                        ID = (int)reader["ID"],
+                                        username = reader["username"].ToString(),
+                                        name = reader["name"].ToString(),
+                                        position = reader["position"].ToString(),
+                                        storeID = (int)reader["storeID"],
+                                        managerCSV = reader["managerCSV"].ToString()
+                                    };
+
+                                    // Construct the response object with nested user object and set IsValid to true.
+                                    var response = new
+                                    {
+                                        IsValid = true,
+                                        user = userData
+                                    };
+
+                                    // Return the response object as JSON.
+                                    return Ok(response);
+                                    }
+                                    else
+                                    {
                                     var userData = new
                                     {
                                         ID = (int)reader["ID"],
@@ -65,6 +88,8 @@ namespace CIS424_API.Controllers
 
                                     // Return the response object as JSON.
                                     return Ok(response);
+                                    }
+                                    // Populate the user object with values from the result set.
                                 }
                                 else
                                 {
