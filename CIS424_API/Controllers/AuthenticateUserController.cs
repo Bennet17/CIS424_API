@@ -40,20 +40,21 @@ namespace CIS424_API.Controllers
                             {
                                 // Retrieve the hashed password from the database.
                                 string storedHashedPassword = reader["hashPassword"].ToString();
+                                string storedPosition = reader["position"].ToString();
 
                                 // Use BCrypt to verify the entered password against the stored hashed password.
                                 bool passwordMatch = BCrypt.Net.BCrypt.Verify(user.password, storedHashedPassword);
 
                                 if (passwordMatch)
                                 {
-                                    if (user.position == "Manager" || user.position == "Owner")
+                                    if (storedPosition == "Manager" || storedPosition == "Owner")
                                     {
                                     var userData = new
                                     {
                                         ID = (int)reader["ID"],
                                         username = reader["username"].ToString(),
                                         name = reader["name"].ToString(),
-                                        position = reader["position"].ToString(),
+                                        position = storedPosition,
                                         storeID = (int)reader["storeID"],
                                         managerCSV = reader["managerCSV"].ToString()
                                     };
@@ -75,7 +76,7 @@ namespace CIS424_API.Controllers
                                         ID = (int)reader["ID"],
                                         username = reader["username"].ToString(),
                                         name = reader["name"].ToString(),
-                                        position = reader["position"].ToString(),
+                                        position = storedPosition,
                                         storeID = (int)reader["storeID"]
                                     };
 
