@@ -160,29 +160,31 @@ namespace CIS424_API.Controllers
 
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@storeID", total.storeID);
-                        command.Parameters.AddWithValue("@total", total.total);
-                        command.Parameters.AddWithValue("@hundred", total.hundred);
-                        command.Parameters.AddWithValue("@fifty", total.fifty);
-                        command.Parameters.AddWithValue("@twenty", total.twenty);
-                        command.Parameters.AddWithValue("@ten", total.ten);
-                        command.Parameters.AddWithValue("@five", total.five);
-                        command.Parameters.AddWithValue("@two", total.two);
-                        command.Parameters.AddWithValue("@one", total.one);
-                        command.Parameters.AddWithValue("@dollarCoin", total.dollarCoin);
-                        command.Parameters.AddWithValue("@halfDollar", total.halfDollar);
-                        command.Parameters.AddWithValue("@quarter", total.quarter);
-                        command.Parameters.AddWithValue("@dime", total.dime);
-                        command.Parameters.AddWithValue("@nickel", total.nickel);
-                        command.Parameters.AddWithValue("@penny", total.penny);
-                        command.Parameters.AddWithValue("@quarterRoll", total.quarterRoll);
-                        command.Parameters.AddWithValue("@dimeRoll", total.dimeRoll);
-                        command.Parameters.AddWithValue("@nickelRoll", total.nickelRoll);
-                        command.Parameters.AddWithValue("@pennyRoll", total.pennyRoll);
+                        command.Parameters.AddWithValue("@storeID", totals.storeID);
+                        command.Parameters.AddWithValue("@total", totals.total);
+                        command.Parameters.AddWithValue("@hundred", totals.hundred);
+                        command.Parameters.AddWithValue("@fifty", totals.fifty);
+                        command.Parameters.AddWithValue("@twenty", totals.twenty);
+                        command.Parameters.AddWithValue("@ten", totals.ten);
+                        command.Parameters.AddWithValue("@five", totals.five);
+                        command.Parameters.AddWithValue("@two", totals.two);
+                        command.Parameters.AddWithValue("@one", totals.one);
+                        command.Parameters.AddWithValue("@dollarCoin", totals.dollarCoin);
+                        command.Parameters.AddWithValue("@halfDollar", totals.halfDollar);
+                        command.Parameters.AddWithValue("@quarter", totals.quarter);
+                        command.Parameters.AddWithValue("@dime", totals.dime);
+                        command.Parameters.AddWithValue("@nickel", totals.nickel);
+                        command.Parameters.AddWithValue("@penny", totals.penny);
+                        command.Parameters.AddWithValue("@quarterRoll", totals.quarterRoll);
+                        command.Parameters.AddWithValue("@dimeRoll", totals.dimeRoll);
+                        command.Parameters.AddWithValue("@nickelRoll", totals.nickelRoll);
+                        command.Parameters.AddWithValue("@pennyRoll", totals.pennyRoll);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
                         command.Parameters.Add(resultMessageParam);
+
+                        return Ok(new { response = resultMessage });
                     }
                 }
             }
@@ -225,23 +227,23 @@ namespace CIS424_API.Controllers
             command.Parameters.AddWithValue("@origin", fundTransfer.origin);
             command.Parameters.AddWithValue("@destination", fundTransfer.destination);
             command.Parameters.AddWithValue("@total", total);
-            command.Parameters.AddWithValue("@hundred", fundTransfer.hundred ?? 0);
-            command.Parameters.AddWithValue("@fifty", fundTransfer.fifty ?? 0);
-            command.Parameters.AddWithValue("@twenty", fundTransfer.twenty ?? 0);
-            command.Parameters.AddWithValue("@ten", fundTransfer.ten ?? 0);
-            command.Parameters.AddWithValue("@five", fundTransfer.five ?? 0);
-            command.Parameters.AddWithValue("@two", fundTransfer.two ?? 0);
-            command.Parameters.AddWithValue("@one", fundTransfer.one ?? 0);
-            command.Parameters.AddWithValue("@dollarCoin", fundTransfer.dollarCoin ?? 0);
-            command.Parameters.AddWithValue("@halfDollar", fundTransfer.halfDollar ?? 0);
-            command.Parameters.AddWithValue("@quarter", fundTransfer.quarter ?? 0);
-            command.Parameters.AddWithValue("@dime", fundTransfer.dime ?? 0);
-            command.Parameters.AddWithValue("@nickel", fundTransfer.nickel ?? 0);
-            command.Parameters.AddWithValue("@penny", fundTransfer.penny ?? 0);
-            command.Parameters.AddWithValue("@quarterRoll", fundTransfer.quarterRoll ?? 0);
-            command.Parameters.AddWithValue("@dimeRoll", fundTransfer.dimeRoll ?? 0);
-            command.Parameters.AddWithValue("@nickelRoll", fundTransfer.nickelRoll ?? 0);
-            command.Parameters.AddWithValue("@pennyRoll", fundTransfer.pennyRoll ?? 0);
+            command.Parameters.AddWithValue("@hundred", fundTransfer.hundred);
+            command.Parameters.AddWithValue("@fifty", fundTransfer.fifty);
+            command.Parameters.AddWithValue("@twenty", fundTransfer.twenty);
+            command.Parameters.AddWithValue("@ten", fundTransfer.ten);
+            command.Parameters.AddWithValue("@five", fundTransfer.five);
+            command.Parameters.AddWithValue("@two", fundTransfer.two);
+            command.Parameters.AddWithValue("@one", fundTransfer.one);
+            command.Parameters.AddWithValue("@dollarCoin", fundTransfer.dollarCoin);
+            command.Parameters.AddWithValue("@halfDollar", fundTransfer.halfDollar);
+            command.Parameters.AddWithValue("@quarter", fundTransfer.quarter);
+            command.Parameters.AddWithValue("@dime", fundTransfer.dime);
+            command.Parameters.AddWithValue("@nickel", fundTransfer.nickel);
+            command.Parameters.AddWithValue("@penny", fundTransfer.penny);
+            command.Parameters.AddWithValue("@quarterRoll", fundTransfer.quarterRoll);
+            command.Parameters.AddWithValue("@dimeRoll", fundTransfer.dimeRoll);
+            command.Parameters.AddWithValue("@nickelRoll", fundTransfer.nickelRoll);
+            command.Parameters.AddWithValue("@pennyRoll", fundTransfer.pennyRoll);
 
             if (fundTransfer.origin != "SAFE" && fundTransfer.destination != "SAFE")
             {
