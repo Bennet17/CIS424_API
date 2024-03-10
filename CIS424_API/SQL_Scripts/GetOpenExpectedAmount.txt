@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[sp_GetOpenExpectedAmount]    Script Date: 3/7/2024 11:47:54 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetOpenExpectedAmount]    Script Date: 3/10/2024 1:46:09 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -6,43 +6,37 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-ALTER PROCEDURE [dbo].[sp_GetOpenExpectedAmount]
-	@usrID INT,
-	@itemCounted VARCHAR(5)
+
+CREATE PROCEDURE [dbo].[sp_GetOpenExpectedAmount]
+    @storeID INT,
+    @registerID INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-	 DECLARE @storeID INT;
-
-    -- Get the storeID based on usrID
-    SELECT @storeID = storeID
-    FROM Users
-    WHERE ID = @usrID;
-
     DECLARE @cashCountID INT;
 
-    IF (@itemCounted = 'SAFE')
+    -- Find the latest cash count ID based on registerID 0 = SAFE
+    IF (@registerID = 0)
     BEGIN
-        SELECT TOP 1 @cashCountID = c.ID
-        FROM CashCount c
-        JOIN Users u ON c.usrID = u.ID
-        WHERE u.storeID = @storeID AND c.registerID = 0
-        ORDER BY c.[date] DESC;
+        SELECT TOP 1 @cashCountID = cashCountID
+        FROM CashCountTotalsView
+        WHERE storeID = @storeID AND registerID = 0
+        ORDER BY [date] DESC;
     END
     ELSE
     BEGIN
-        SELECT TOP 1 @cashCountID = c.ID
-        FROM CashCount c
-        JOIN Register r ON c.registerID = r.ID
-        JOIN Users u ON r.storeID = u.storeID
-        WHERE u.ID = @usrID AND r.name = @itemCounted
-        ORDER BY c.[date] DESC;
+        SELECT TOP 1 @cashCountID = cashCountID
+        FROM CashCountTotalsView
+        WHERE storeID = @storeID AND registerID = @registerID
+        ORDER BY [date] DESC;
     END
 
-    SELECT ISNULL(total, 0)
+    -- Calculate the expected amount based on cashCountID
+    SELECT total
     FROM Totals
     WHERE cashCountID = @cashCountID;
 END;
 GO
+
 

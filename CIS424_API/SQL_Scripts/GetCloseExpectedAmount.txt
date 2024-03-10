@@ -1,0 +1,21 @@
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[sp_GetCloseExpectedAmount]
+     @storeID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT total
+    FROM StoreTotalsView
+    WHERE storeID = @storeID;
+END;
+GO
+
+
