@@ -127,8 +127,7 @@ namespace CIS424_API.Controllers
                             }
                             else
                             {
-                                // Return 404 Not Found if no data is found in the database.
-                                return NotFound();
+                                 return Ok(responseList);
                             }
                         }
 
