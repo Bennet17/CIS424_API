@@ -121,24 +121,24 @@ namespace CIS424_API.Controllers
                         // Check if origin or destination is 'SAFE'
                         if (fundTransfer.origin == "SAFE")
                         {
-                            totals.total -= checkNegative(total);
-                            totals.hundred -= checkNegative(fundTransfer.hundred);
-                            totals.fifty -= checkNegative(fundTransfer.fifty);
-                            totals.twenty -= checkNegative(fundTransfer.twenty);
-                            totals.ten -= checkNegative(fundTransfer.ten);
-                            totals.five -= checkNegative(fundTransfer.five);
-                            totals.two -= checkNegative(fundTransfer.two);
-                            totals.one -= checkNegative(fundTransfer.one);
-                            totals.dollarCoin -= checkNegative(fundTransfer.dollarCoin);
-                            totals.halfDollar -= checkNegative(fundTransfer.halfDollar);
-                            totals.quarter -= checkNegative(fundTransfer.quarter);
-                            totals.dime -= checkNegative(fundTransfer.dime);
-                            totals.nickel -= checkNegative(fundTransfer.nickel);
-                            totals.penny -= checkNegative(fundTransfer.penny);
-                            totals.quarterRoll -= checkNegative(fundTransfer.quarterRoll);
-                            totals.dimeRoll -= checkNegative(fundTransfer.dimeRoll);
-                            totals.nickelRoll -= checkNegative(fundTransfer.nickelRoll);
-                            totals.pennyRoll -= checkNegative(fundTransfer.pennyRoll);
+                            totals.total = checkNegative(totals.total -= total);
+                            totals.hundred = checkNegative(totals.hundred -= fundTransfer.hundred);
+                            totals.fifty = checkNegative(totals.fifty -= fundTransfer.fifty);
+                            totals.twenty = checkNegative(totals.twenty -= fundTransfer.twenty);
+                            totals.ten = checkNegative(totals.ten -= fundTransfer.ten);
+                            totals.five = checkNegative(totals.five -= fundTransfer.five);
+                            totals.two = checkNegative(totals.two -= fundTransfer.two);
+                            totals.one = checkNegative(totals.one -= fundTransfer.one);
+                            totals.dollarCoin = checkNegative(totals.dollarCoin -= fundTransfer.dollarCoin);
+                            totals.halfDollar = checkNegative(totals.halfDollar -= fundTransfer.halfDollar);
+                            totals.quarter =  checkNegative(totals.quarter -= fundTransfer.quarter);
+                            totals.dime =   checkNegative(totals.dime -= fundTransfer.dime);
+                            totals.nickel = checkNegative(totals.nickel -= fundTransfer.nickel);
+                            totals.penny = checkNegative(totals.penny -= fundTransfer.penny);
+                            totals.quarterRoll = checkNegative(totals.quarterRoll -= fundTransfer.quarterRoll);
+                            totals.dimeRoll = checkNegative(totals.dimeRoll -= fundTransfer.dimeRoll);
+                            totals.nickelRoll = checkNegative(totals.nickelRoll -= fundTransfer.nickelRoll);
+                            totals.pennyRoll = checkNegative(totals.pennyRoll -= fundTransfer.pennyRoll);
                         } 
                         if (fundTransfer.destination == "SAFE")
                         { 
