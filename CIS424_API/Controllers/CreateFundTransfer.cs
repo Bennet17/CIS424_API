@@ -54,7 +54,7 @@ namespace CIS424_API.Controllers
                         if (fundTransfer.origin == "SAFE" || fundTransfer.destination == "SAFE")
                         {
 
-                            GenerateTransferCommand(command, fundTransfer);
+                            GenerateTransferCommand(command, fundTransfer, total);
 
                             using (SqlDataReader reader = command.ExecuteReader())
                             {
@@ -86,7 +86,11 @@ namespace CIS424_API.Controllers
                         else
                         {
 
-                         GenerateTransferCommand(command, fundTransfer);
+                         GenerateTransferCommand(command, fundTransfer, total);
+
+                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
+                         resultMessageParam.Direction = ParameterDirection.Output;
+                         command.Parameters.Add(resultMessageParam);
 
                          // Execute the stored procedure
                          command.ExecuteNonQuery();
@@ -184,6 +188,10 @@ namespace CIS424_API.Controllers
                         resultMessageParam.Direction = ParameterDirection.Output;
                         command.Parameters.Add(resultMessageParam);
 
+                        command.ExecuteNonQuery();
+                         // Retrieve the result message
+                        string resultMessage = resultMessageParam.Value.ToString();
+
                         return Ok(new { response = resultMessage });
                     }
                 }
@@ -219,7 +227,7 @@ namespace CIS424_API.Controllers
             }
         }
 
-        private void GenerateTransferCommand(SqlCommand command, CreateFundTransfer fundTransfer)
+        private void GenerateTransferCommand(SqlCommand command, CreateFundTransfer fundTransfer, decimal total)
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -244,13 +252,6 @@ namespace CIS424_API.Controllers
             command.Parameters.AddWithValue("@dimeRoll", fundTransfer.dimeRoll);
             command.Parameters.AddWithValue("@nickelRoll", fundTransfer.nickelRoll);
             command.Parameters.AddWithValue("@pennyRoll", fundTransfer.pennyRoll);
-
-            if (fundTransfer.origin != "SAFE" && fundTransfer.destination != "SAFE")
-            {
-                SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
-                resultMessageParam.Direction = ParameterDirection.Output;
-                command.Parameters.Add(resultMessageParam);
-            }
         }
     }
 } 
