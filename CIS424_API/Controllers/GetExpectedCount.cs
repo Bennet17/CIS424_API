@@ -29,7 +29,7 @@ namespace CIS424_API.Controllers
                     {
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@storeID", storeID);
-                        command.Parameters.AddWithValue("@register", registerID);
+                        command.Parameters.AddWithValue("@registerID", registerID);
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
