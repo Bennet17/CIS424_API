@@ -54,7 +54,7 @@ namespace CIS424_API.Controllers
                                         username = reader["username"].ToString(),
                                         name = reader["name"].ToString(),
                                         position = storedPosition,
-                                        StoreID_CSV = reader["StoreID_CSV"].ToString()
+                                        storeID_CSV = reader["StoreID_CSV"].ToString()
                                     };
 
                                     // Construct the response object with nested user object and set IsValid to true.
