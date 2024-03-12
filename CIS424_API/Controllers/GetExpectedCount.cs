@@ -15,7 +15,8 @@ namespace CIS424_API.Controllers
         // POST SVSU_CIS424/GetOpenCount
         [HttpGet]
         [Route("GetOpenCount")]
-        public IHttpActionResult GetOpenCount([FromUri] int storeID, [FromUri] int registerID)
+        //For get requests using ASP.NET Framework 4.8, simple datatypes are implicitly read from the URI
+        public IHttpActionResult GetOpenCount(int storeID, int registerID)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -54,7 +55,7 @@ namespace CIS424_API.Controllers
             }
         }
 
-         [HttpGet]
+        [HttpGet]
         [Route("GetCloseCount")]
         public IHttpActionResult GetCloseCount([FromUri] int storeID)
         {
