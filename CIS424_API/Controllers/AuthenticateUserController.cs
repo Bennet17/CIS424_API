@@ -47,16 +47,14 @@ namespace CIS424_API.Controllers
 
                                 if (passwordMatch)
                                 {
-                                    if (storedPosition == "Manager" || storedPosition == "Owner")
-                                    {
+                                    
                                     var userData = new
                                     {
                                         ID = (int)reader["ID"],
                                         username = reader["username"].ToString(),
                                         name = reader["name"].ToString(),
                                         position = storedPosition,
-                                        storeID = (int)reader["storeID"],
-                                        managerCSV = reader["managerCSV"].ToString()
+                                        StoreID_CSV = reader["StoreID_CSV"].ToString()
                                     };
 
                                     // Construct the response object with nested user object and set IsValid to true.
@@ -67,30 +65,8 @@ namespace CIS424_API.Controllers
                                     };
 
                                     // Return the response object as JSON.
-                                    return Ok(response);
-                                    }
-                                    else
-                                    {
-                                    var userData = new
-                                    {
-                                        ID = (int)reader["ID"],
-                                        username = reader["username"].ToString(),
-                                        name = reader["name"].ToString(),
-                                        position = storedPosition,
-                                        storeID = (int)reader["storeID"]
-                                    };
-
-                                    // Construct the response object with nested user object and set IsValid to true.
-                                    var response = new
-                                    {
-                                        IsValid = true,
-                                        user = userData
-                                    };
-
-                                    // Return the response object as JSON.
-                                    return Ok(response);
-                                    }
-                                    // Populate the user object with values from the result set.
+                                    return Ok(response);                       
+                                    
                                 }
                                 else
                                 {
