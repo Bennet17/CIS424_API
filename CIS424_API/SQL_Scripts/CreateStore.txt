@@ -20,7 +20,7 @@ BEGIN
     BEGIN
         -- Insert the new store into the Stores table
         INSERT INTO [dbo].[Store] (location, enabled, opened)
-        VALUES (@location, 1, 1); -- Replace with the actual location
+        VALUES (@location, 1, 0); -- Replace with the actual location
 
         -- Get the ID of the newly created store
         DECLARE @storeID INT;

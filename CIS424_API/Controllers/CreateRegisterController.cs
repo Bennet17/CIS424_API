@@ -32,7 +32,6 @@ namespace CIS424_API.Controllers
 
                         // Add parameters for the stored procedure.
                         command.Parameters.AddWithValue("@storeID", register.storeID);
-                        command.Parameters.AddWithValue("@name", register.name);
 
                         // Add output parameter
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
