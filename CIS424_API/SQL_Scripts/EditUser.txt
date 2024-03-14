@@ -1,4 +1,4 @@
-/****** Object:  StoredProcedure [dbo].[sp_CreateUser]    Script Date: 3/7/2024 12:02:09 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_EditUser]    Script Date: 3/13/2024 6:48:10 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -10,15 +10,14 @@ ALTER PROCEDURE [dbo].[sp_EditUser]
     @username VARCHAR(50),
     @name VARCHAR(50),
     @position VARCHAR(50),
+	@managerCSV VARCHAR(255),
     @ResultMessage VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Check if the username already exists
-    IF EXISTS (SELECT 1 FROM Users WHERE ID = @ID)
+	IF NOT EXISTS (SELECT 1 FROM Users WHERE username = @username)
     BEGIN
-		-- update user with matching ID
 		UPDATE Users
 		SET name = @name,
 		storeID = @storeID,
@@ -26,10 +25,37 @@ BEGIN
 		position = @position
 		WHERE ID = @ID;
 
+		-- 1. Delete references for employees
+		IF @position = 'Employee'
+		BEGIN
+		DELETE FROM Managers WHERE usrID = @ID;
+		END
+
+		-- 2. Update references for managers based on selected stores
+		IF @position = 'Manager'
+		BEGIN
+		-- Loop through selected stores from CSV
+		DECLARE @CSVStores TABLE (StoreID INT);
+		INSERT INTO @CSVStores (StoreID)
+		SELECT value FROM STRING_SPLIT(@managerCSV, ',');
+
+		-- Delete existing references not in the CSV
+		DELETE FROM Managers
+		WHERE usrID = @ID
+		AND storeID NOT IN (SELECT StoreID FROM @CSVStores);
+
+		-- Insert new references from CSV
+		INSERT INTO Managers (usrID, storeID)
+		SELECT @ID, StoreID FROM @CSVStores
+		WHERE NOT EXISTS (
+        SELECT 1 FROM Managers WHERE usrID = @ID AND storeID = StoreID
+		);
+		END
+
         SET @ResultMessage = 'User Updated successfully.';
     END
     ELSE
     BEGIN
-        SET @ResultMessage = 'ID does not exist. Please choose a different username.';
+        SET @ResultMessage = 'Please choose a different username.';
     END
 END;

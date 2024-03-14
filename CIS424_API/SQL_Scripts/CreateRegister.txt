@@ -1,7 +1,4 @@
-USE [capstone_db_01]
-GO
-
-/** Object:  StoredProcedure [dbo].[sp_CreateRegister]    Script Date: 1/30/2024 **/
+/****** Object:  StoredProcedure [dbo].[sp_CreateRegister]    Script Date: 3/13/2024 6:51:38 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9,15 +6,28 @@ GO
 
 ALTER PROCEDURE [dbo].[sp_CreateRegister]
     @storeID INT,
-    @name VARCHAR(5),
     @ResultMessage VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
         -- Insert the new register into the Registers table
+		DECLARE @name VARCHAR(5);
+		DECLARE @maxPos INT;
+
+		-- Check if there are existing records with the given storeID
+		SELECT @maxPos = MAX(RIGHT(name, LEN(name) - 3))
+		FROM Register
+		WHERE storeID = @storeID;
+
+		IF @maxPos IS NULL
+			SET @name = 'POS1';
+		ELSE
+			-- Otherwise, increment the position and set the name
+			SET @name = 'POS' + CAST(@maxPos + 1 AS VARCHAR);
+
         INSERT INTO Register (storeID, name, enabled, opened)
-        VALUES (@storeID, @name, 1, 1);
+        VALUES (@storeID, @name, 1, 0);
 
         SET @ResultMessage = 'Register created successfully.';
 END;
-GO
+
