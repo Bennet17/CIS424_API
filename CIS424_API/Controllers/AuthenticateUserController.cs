@@ -46,6 +46,7 @@ namespace CIS424_API.Controllers
                                     username = reader["username"].ToString(),
                                     name = reader["name"].ToString(),
                                     position = storedPosition,
+                                    enabled = Convert.ToBoolean(reader["enabled"]),
                                     storeID_CSV = storeIDs
                                 };
 

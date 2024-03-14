@@ -80,23 +80,32 @@ namespace CIS424_API.Controllers
                         // Add parameter for the stored procedure.
                         command.Parameters.AddWithValue("@storeID", storeID);
 
+                        // List to store user data
+                        List<object> userDataList = new List<object>(); 
                         // Create a SqlDataReader object
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            List<User> users = new List<User>();
                             while (reader.Read())
                             {
-                                User user = new User();
-                                user.ID = Convert.ToInt32(reader["ID"]);
-                                user.storeID = Convert.ToInt32(reader["storeID"]);
-                                user.username = reader["username"].ToString();
-                                user.name = reader["name"].ToString();
-                                user.position = reader["position"].ToString();
-                                user.enabled = Convert.ToBoolean(reader["enabled"]);
-                                users.Add(user);
+                               //string storeID_CSV = reader["StoreID_CSV"].ToString();
+                               // string[] storeIDs = storeID_CSV.Split(',');
+
+                                var userData = new
+                                {
+                                    ID = (int)reader["ID"],
+                                    username = reader["username"].ToString(),
+                                    name = reader["name"].ToString(),
+                                    position = reader["position"].ToString(),
+                                    enabled = Convert.ToBoolean(reader["enabled"]),
+                                //storeID_CSV = storeIDs
+                                };
+
+                                userDataList.Add(userData); // Add user data to the list
                             }
-                            return Ok(users);
                         }
+
+                        return Ok(userDataList); // Return the list of user data
+
                     }
                 }
             }
