@@ -5,6 +5,7 @@ namespace CIS424_API.Models
 		public int usrID { get; set; }
         public string origin { get; set; }
         public string destination { get; set; }
+		public decimal total { get; set; }
 		public int hundred	{ get; set; }
 		public int fifty { get; set; }
 		public int twenty { get; set; }

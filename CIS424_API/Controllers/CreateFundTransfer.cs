@@ -227,14 +227,15 @@ namespace CIS424_API.Controllers
             }
         }
 
-        private void GenerateTransferCommand(SqlCommand command, CreateFundTransfer fundTransfer, decimal total)
+        private void GenerateTransferCommand(SqlCommand command, CreateFundTransfer fundTransfer)
         {
             command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@usrID", fundTransfer.usrID);
+            command.Parameters.AddWithValue("@storeID", fundTransfer.usrID);
             command.Parameters.AddWithValue("@origin", fundTransfer.origin);
             command.Parameters.AddWithValue("@destination", fundTransfer.destination);
-            command.Parameters.AddWithValue("@total", total);
+            command.Parameters.AddWithValue("@total", fundTransfer.total);
             command.Parameters.AddWithValue("@hundred", fundTransfer.hundred);
             command.Parameters.AddWithValue("@fifty", fundTransfer.fifty);
             command.Parameters.AddWithValue("@twenty", fundTransfer.twenty);
