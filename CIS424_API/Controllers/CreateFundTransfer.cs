@@ -102,7 +102,7 @@ namespace CIS424_API.Controllers
                         // Check if origin or destination is 'SAFE'
                         if (fundTransfer.origin == "SAFE")
                         {
-                            totals.total = checkNegative(totals.total -= total);
+                            totals.total = checkNegative(totals.total -= fundTransfer.total);
                             totals.hundred = checkNegative(totals.hundred -= fundTransfer.hundred);
                             totals.fifty = checkNegative(totals.fifty -= fundTransfer.fifty);
                             totals.twenty = checkNegative(totals.twenty -= fundTransfer.twenty);
@@ -123,7 +123,7 @@ namespace CIS424_API.Controllers
                         } 
                         if (fundTransfer.destination == "SAFE")
                         { 
-                            totals.total += total;
+                            totals.total += fundTransfer.total;
                             totals.hundred += fundTransfer.hundred;
                             totals.fifty += fundTransfer.fifty;
                             totals.twenty += fundTransfer.twenty;

@@ -34,8 +34,8 @@ namespace CIS424_API.Controllers
                             if (reader.Read())
                             {
                                 string storedHashedPassword = reader["hashPassword"].ToString();
-                                
-                                if (storedHashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password)) {
+
+                                if (storedHashedPassword == BCrypt.Net.BCrypt.HashPassword(user.password)) {
                                     string storedPosition = reader["position"].ToString();
                                     string storeID_CSV = reader["StoreID_CSV"].ToString();
 
