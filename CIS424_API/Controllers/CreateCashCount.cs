@@ -36,20 +36,20 @@ namespace CIS424_API.Controllers
                             {
                                 //needs to check for bank deposit
                             }
-                            Else
+                            else
                             {
-                                GenerateCommand(command, createCashCount)
+                                GenerateCommand(command, createCashCount);
                             }
                         } 
-                        Else 
+                        else 
                         {
                             if (createCashCount.type = "CLOSE")
                             {
                                 //needs to check for safe deposit
                             }
-                            Else
+                            else
                             {
-                                GenerateCommand(command, createCashCount)
+                                GenerateCommand(command, createCashCount);
                             }
                         }
                         
