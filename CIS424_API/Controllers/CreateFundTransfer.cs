@@ -54,7 +54,7 @@ namespace CIS424_API.Controllers
                         if (fundTransfer.origin == "SAFE" || fundTransfer.destination == "SAFE")
                         {
 
-                            GenerateTransferCommand(command, fundTransfer, total);
+                            GenerateTransferCommand(command, fundTransfer);
 
                             using (SqlDataReader reader = command.ExecuteReader())
                             {
@@ -86,7 +86,7 @@ namespace CIS424_API.Controllers
                         else
                         {
 
-                         GenerateTransferCommand(command, fundTransfer, total);
+                         GenerateTransferCommand(command, fundTransfer);
 
                          SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                          resultMessageParam.Direction = ParameterDirection.Output;
