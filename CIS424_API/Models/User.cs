@@ -12,8 +12,7 @@ namespace CIS424_API.Models
         public string name { get; set; }
         public string password { get; set; }
         public string position { get; set; }
-        public int storeID { get; set; }
+        public string storeCSV { get; set; }
         public bool enabled { get; set; }
-        public string managerCSV { get; set; }
     }
 }

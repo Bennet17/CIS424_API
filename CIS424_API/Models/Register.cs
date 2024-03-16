@@ -5,9 +5,7 @@
         public int ID { get; set; }
         public string name { get; set; }
         public int storeID { get; set; }
-
         public bool enabled { get; set; }
-
         public bool opened { get; set; }
 
     }

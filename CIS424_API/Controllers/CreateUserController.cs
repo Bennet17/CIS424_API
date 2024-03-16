@@ -33,10 +33,10 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameters for the stored procedure.
+                        command.Parameters.AddWithValue("@storeCSV", user.storeCSV);
                         command.Parameters.AddWithValue("@username", user.username);
                         command.Parameters.AddWithValue("@name", user.name);
                         command.Parameters.AddWithValue("@position", user.position);
-                        command.Parameters.AddWithValue("@storeID", user.storeID);
                         // Hash the password
                         Console.WriteLine(user);
                         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
