@@ -33,30 +33,39 @@ namespace CIS424_API.Controllers
                         {
                             if (reader.Read())
                             {
-                                string storedHashedPassword = reader["hashPassword"].ToString();
-                                string storedPosition = reader["position"].ToString();
-                                string storeID_CSV = reader["StoreID_CSV"].ToString();
+                                if (reader["hashPassword"].ToString() = BCrypt.Net.BCrypt.HashPassword(user.password)) {
+                                    string storedPosition = reader["position"].ToString();
+                                    string storeID_CSV = reader["StoreID_CSV"].ToString();
 
-                                // Split CSV string into an array
-                                string[] storeIDs = storeID_CSV.Split(',');
+                                    // Split CSV string into an array
+                                    string[] storeIDs = storeID_CSV.Split(',');
 
-                                var userData = new
+                                    var userData = new
+                                    {
+                                        ID = (int)reader["ID"],
+                                        username = reader["username"].ToString(),
+                                        name = reader["name"].ToString(),
+                                        position = storedPosition,
+                                        enabled = Convert.ToBoolean(reader["enabled"]),
+                                        storeID_CSV = storeIDs
+                                    };
+
+                                    var response = new
+                                    {
+                                        IsValid = true,
+                                        user = userData
+                                    };
+
+                                    return Ok(response);
+                                }
+                                else
                                 {
-                                    ID = (int)reader["ID"],
-                                    username = reader["username"].ToString(),
-                                    name = reader["name"].ToString(),
-                                    position = storedPosition,
-                                    enabled = Convert.ToBoolean(reader["enabled"]),
-                                    storeID_CSV = storeIDs
-                                };
-
-                                var response = new
-                                {
-                                    IsValid = true,
-                                    user = userData
-                                };
-
-                                return Ok(response);
+                                        var response = new
+                                    {
+                                        IsValid = false
+                                    };
+                                    return Ok(response);
+                                }
                             }
                             else
                             {

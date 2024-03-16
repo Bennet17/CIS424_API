@@ -20,25 +20,6 @@ namespace CIS424_API.Controllers
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             
-            decimal total = 0.0m;
-            total = fundTransfer.hundred * 100 +
-                fundTransfer.fifty * 50 +
-                fundTransfer.twenty * 20 +
-                fundTransfer.ten * 10 +
-                fundTransfer.five * 5 +
-                fundTransfer.two * 2 +
-                fundTransfer.one +
-                fundTransfer.dollarCoin +
-                fundTransfer.halfDollar * 0.5m +
-                fundTransfer.quarter * 0.25m +
-                fundTransfer.dime * 0.1m +
-                fundTransfer.nickel * 0.05m +
-                fundTransfer.penny * 0.01m +
-                fundTransfer.quarterRoll * 10 +
-                fundTransfer.dimeRoll * 5 +
-                fundTransfer.nickelRoll * 2 +
-                fundTransfer.pennyRoll * 0.5m;
-
             Totals totals = new Totals();
 
             try

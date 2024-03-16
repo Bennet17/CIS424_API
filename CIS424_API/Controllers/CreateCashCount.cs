@@ -21,25 +21,6 @@ namespace CIS424_API.Controllers
         public IHttpActionResult CreateCashCount([FromBody] CreateCashCount createCashCount)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
-            decimal total = (createCashCount.hundred ?? 0) * 100 +
-                (createCashCount.fifty ?? 0) * 50 +
-                (createCashCount.twenty ?? 0) * 20 +
-                (createCashCount.ten ?? 0) * 10 +
-                (createCashCount.five ?? 0) * 5 +
-                (createCashCount.two ?? 0) * 2 +
-                (createCashCount.one ?? 0) +
-                (createCashCount.dollarCoin ?? 0) +
-                (createCashCount.halfDollar ?? 0) * 0.5m +
-                (createCashCount.quarter ?? 0) * 0.25m +
-                (createCashCount.dime ?? 0) * 0.1m +
-                (createCashCount.nickel ?? 0) * 0.05m +
-                (createCashCount.penny ?? 0) * 0.01m +
-                (createCashCount.quarterRoll ?? 0) * 10 +
-                (createCashCount.dimeRoll ?? 0) * 5 +
-                (createCashCount.nickelRoll ?? 0) * 2 +
-                (createCashCount.pennyRoll ?? 0) * 0.5m;
-
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -49,31 +30,29 @@ namespace CIS424_API.Controllers
                     // Create a SqlCommand object for the stored procedure.
                     using (SqlCommand command = new SqlCommand("sp_CreateCashCount", connection))
                     {
-                        command.CommandType = CommandType.StoredProcedure;
-
-                        // Add parameters for the stored procedure.
-                        command.Parameters.AddWithValue("@usrID", createCashCount.usrID);
-                        command.Parameters.AddWithValue("@total", total);
-                        command.Parameters.AddWithValue("@itemCounted", createCashCount.itemCounted);
-                        command.Parameters.AddWithValue("@amountExpected", createCashCount.amountExpected);
-                        command.Parameters.AddWithValue("@hundred", createCashCount.hundred ?? 0);
-                        command.Parameters.AddWithValue("@fifty", createCashCount.fifty ?? 0);
-                        command.Parameters.AddWithValue("@twenty", createCashCount.twenty ?? 0);
-                        command.Parameters.AddWithValue("@ten", createCashCount.ten ?? 0);
-                        command.Parameters.AddWithValue("@five", createCashCount.five ?? 0);
-                        command.Parameters.AddWithValue("@two", createCashCount.two ?? 0);
-                        command.Parameters.AddWithValue("@one", createCashCount.one ?? 0);
-                        command.Parameters.AddWithValue("@dollarCoin", createCashCount.dollarCoin ?? 0);
-                        command.Parameters.AddWithValue("@halfDollar", createCashCount.halfDollar ?? 0);
-                        command.Parameters.AddWithValue("@quarter", createCashCount.quarter ?? 0);
-                        command.Parameters.AddWithValue("@dime", createCashCount.dime ?? 0);
-                        command.Parameters.AddWithValue("@nickel", createCashCount.nickel ?? 0);
-                        command.Parameters.AddWithValue("@penny", createCashCount.penny ?? 0);
-                        command.Parameters.AddWithValue("@quarterRoll", createCashCount.quarterRoll ?? 0);
-                        command.Parameters.AddWithValue("@dimeRoll", createCashCount.dimeRoll ?? 0);
-                        command.Parameters.AddWithValue("@nickelRoll", createCashCount.nickelRoll ?? 0);
-                        command.Parameters.AddWithValue("@pennyRoll", createCashCount.pennyRoll ?? 0);
-
+                        if (createCashCount.itemCounted = "SAFE") 
+                        {
+                            if (createCashCount.type = "CLOSE")
+                            {
+                                //needs to check for bank deposit
+                            }
+                            Else
+                            {
+                                GenerateCommand(command, createCashCount)
+                            }
+                        } 
+                        Else 
+                        {
+                            if (createCashCount.type = "CLOSE")
+                            {
+                                //needs to check for safe deposit
+                            }
+                            Else
+                            {
+                                GenerateCommand(command, createCashCount)
+                            }
+                        }
+                        
                         // Add output parameter
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
@@ -97,6 +76,37 @@ namespace CIS424_API.Controllers
                 // Handle any exceptions that may occur during database operations.
                 return InternalServerError(ex);
             }
+        }
+
+
+
+        private void GenerateCommand(SqlCommand command, CreateCashCount cashCount)
+        {
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@storeID", createCashCount.storeID);
+            command.Parameters.AddWithValue("@usrID", createCashCount.usrID);
+            command.Parameters.AddWithValue("@total", createCashCount.total);
+            command.Parameters.AddWithValue("@type", createCashCount.type);
+            command.Parameters.AddWithValue("@itemCounted", createCashCount.itemCounted);
+            command.Parameters.AddWithValue("@amountExpected", createCashCount.amountExpected);
+            command.Parameters.AddWithValue("@hundred", createCashCount.hundred);
+            command.Parameters.AddWithValue("@fifty", createCashCount.fifty);
+            command.Parameters.AddWithValue("@twenty", createCashCount.twenty);
+            command.Parameters.AddWithValue("@ten", createCashCount.ten);
+            command.Parameters.AddWithValue("@five", createCashCount.five);
+            command.Parameters.AddWithValue("@two", createCashCount.two);
+            command.Parameters.AddWithValue("@one", createCashCount.one);
+            command.Parameters.AddWithValue("@dollarCoin", createCashCount.dollarCoin);
+            command.Parameters.AddWithValue("@halfDollar", createCashCount.halfDollar);
+            command.Parameters.AddWithValue("@quarter", createCashCount.quarter);
+            command.Parameters.AddWithValue("@dime", createCashCount.dime);
+            command.Parameters.AddWithValue("@nickel", createCashCount.nickel);
+            command.Parameters.AddWithValue("@penny", createCashCount.penny);
+            command.Parameters.AddWithValue("@quarterRoll", createCashCount.quarterRoll);
+            command.Parameters.AddWithValue("@dimeRoll", createCashCount.dimeRoll);
+            command.Parameters.AddWithValue("@nickelRoll", createCashCount.nickelRoll);
+            command.Parameters.AddWithValue("@pennyRoll", createCashCount.pennyRoll);
         }
     }
 }

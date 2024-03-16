@@ -33,6 +33,20 @@ namespace CIS424_API.Controllers
 
                         // Add parameters for the stored procedure.
                         command.Parameters.AddWithValue("@location", store.location);
+                        command.Parameters.AddWithValue("@hundredRegisterMax", store.hundredRegisterMax);
+                        command.Parameters.AddWithValue("@fiftyRegisterMax", store.fiftyRegisterMax);
+                        command.Parameters.AddWithValue("@twentyRegisterMax", store.twentyRegisterMax);
+                        command.Parameters.AddWithValue("@hundredMax", store.hundredMax);
+                        command.Parameters.AddWithValue("@fiftyMax", store.fiftyMax);
+                        command.Parameters.AddWithValue("@twentyMax", store.twentyMax);
+                        command.Parameters.AddWithValue("@tenMax", store.tenMax);
+                        command.Parameters.AddWithValue("@fiveMax", store.fiveMax);
+                        command.Parameters.AddWithValue("@twoMax", store.twoMax);
+                        command.Parameters.AddWithValue("@oneMax", store.oneMax);
+                        command.Parameters.AddWithValue("@quarterRollMax", store.quarterRollMax);
+                        command.Parameters.AddWithValue("@dimeRollMax", store.dimeRollMax);
+                        command.Parameters.AddWithValue("@nickelRollMax", store.nickelRollMax);
+                        command.Parameters.AddWithValue("@pennyRollMax", store.pennyRollMax);
 
                         // Add output parameter
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
