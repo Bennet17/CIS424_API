@@ -30,9 +30,9 @@ namespace CIS424_API.Controllers
                     // Create a SqlCommand object for the stored procedure.
                     using (SqlCommand command = new SqlCommand("sp_CreateCashCount", connection))
                     {
-                        if (createCashCount.itemCounted = "SAFE") 
+                        if (createCashCount.itemCounted == "SAFE") 
                         {
-                            if (createCashCount.type = "CLOSE")
+                            if (createCashCount.type == "CLOSE")
                             {
                                 //needs to check for bank deposit
                             }
@@ -43,7 +43,7 @@ namespace CIS424_API.Controllers
                         } 
                         else 
                         {
-                            if (createCashCount.type = "CLOSE")
+                            if (createCashCount.type == "CLOSE")
                             {
                                 //needs to check for safe deposit
                             }
@@ -80,7 +80,7 @@ namespace CIS424_API.Controllers
 
 
 
-        private void GenerateCommand(SqlCommand command, CreateCashCount cashCount)
+        private void GenerateCommand(SqlCommand command, CreateCashCount createCashCount)
         {
             command.CommandType = CommandType.StoredProcedure;
 
