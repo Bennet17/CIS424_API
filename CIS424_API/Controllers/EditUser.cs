@@ -32,11 +32,11 @@ namespace CIS424_API.Controllers
 
                         // Add parameters for the stored procedure.
                         command.Parameters.AddWithValue("@name", user.name);
-                        command.Parameters.AddWithValue("@storeID",user.storeID);
+                        //command.Parameters.AddWithValue("@storeID",user.storeID);
                         command.Parameters.AddWithValue("@ID",user.ID);
                         command.Parameters.AddWithValue("@username",user.username);
                         command.Parameters.AddWithValue("@position",user.position);
-                        command.Parameters.AddWithValue("@managerCSV",user.managerCSV);
+                        //command.Parameters.AddWithValue("@managerCSV",user.managerCSV);
 
 
                         // Add output parameter

@@ -42,7 +42,7 @@ namespace CIS424_API.Controllers
                                 User user = new User();
                                 users.Add(user);
                                 user.ID = Convert.ToInt32(reader["ID"]);
-                                user.storeID = Convert.ToInt32(reader["storeID"]);
+                                //user.storeID = Convert.ToInt32(reader["storeID"]);
                                 user.username = reader["username"].ToString();
                                 user.name = reader["name"].ToString();
                                 user.position = reader["position"].ToString();
