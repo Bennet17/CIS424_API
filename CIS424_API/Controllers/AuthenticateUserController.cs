@@ -12,6 +12,7 @@ namespace CIS424_API.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AuthenticateUserController : ApiController
     {
+        //SVSU_CIS424/AuthenticateUser
         [HttpPost]
         [Route("AuthenticateUser")]
         public IHttpActionResult AuthenticateUser([FromBody] User user)
@@ -76,5 +77,6 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
+        
     }
 }

@@ -160,5 +160,45 @@ namespace CIS424_API.Controllers
                 return Content(HttpStatusCode.InternalServerError, e);
             }
         }
+
+        [HttpPost]
+        [Route("UpdateUserPassword")]
+        public IHttpActionResult UpdateUserPassword([FromBody] User user)
+        {
+            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand("sp_UpdateUserPassword", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@username", user.username);
+                        command.Parameters.AddWithValue("@newHashPassword", user.password);
+
+                        // Add output parameter
+                        SqlParameter resultMessageParam = new SqlParameter("@outputMessage", SqlDbType.VarChar, 255);
+                        resultMessageParam.Direction = ParameterDirection.Output;
+                        command.Parameters.Add(resultMessageParam);
+
+                        // Execute the stored procedure
+                        command.ExecuteNonQuery();
+
+                        // Retrieve the result message and return
+                        string outputMessage = resultMessageParam.Value.ToString();
+                        return Ok(outputMessage);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+
     }
 }
