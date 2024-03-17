@@ -173,11 +173,13 @@ namespace CIS424_API.Controllers
                 {
                     connection.Open();
 
+                    string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
+
                     using (SqlCommand command = new SqlCommand("sp_UpdateUserPassword", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@username", user.username);
-                        command.Parameters.AddWithValue("@newHashPassword", user.password);
+                        command.Parameters.AddWithValue("@newHashPassword", hashedPassword);
 
                         // Add output parameter
                         SqlParameter resultMessageParam = new SqlParameter("@outputMessage", SqlDbType.VarChar, 255);

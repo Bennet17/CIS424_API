@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
+using System.Data.SqlClient;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
+using BCrypt.Net;
 
 namespace CIS424_API.Controllers
 {
@@ -12,7 +12,7 @@ namespace CIS424_API.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AuthenticateUserController : ApiController
     {
-        //SVSU_CIS424/AuthenticateUser
+        // SVSU_CIS424/AuthenticateUser
         [HttpPost]
         [Route("AuthenticateUser")]
         public IHttpActionResult AuthenticateUser([FromBody] User user)
@@ -35,40 +35,41 @@ namespace CIS424_API.Controllers
                             if (reader.Read())
                             {
                                 string storedHashedPassword = reader["hashPassword"].ToString();
-                                string storedPosition = reader["position"].ToString();
-                                string storeID_CSV = reader["StoreID_CSV"].ToString();
-
-                                // Split CSV string into an array
-                                string[] storeIDs = storeID_CSV.Split(',');
-
-                                var userData = new
+                                if (BCrypt.Net.BCrypt.Verify(user.password, storedHashedPassword))
                                 {
-                                    ID = (int)reader["ID"],
-                                    username = reader["username"].ToString(),
-                                    name = reader["name"].ToString(),
-                                    position = storedPosition,
-                                    enabled = Convert.ToBoolean(reader["enabled"]),
-                                    storeID_CSV = storeIDs
-                                };
+                                    string storedPosition = reader["position"].ToString();
+                                    string storeID_CSV = reader["StoreID_CSV"].ToString();
 
-                                var response = new
-                                {
-                                    IsValid = true,
-                                    user = userData
-                                };
+                                    // Split CSV string into an array
+                                    string[] storeIDs = storeID_CSV.Split(',');
 
-                                return Ok(response);
-                                
-                            }
-                            else
-                            {
-                                var response = new
-                                {
-                                    IsValid = false
-                                };
-                                return Ok(response);
+                                    var userData = new
+                                    {
+                                        ID = (int)reader["ID"],
+                                        username = reader["username"].ToString(),
+                                        name = reader["name"].ToString(),
+                                        position = storedPosition,
+                                        enabled = Convert.ToBoolean(reader["enabled"]),
+                                        storeID_CSV = storeIDs
+                                    };
+
+                                    var response = new
+                                    {
+                                        IsValid = true,
+                                        user = userData
+                                    };
+
+                                    return Ok(response);
+                                }
                             }
                         }
+
+                        // If the username doesn't exist or password doesn't match
+                        var errorResponse = new
+                        {
+                            IsValid = false
+                        };
+                        return Ok(errorResponse);
                     }
                 }
             }
@@ -77,6 +78,5 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
-        
     }
 }
