@@ -230,7 +230,8 @@ namespace CIS424_API.Controllers
                             List<StoreObject> objects = new List<StoreObject>();
                             while (reader.Read())
                             {
-                                StoreObject obj = new StoreObject();       
+                                StoreObject obj = new StoreObject();
+                                obj.regID = Convert.ToInt32(reader["regID"]);      
                                 obj.name = reader["name"].ToString();
                                 obj.opened = Convert.ToBoolean(reader["opened"]);
                                 objects.Add(obj);
@@ -247,6 +248,7 @@ namespace CIS424_API.Controllers
         }
         private class StoreObject
         {
+            public int regID { get; set; }
             public string name { get; set; }
             public bool opened { get; set; }
         }
