@@ -13,9 +13,9 @@ namespace CIS424_API.Controllers
     public class VarianceController : ApiController
     {
         // POST SVSU_CIS424/RegisterVariance
-        [HttpPost]
+        [HttpGet]
         [Route("RegisterVariance")]
-        public IHttpActionResult RegisterVariance([FromBody] RegisterVarianceRequest request)
+        public IHttpActionResult RegisterVariance([FromUri] int registerID, [FromUri] String startDate, [FromUri] String endDate)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -31,9 +31,9 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@registerID", request.registerID);
-                        command.Parameters.AddWithValue("@startDate", request.startDate);
-                        command.Parameters.AddWithValue("@endDate", request.endDate);
+                        command.Parameters.AddWithValue("@registerID", registerID);
+                        command.Parameters.AddWithValue("@startDate", startDate);
+                        command.Parameters.AddWithValue("@endDate", endDate);
 
                         // Modify your response object to hold a list of VarianceResponse objects
                         List<VarianceResponse> responseList = new List<VarianceResponse>();
@@ -77,10 +77,10 @@ namespace CIS424_API.Controllers
             }
         }
 
-        // POST SVSU_CIS424/GeneralVariance
-        [HttpPost]
+        // GET SVSU_CIS424/GeneralVariance
+        [HttpGet]
         [Route("GeneralVariance")]
-        public IHttpActionResult GeneralVariance([FromBody] SafeVarianceRequest request)
+        public IHttpActionResult GeneralVariance([FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
@@ -96,9 +96,9 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@storeID", request.storeID);
-                        command.Parameters.AddWithValue("@startDate", request.startDate);
-                        command.Parameters.AddWithValue("@endDate", request.endDate);
+                        command.Parameters.AddWithValue("@storeID", storeID);
+                        command.Parameters.AddWithValue("@startDate", startDate);
+                        command.Parameters.AddWithValue("@endDate", endDate);
 
                         // Modify your response object to hold a list of VarianceResponse objects
                         List<VarianceResponse> responseList = new List<VarianceResponse>();
