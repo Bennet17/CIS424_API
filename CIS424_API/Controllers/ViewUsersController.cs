@@ -189,7 +189,8 @@ namespace CIS424_API.Controllers
 
                         // Retrieve the result message and return
                         string outputMessage = resultMessageParam.Value.ToString();
-                        return Ok(outputMessage);
+                        var response = new { Message = outputMessage }; // Creating anonymous object
+                        return Ok(response); // Serialize to JSON and return
                     }
                 }
             }
