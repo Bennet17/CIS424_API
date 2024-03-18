@@ -213,7 +213,7 @@ namespace CIS424_API.Controllers
             command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@usrID", fundTransfer.usrID);
-            command.Parameters.AddWithValue("@storeID", fundTransfer.usrID);
+            command.Parameters.AddWithValue("@storeID", fundTransfer.storeID);
             command.Parameters.AddWithValue("@origin", fundTransfer.origin);
             command.Parameters.AddWithValue("@destination", fundTransfer.destination);
             command.Parameters.AddWithValue("@total", fundTransfer.total);
