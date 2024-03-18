@@ -190,6 +190,7 @@
     <Compile Include="Controllers\EnableRegisterController.cs" />
     <Compile Include="Controllers\EnableStoreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\CreateCashCount.cs" />
     <Compile Include="Controllers\CreateFundTransfer.cs" />
@@ -250,6 +251,7 @@
     <Folder Include="Views\EnableEmployee\" />
     <Folder Include="Views\EnableRegister\" />
     <Folder Include="Views\EnableStore\" />
+    <Folder Include="Views\Transfer\" />
     <Folder Include="Views\Variance\" />
     <Folder Include="Views\ViewStores\" />
     <Folder Include="Views\ViewUsers\" />
