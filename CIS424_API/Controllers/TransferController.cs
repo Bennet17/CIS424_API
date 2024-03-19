@@ -50,7 +50,7 @@ namespace CIS424_API.Controllers
                                     date = Convert.ToDateTime(reader["date"]),
                                     origin = Convert.ToString(reader["origin"]),
                                     destination = Convert.ToString(reader["destination"]),
-                                    total = Convert.ToSingle(reader["total"]),
+                                    total = Convert.ToDecimal(reader["total"]),
                                     hundred = Convert.ToInt16(reader["hundred"]),
                                     fifty = Convert.ToInt16(reader["fifty"]),
                                     twenty = Convert.ToInt16(reader["twenty"]),
