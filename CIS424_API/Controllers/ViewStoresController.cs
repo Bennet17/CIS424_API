@@ -44,6 +44,20 @@ namespace CIS424_API.Controllers
                                 store.location = reader["location"].ToString();
                                 store.enabled = Convert.ToBoolean(reader["enabled"]);
                                 store.opened = Convert.ToBoolean(reader["opened"]);
+                                store.hundredRegisterMax = Convert.ToInt32(reader["hundredRegisterMax"]);
+                                store.fiftyRegisterMax = Convert.ToInt32(reader["fiftyRegisterMax"]);
+                                store.twentyRegisterMax = Convert.ToInt32(reader["twentyRegisterMax"]);
+                                store.hundredMax = Convert.ToInt32(reader["hundredMax"]);
+                                store.fiftyMax = Convert.ToInt32(reader["fiftyMax"]);
+                                store.twentyMax = Convert.ToInt32(reader["twentyMax"]);
+                                store.tenMax = Convert.ToInt32(reader["tenMax"]);
+                                store.fiveMax = Convert.ToInt32(reader["fiveMax"]);
+                                store.twoMax = Convert.ToInt32(reader["twoMax"]);
+                                store.oneMax = Convert.ToInt32(reader["oneMax"]);
+                                store.quarterRollMax = Convert.ToInt32(reader["quarterRollMax"]);
+                                store.dimeRollMax = Convert.ToInt32(reader["dimeRollMax"]);
+                                store.nickelRollMax = Convert.ToInt32(reader["nickelRollMax"]);
+                                store.pennyRollMax = Convert.ToInt32(reader["pennyRollMax"]);
                                 // Add more properties as needed
                                 stores.Add(store);
                             }
