@@ -110,8 +110,8 @@ namespace CIS424_API.Controllers
                                 // Populate the VarianceResponse object for each row in the result set.
                                 GeneralVarianceResponse response = new GeneralVarianceResponse
                                 {
-                                    Variance = Convert.ToSingle(reader["Variance"]),
-                                    Date = Convert.ToDateTime(reader["Date"])
+                                    variance = Convert.ToSingle(reader["variance"]),
+                                    date = Convert.ToDateTime(reader["date"])
                                 };
 
                                 // Add the response object to the list
