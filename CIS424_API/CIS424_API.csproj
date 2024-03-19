@@ -191,8 +191,7 @@
     <Compile Include="Controllers\EnableStoreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Controllers\CreateCashCount.cs" />
-    <Compile Include="Controllers\CreateFundTransfer.cs" />
+    <Compile Include="Controllers\CreateTransactionController.cs" />
     <Compile Include="Controllers\VarianceController.cs" />
     <Compile Include="Controllers\ViewStoresController.cs" />
     <Compile Include="Controllers\ViewUsersController.cs" />
