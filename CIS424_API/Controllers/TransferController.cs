@@ -13,8 +13,9 @@ namespace CIS424_API.Controllers
     public class TransferController : ApiController
     {
         [HttpGet]
-        [Route("GetTransferForStore")]
-        // GET: Transfer
+        [Route("GetTransfersForStore")]
+        //Route
+        //GET GetTransferForStore
         public IHttpActionResult GetTransferForStore([FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
@@ -45,10 +46,28 @@ namespace CIS424_API.Controllers
                                 // Populate the VarianceResponse object for each row in the result set.
                                 FundsTransferResponse response = new FundsTransferResponse
                                 {
-                                    amountExpected = Convert.ToSingle(reader["amountExpected"]),
+                                    name = Convert.ToString(reader["name"]),
+                                    date = Convert.ToDateTime(reader["date"]),
+                                    origin = Convert.ToString(reader["origin"]),
+                                    destination = Convert.ToString(reader["destination"]),
                                     total = Convert.ToSingle(reader["total"]),
-                                    Variance = Convert.ToSingle(reader["Variance"]),
-                                    Date = Convert.ToDateTime(reader["Date"])
+                                    hundred = Convert.ToInt16(reader["hundred"]),
+                                    fifty = Convert.ToInt16(reader["fifty"]),
+                                    twenty = Convert.ToInt16(reader["twenty"]),
+                                    ten = Convert.ToInt16(reader["ten"]),
+                                    five = Convert.ToInt16(reader["five"]),
+                                    two = Convert.ToInt16(reader["two"]),
+                                    one = Convert.ToInt16(reader["one"]),
+                                    dollarCoin = Convert.ToInt16(reader["dollarCoin"]),
+                                    halfDollar = Convert.ToInt16(reader["halfDollar"]),
+                                    quarter = Convert.ToInt16(reader["quarter"]),
+                                    dime = Convert.ToInt16(reader["dime"]),
+                                    nickel = Convert.ToInt16(reader["nickel"]),
+                                    penny = Convert.ToInt16(reader["penny"]),
+                                    quarterRoll = Convert.ToInt16(reader["quarterRoll"]),
+                                    dimeRoll = Convert.ToInt16(reader["dimeRoll"]),
+                                    nickelRoll = Convert.ToInt16(reader["nickelRoll"]),
+                                    pennyRoll = Convert.ToInt16(reader["pennyRoll"])
                                 };
 
                                 // Add the response object to the list
