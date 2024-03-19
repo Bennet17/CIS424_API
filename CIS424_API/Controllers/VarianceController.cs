@@ -101,14 +101,14 @@ namespace CIS424_API.Controllers
                         command.Parameters.AddWithValue("@endDate", endDate);
 
                         // Modify your response object to hold a list of VarianceResponse objects
-                        List<GeneralVariance> responseList = new List<GeneralVariance>();
+                        List<GeneralVarianceResponse> responseList = new List<GeneralVarianceResponse>();
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 // Populate the VarianceResponse object for each row in the result set.
-                                GeneralVariance response = new GeneralVariance
+                                GeneralVarianceResponse response = new GeneralVarianceResponse
                                 {
                                     Variance = Convert.ToSingle(reader["Variance"]),
                                     Date = Convert.ToDateTime(reader["Date"])
@@ -137,7 +137,7 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
-        private class GeneralVariance
+        private class GeneralVarianceResponse
         {
             public decimal variance { get; set; }
             public DateTime date { get; set; }
