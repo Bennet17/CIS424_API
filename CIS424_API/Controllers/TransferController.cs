@@ -36,14 +36,14 @@ namespace CIS424_API.Controllers
                         command.Parameters.AddWithValue("@endDate", endDate);
 
                         // Modify your response object to hold a list of Funds Transfer objects
-/*                        List<FundsTransfer> responseList = new List<FundsTransfer>();
+                        List<FundsTransferResponse> responseList = new List<FundsTransferResponse>();
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 // Populate the VarianceResponse object for each row in the result set.
-                                VarianceResponse response = new VarianceResponse
+                                FundsTransferResponse response = new FundsTransferResponse
                                 {
                                     amountExpected = Convert.ToSingle(reader["amountExpected"]),
                                     total = Convert.ToSingle(reader["total"]),
@@ -65,7 +65,7 @@ namespace CIS424_API.Controllers
                                 // Return 404 Not Found if no data is found in the database.
                                 return NotFound();
                             }
-                        }*/
+                        }
 
                     }
                 }
