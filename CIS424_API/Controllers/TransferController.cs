@@ -13,10 +13,10 @@ namespace CIS424_API.Controllers
     public class TransferController : ApiController
     {
         [HttpGet]
-        [Route("GetTransfersForStore")]
+        [Route("GetFundTransfersForStore")]
         //Route
         //GET GetTransferForStore
-        public IHttpActionResult GetTransferForStore([FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
+        public IHttpActionResult GetFundTransfersForStore([FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
         {
             string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             
@@ -27,12 +27,12 @@ namespace CIS424_API.Controllers
                     connection.Open();
 
                     // Create a SqlCommand object for the stored procedure.
-                    using (SqlCommand command = new SqlCommand(" sp_GetFundTransfersForStore", connection))
+                    using (SqlCommand command = new SqlCommand("sp_GetFundTransfersForStore", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@registerID", storeID);
+                        command.Parameters.AddWithValue("@storeID", storeID);
                         command.Parameters.AddWithValue("@startDate", startDate);
                         command.Parameters.AddWithValue("@endDate", endDate);
 
