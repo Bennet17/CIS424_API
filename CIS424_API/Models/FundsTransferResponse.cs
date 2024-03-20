@@ -8,6 +8,7 @@ namespace CIS424_API.Models
         public DateTime date { get; set; }
         public string origin { get; set; }
         public string destination { get; set; }
+        public string status { get; set; }
         public decimal total { get; set; }
         public int hundred { get; set; }
         public int fifty { get; set; }

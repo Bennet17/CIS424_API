@@ -50,6 +50,7 @@ namespace CIS424_API.Controllers
                                     date = Convert.ToDateTime(reader["date"]),
                                     origin = Convert.ToString(reader["origin"]),
                                     destination = Convert.ToString(reader["destination"]),
+                                    status = Convert.ToString(reader["status"]),
                                     total = Convert.ToDecimal(reader["total"]),
                                     hundred = Convert.ToInt16(reader["hundred"]),
                                     fifty = Convert.ToInt16(reader["fifty"]),
