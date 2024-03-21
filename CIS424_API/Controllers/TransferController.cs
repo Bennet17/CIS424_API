@@ -5,6 +5,8 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
+using System.CodeDom;
+using System.Web.Security;
 
 namespace CIS424_API.Controllers
 {
@@ -46,6 +48,7 @@ namespace CIS424_API.Controllers
                                 // Populate the VarianceResponse object for each row in the result set.
                                 FundsTransferResponse response = new FundsTransferResponse
                                 {
+                                    fID = Convert.ToInt16(reader["fundTransferID"]),
                                     name = Convert.ToString(reader["name"]),
                                     date = Convert.ToDateTime(reader["date"]),
                                     origin = Convert.ToString(reader["origin"]),
