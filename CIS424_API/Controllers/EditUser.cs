@@ -62,5 +62,53 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
+        [HttpPost]
+        [Route("UpdateMaximums")]
+        public IHttpActionResult UpdateStoreAndTotals([FromBody] MaximumDenominations data)
+        {
+            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand("sp_UpdateStoreAndTotals", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@storeID", data.storeId);
+                        command.Parameters.AddWithValue("@enabled", data.enabled);
+                        command.Parameters.AddWithValue("@opened", data.opened);
+                        command.Parameters.AddWithValue("@hundredMax", data.Hundred_Register);
+                        command.Parameters.AddWithValue("@fiftyMax", data.Fifty_Register);
+                        command.Parameters.AddWithValue("@twentyMax", data.Twenty_Register);
+                        command.Parameters.AddWithValue("@hundred", data.Hundred);
+                        command.Parameters.AddWithValue("@fifty", data.Fifty);
+                        command.Parameters.AddWithValue("@twenty", data.Twenty);
+                        command.Parameters.AddWithValue("@ten", data.Ten);
+                        command.Parameters.AddWithValue("@five", data.Five);
+                        command.Parameters.AddWithValue("@two", data.Two);
+                        command.Parameters.AddWithValue("@one", data.One);
+                        command.Parameters.AddWithValue("@quarterRoll", data.QuarterRoll);
+                        command.Parameters.AddWithValue("@dimeRoll", data.DimeRoll);
+                        command.Parameters.AddWithValue("@nickelRoll", data.NickelRoll);
+                        command.Parameters.AddWithValue("@pennyRoll", data.PennyRoll);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                var response = new
+                {
+                    Message = "Store and Totals updated successfully."
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }

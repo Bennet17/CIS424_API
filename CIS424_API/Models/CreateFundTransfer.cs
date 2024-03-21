@@ -3,6 +3,7 @@ namespace CIS424_API.Models
     public class CreateFundTransfer
     {
 		public int usrID { get; set; }
+		public int storeID { get; set; }
         public string origin { get; set; }
         public string destination { get; set; }
 		public decimal total { get; set; }
