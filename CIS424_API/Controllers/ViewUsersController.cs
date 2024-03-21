@@ -87,8 +87,8 @@ namespace CIS424_API.Controllers
                         {
                             while (reader.Read())
                             {
-                               //string storeID_CSV = reader["StoreID_CSV"].ToString();
-                               // string[] storeIDs = storeID_CSV.Split(',');
+                                string storeID_CSV = reader["StoreID_CSV"].ToString();
+                                string[] storeIDs = storeID_CSV.Split(',');
 
                                 var userData = new
                                 {
@@ -97,7 +97,7 @@ namespace CIS424_API.Controllers
                                     name = reader["name"].ToString(),
                                     position = reader["position"].ToString(),
                                     enabled = Convert.ToBoolean(reader["enabled"]),
-                                //storeID_CSV = storeIDs
+                                    storeID_CSV = storeIDs
                                 };
 
                                 userDataList.Add(userData); // Add user data to the list
