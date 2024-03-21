@@ -201,57 +201,6 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
-
-// GET SVSU_CIS424/ViewRegistersByStoreID
-        // Returns a list of all users in the database for a store by the storeID
-        [HttpGet]
-        [Route("ViewStoreObjects")]
-        public IHttpActionResult ViewStoreObjects([FromUri] int storeID)
-        {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    // Create a SqlCommand object for the stored procedure.
-                    using (SqlCommand command = new SqlCommand("sp_getStoreObjects", connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-
-                        // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@storeID", storeID);
-
-                        // Create a SqlDataReader object
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            List<StoreObject> objects = new List<StoreObject>();
-                            while (reader.Read())
-                            {
-                                StoreObject obj = new StoreObject();
-                                obj.regID = Convert.ToInt32(reader["regID"]);      
-                                obj.name = reader["name"].ToString();
-                                obj.opened = Convert.ToBoolean(reader["opened"]);
-                                objects.Add(obj);
-                            }
-                            return Ok(objects);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                return Content(HttpStatusCode.InternalServerError, e);
-            }
-        }
-        private class StoreObject
-        {
-            public int regID { get; set; }
-            public string name { get; set; }
-            public bool opened { get; set; }
-        }
     }
 }
 

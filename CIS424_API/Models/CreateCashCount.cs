@@ -33,6 +33,19 @@ namespace CIS424_API.Models
 		public int fiftyToSafe { get; set; }
 		public int twentyToSafe { get; set; }
 
+		public decimal cashToBankTotal { get; set; }
+		public int hundredToBank { get; set; }
+		public int fiftyToBank { get; set; }
+		public int twentyToBank { get; set; }
+		public int tenToBank { get; set; }
+		public int fiveToBank { get; set; }
+		public int twoToBank { get; set; }
+		public int oneToBank { get; set; }
+		public int quarterRollToBank { get; set; }
+		public int dimeRollToBank { get; set; }
+		public int nickelRollToBank { get; set; }
+		public int pennyRollToBank { get; set; }
+
 		// could add in another attribute for if it was an open, mid, close cashCount so never a null if not open or close would be mid, during shift
 		// could add in a boolean that is for open day and close day, default is false, and when user selects open day on the GUI param sent as open and boolean would be set to true for that cash count and that could be used to stay open for the day until close day is used
 		// close day boolean would be true until the open day is clicked, and will change the GUI for the user
