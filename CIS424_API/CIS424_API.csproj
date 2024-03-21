@@ -183,9 +183,7 @@
     <Compile Include="Controllers\CreateRegisterController.cs" />
     <Compile Include="Controllers\CreateStoreController.cs" />
     <Compile Include="Controllers\CreateUserController.cs" />
-    <Compile Include="Controllers\DisableUserController.cs" />
-    <Compile Include="Controllers\DisableRegisterController.cs" />
-    <Compile Include="Controllers\DisableStoreController.cs" />
+    <Compile Include="Controllers\DisableController.cs" />
     <Compile Include="Controllers\EnableUserController.cs" />
     <Compile Include="Controllers\EnableRegisterController.cs" />
     <Compile Include="Controllers\EnableStoreController.cs" />
