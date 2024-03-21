@@ -80,6 +80,11 @@ namespace CIS424_API.Controllers
                                 // Return the list of response objects as JSON.
                                 return Ok(responseList);
                             }
+                            else if (responseList.Count == 0)
+                            {
+                                //If the request was valid but no data was found, return a custom message.
+                                return Ok("No transfers or deposits were found between " + startDate + " and " + endDate);
+                            }
                             else
                             {
                                 // Return 404 Not Found if no data is found in the database.
