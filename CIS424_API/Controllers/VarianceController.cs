@@ -46,7 +46,7 @@ namespace CIS424_API.Controllers
                                 VarianceResponse response = new VarianceResponse
                                 {
                                     amountExpected = Convert.ToSingle(reader["amountExpected"]),
-                                    total = Convert.ToSingle(reader["total"]),
+                                    total = Convert.ToDecimal(reader["total"]),
                                     Variance = Convert.ToSingle(reader["Variance"]),
                                     Date = Convert.ToDateTime(reader["Date"])
                                 };
@@ -111,7 +111,7 @@ namespace CIS424_API.Controllers
                                 VarianceResponse response = new VarianceResponse
                                 {
                                     amountExpected = Convert.ToSingle(reader["amountExpected"]),
-                                    total = Convert.ToSingle(reader["total"]),
+                                    total = Convert.ToDecimal(reader["total"]),
                                     Variance = Convert.ToSingle(reader["Variance"]),
                                     Date = Convert.ToDateTime(reader["Date"])
                                 };
