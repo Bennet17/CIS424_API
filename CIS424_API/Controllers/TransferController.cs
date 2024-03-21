@@ -5,8 +5,6 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
-using System.CodeDom;
-using System.Web.Security;
 
 namespace CIS424_API.Controllers
 {
