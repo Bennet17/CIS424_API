@@ -17,11 +17,9 @@ namespace CIS424_API.Controllers
         [Route("DisableUser")]
         public IHttpActionResult DisableUser([FromBody] User User)
         {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 
@@ -57,11 +55,11 @@ namespace CIS424_API.Controllers
         [Route("DisableRegister")]
         public IHttpActionResult DisableRegister([FromBody] Register Register)
         {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 
@@ -97,11 +95,10 @@ namespace CIS424_API.Controllers
         [Route("DisableStore")]
         public IHttpActionResult DisableStore([FromBody] Store Store)
         {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 
