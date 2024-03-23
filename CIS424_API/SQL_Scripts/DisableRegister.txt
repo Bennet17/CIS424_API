@@ -3,6 +3,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+-- =============================================
+-- Author:      <Author: Walden, Garrett>
+-- Create Date: <Create Date, 2/18/2024>
+-- Description: <Description, move a given user from the current store instance to another>
+-- =============================================
+
 CREATE PROCEDURE [dbo].[sp_DisableRegister]
     @ID INT,
     @ResultMessage VARCHAR(255) OUTPUT

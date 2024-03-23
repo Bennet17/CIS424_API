@@ -191,10 +191,9 @@
     <Compile Include="Controllers\CreateStoreController.cs" />
     <Compile Include="Controllers\CreateUserController.cs" />
     <Compile Include="Controllers\DisableController.cs" />
-    <Compile Include="Controllers\EnableUserController.cs" />
-    <Compile Include="Controllers\EnableRegisterController.cs" />
-    <Compile Include="Controllers\EnableStoreController.cs" />
+    <Compile Include="Controllers\EnableController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MoveController.cs" />
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\CreateTransactionController.cs" />
