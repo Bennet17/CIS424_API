@@ -204,6 +204,31 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpGet]
+        [Route("Test")]
+        public IHttpActionResult GetHelloWorld()
+        {
+            if (!AuthenticateRequest(Request))
+             {
+             //Return unauthorized response with custom message
+                 return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+             }
+            return Ok("Hello, FrontEnd Team!");
+        }
+
+        [HttpPost]
+        [Route("Test")]
+        public IHttpActionResult PostHelloWorld()
+        {
+            if (!AuthenticateRequest(Request))
+            {
+                //Return unauthorized response with custom message
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
+            return Ok("Hello, FrontEnd Team!");
+        }
+
     }
 }
 

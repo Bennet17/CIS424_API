@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 public class BaseApiController : ApiController
 {
+    
     protected const string SharedKey = "y0xVoIQWvBjwAvDvgg4xhAV4km8XDitmwqc80UqSRiI4T7kt0sRmKeaD95MfZ35k";
 
     protected bool AuthenticateRequest(HttpRequestMessage request)
