@@ -1,4 +1,4 @@
-
+/*
 using System;
 using System.Data.SqlClient;
 using System.Data;
@@ -8,6 +8,8 @@ using CIS424_API.Models;
 
 namespace CIS424_API.Controllers
 { 
+
+    
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EnableUserController : ApiController
@@ -52,4 +54,4 @@ namespace CIS424_API.Controllers
 
         }
     }
-}
+}*/
