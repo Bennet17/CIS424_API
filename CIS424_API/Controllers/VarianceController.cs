@@ -46,7 +46,7 @@ namespace CIS424_API.Controllers
                                 VarianceResponse response = new VarianceResponse
                                 {
                                     amountExpected = Convert.ToSingle(reader["amountExpected"]),
-                                    total = Convert.ToSingle(reader["total"]),
+                                    total = Convert.ToDecimal(reader["total"]),
                                     Variance = Convert.ToSingle(reader["Variance"]),
                                     Date = Convert.ToDateTime(reader["Date"])
                                 };
@@ -101,19 +101,17 @@ namespace CIS424_API.Controllers
                         command.Parameters.AddWithValue("@endDate", endDate);
 
                         // Modify your response object to hold a list of VarianceResponse objects
-                        List<VarianceResponse> responseList = new List<VarianceResponse>();
+                        List<GeneralVarianceResponse> responseList = new List<GeneralVarianceResponse>();
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 // Populate the VarianceResponse object for each row in the result set.
-                                VarianceResponse response = new VarianceResponse
+                                GeneralVarianceResponse response = new GeneralVarianceResponse
                                 {
-                                    amountExpected = Convert.ToSingle(reader["amountExpected"]),
-                                    total = Convert.ToSingle(reader["total"]),
-                                    Variance = Convert.ToSingle(reader["Variance"]),
-                                    Date = Convert.ToDateTime(reader["Date"])
+                                    variance = Convert.ToDecimal(reader["variance"]),
+                                    date = Convert.ToDateTime(reader["date"])
                                 };
 
                                 // Add the response object to the list
@@ -130,7 +128,6 @@ namespace CIS424_API.Controllers
                                  return Ok(responseList);
                             }
                         }
-
                     }
                 }
             }
@@ -139,6 +136,11 @@ namespace CIS424_API.Controllers
                 // Handle any exceptions that may occur during database operations.
                 return InternalServerError(ex);
             }
+        }
+        private class GeneralVarianceResponse
+        {
+            public decimal variance { get; set; }
+            public DateTime date { get; set; }
         }
     }
 }

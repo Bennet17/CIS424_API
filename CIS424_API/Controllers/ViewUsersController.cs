@@ -20,11 +20,10 @@ namespace CIS424_API.Controllers
         [Route("ViewUsers")]
         public IHttpActionResult ViewUsers()
         {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 
@@ -63,12 +62,11 @@ namespace CIS424_API.Controllers
         [HttpGet]
         [Route("ViewUsersByStoreID")]
         public IHttpActionResult ViewUsersByStoreID([FromUri] int storeID)
-        {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        {         
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 
@@ -87,8 +85,8 @@ namespace CIS424_API.Controllers
                         {
                             while (reader.Read())
                             {
-                               //string storeID_CSV = reader["StoreID_CSV"].ToString();
-                               // string[] storeIDs = storeID_CSV.Split(',');
+                                string storeID_CSV = reader["StoreID_CSV"].ToString();
+                                string[] storeIDs = storeID_CSV.Split(',');
 
                                 var userData = new
                                 {
@@ -97,7 +95,7 @@ namespace CIS424_API.Controllers
                                     name = reader["name"].ToString(),
                                     position = reader["position"].ToString(),
                                     enabled = Convert.ToBoolean(reader["enabled"]),
-                                //storeID_CSV = storeIDs
+                                    storeID_CSV = storeIDs
                                 };
 
                                 userDataList.Add(userData); // Add user data to the list
@@ -120,11 +118,10 @@ namespace CIS424_API.Controllers
         [Route("ViewRegistersByStoreID")]
         public IHttpActionResult ViewRegistersByStoreID([FromUri] int storeID)
         {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 
@@ -165,11 +162,10 @@ namespace CIS424_API.Controllers
         [Route("UpdateUserPassword")]
         public IHttpActionResult UpdateUserPassword([FromBody] User user)
         {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
+            
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 
@@ -201,7 +197,6 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
-
-
     }
 }
+
