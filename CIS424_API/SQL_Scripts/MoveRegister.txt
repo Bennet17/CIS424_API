@@ -9,8 +9,8 @@ SET QUOTED_IDENTIFIER ON
 
 GO
 
-CREATE RPOCEDURE [dbo].[sp_MoveRegister]
-    @RegID INT
+CREATE PROCEDURE [dbo].[sp_MoveRegister]
+    @RegID INT,
     @LocID INT
 AS
 BEGIN
