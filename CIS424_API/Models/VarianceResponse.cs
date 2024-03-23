@@ -9,7 +9,7 @@ namespace CIS424_API.Models
     {
         public float amountExpected { get; set; }
 
-        public float total {  get; set; }
+        public decimal total {  get; set; }
 
         public float Variance {  get; set; }
 
