@@ -7,12 +7,13 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
 using Microsoft.Win32;
+using Microsoft.Ajax.Utilities;
 
 namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class ViewUsersController : ApiController
+    public class ViewUsersController : BaseApiController
     {
         // GET SVSU_CIS424/ViewUsers
         // Returns a list of all users in the database
@@ -62,55 +63,61 @@ namespace CIS424_API.Controllers
         [HttpGet]
         [Route("ViewUsersByStoreID")]
         public IHttpActionResult ViewUsersByStoreID([FromUri] int storeID)
-        {         
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
+        {
+            //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
+            
+                try
                 {
-                    connection.Open();
-
-                    // Create a SqlCommand object for the stored procedure.
-                    using (SqlCommand command = new SqlCommand("sp_ViewUsersByStoreID", connection))
+                    using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                     {
-                        command.CommandType = CommandType.StoredProcedure;
+                        connection.Open();
 
-                        // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@storeID", storeID);
-
-                        // List to store user data
-                        List<object> userDataList = new List<object>(); 
-                        // Create a SqlDataReader object
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        // Create a SqlCommand object for the stored procedure.
+                        using (SqlCommand command = new SqlCommand("sp_ViewUsersByStoreID", connection))
                         {
-                            while (reader.Read())
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            // Add parameter for the stored procedure.
+                            command.Parameters.AddWithValue("@storeID", storeID);
+
+                            // List to store user data
+                            List<object> userDataList = new List<object>();
+                            // Create a SqlDataReader object
+                            using (SqlDataReader reader = command.ExecuteReader())
                             {
-                                string storeID_CSV = reader["StoreID_CSV"].ToString();
-                                string[] storeIDs = storeID_CSV.Split(',');
-
-                                var userData = new
+                                while (reader.Read())
                                 {
-                                    ID = (int)reader["ID"],
-                                    username = reader["username"].ToString(),
-                                    name = reader["name"].ToString(),
-                                    position = reader["position"].ToString(),
-                                    enabled = Convert.ToBoolean(reader["enabled"]),
-                                    storeID_CSV = storeIDs
-                                };
+                                    string storeID_CSV = reader["StoreID_CSV"].ToString();
+                                    string[] storeIDs = storeID_CSV.Split(',');
 
-                                userDataList.Add(userData); // Add user data to the list
+                                    var userData = new
+                                    {
+                                        ID = (int)reader["ID"],
+                                        username = reader["username"].ToString(),
+                                        name = reader["name"].ToString(),
+                                        position = reader["position"].ToString(),
+                                        enabled = Convert.ToBoolean(reader["enabled"]),
+                                        storeID_CSV = storeIDs
+                                    };
+
+                                    userDataList.Add(userData); // Add user data to the list
+                                }
                             }
+
+                            return Ok(userDataList); // Return the list of user data
+
                         }
-
-                        return Ok(userDataList); // Return the list of user data
-
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                return Content(HttpStatusCode.InternalServerError, e);
-            }
+                catch (Exception e)
+                {
+                    return Content(HttpStatusCode.InternalServerError, e);
+                }
+            
         }
         // GET SVSU_CIS424/ViewRegistersByStoreID
         // Returns a list of all users in the database for a store by the storeID
