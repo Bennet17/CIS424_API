@@ -76,7 +76,7 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("@EmpID", User.ID);
-                        command.Parameters.AddWithValue("@LocID", User.storeID);
+                        command.Parameters.AddWithValue("@LocID", User.storeCSV);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
