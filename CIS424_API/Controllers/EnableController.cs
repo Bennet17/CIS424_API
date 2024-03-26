@@ -9,7 +9,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class EnableUserController : ApiController
+    public class EnableUserController : BaseApiController
     {
         // POST SVSU_CIS424/EnableUser
         // Enables a user in the database
@@ -18,6 +18,11 @@ namespace CIS424_API.Controllers
 
         public IHttpActionResult EnableUser([FromBody] User User)
         {
+            //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
@@ -63,6 +68,11 @@ namespace CIS424_API.Controllers
 
         public IHttpActionResult EnableStore([FromBody] Store Store)
         {
+            //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
@@ -108,6 +118,11 @@ namespace CIS424_API.Controllers
 
         public IHttpActionResult EnableRegister([FromBody] Register Register)
         {
+            //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
