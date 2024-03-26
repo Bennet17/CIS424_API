@@ -21,6 +21,11 @@ namespace CIS424_API.Controllers
         [Route("ViewUsers")]
         public IHttpActionResult ViewUsers()
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
@@ -125,6 +130,11 @@ namespace CIS424_API.Controllers
         [Route("ViewRegistersByStoreID")]
         public IHttpActionResult ViewRegistersByStoreID([FromUri] int storeID)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
@@ -169,6 +179,11 @@ namespace CIS424_API.Controllers
         [Route("UpdateUserPassword")]
         public IHttpActionResult UpdateUserPassword([FromBody] User user)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
             
             try
             {

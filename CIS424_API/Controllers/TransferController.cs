@@ -13,7 +13,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class TransferController : ApiController
+    public class TransferController : BaseApiController
     {
         [HttpGet]
         [Route("GetFundTransfersForStore")]
@@ -21,6 +21,11 @@ namespace CIS424_API.Controllers
         //GET GetTransferForStore
         public IHttpActionResult GetFundTransfersForStore([FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
@@ -111,6 +116,11 @@ namespace CIS424_API.Controllers
         //GET GetTransferForStore
         public IHttpActionResult UpdateDepositStatus([FromBody] FundTransfer fundTransfer)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {

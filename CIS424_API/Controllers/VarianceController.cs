@@ -10,13 +10,18 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class VarianceController : ApiController
+    public class VarianceController : BaseApiController
     {
         // POST SVSU_CIS424/RegisterVariance
         [HttpGet]
         [Route("RegisterVariance")]
         public IHttpActionResult RegisterVariance([FromUri] int registerID, [FromUri] String startDate, [FromUri] String endDate)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
@@ -81,6 +86,11 @@ namespace CIS424_API.Controllers
         [Route("GeneralVariance")]
         public IHttpActionResult GeneralVariance([FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {

@@ -12,7 +12,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class ViewStoresController : ApiController
+    public class ViewStoresController : BaseApiController
     {
         // GET SVSU_CIS424/ViewStores
         // Returns a list of all stores in the database
@@ -20,6 +20,11 @@ namespace CIS424_API.Controllers
         [Route("ViewStores")]
         public IHttpActionResult ViewStores()
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
@@ -77,6 +82,12 @@ namespace CIS424_API.Controllers
         public IHttpActionResult ViewStoreThresholds(int storeID)
         {
 
+            //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
+           
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
@@ -130,6 +141,11 @@ namespace CIS424_API.Controllers
         [Route("ViewStoreObjects")]
         public IHttpActionResult ViewStoreObjects([FromUri] int storeID)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {

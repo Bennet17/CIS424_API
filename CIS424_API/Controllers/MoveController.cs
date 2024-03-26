@@ -9,7 +9,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class MoveController : ApiController
+    public class MoveController : BaseApiController
     {
 
         // GET SVSU_CIS424/ViewStores
@@ -20,6 +20,11 @@ namespace CIS424_API.Controllers
 
         public IHttpActionResult MoveRegister([FromBody] Register Register)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
@@ -64,6 +69,11 @@ namespace CIS424_API.Controllers
 
         public IHttpActionResult MoveUser([FromBody] User User)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {

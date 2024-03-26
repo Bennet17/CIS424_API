@@ -10,7 +10,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class GetExpectedCountController : ApiController
+    public class GetExpectedCountController : BaseApiController
     {
         // POST SVSU_CIS424/GetOpenCount
         [HttpGet]
@@ -18,6 +18,11 @@ namespace CIS424_API.Controllers
         //For get requests using ASP.NET Framework 4.8, simple datatypes are implicitly read from the URI
         public IHttpActionResult GetOpenCount(int storeID, int registerID)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
@@ -58,6 +63,11 @@ namespace CIS424_API.Controllers
         [Route("GetCloseCount")]
         public IHttpActionResult GetCloseCount([FromUri] int storeID)
         {
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
