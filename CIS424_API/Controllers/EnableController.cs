@@ -50,10 +50,6 @@ namespace CIS424_API.Controllers
             }
 
         }
-    
-
-    [RoutePrefix("SVSU_CIS424")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
 
         // POST SVSU_CIS424/EnableStore
         // Enables a store in the database
@@ -94,10 +90,6 @@ namespace CIS424_API.Controllers
             }
 
         }
-    
-
-    [RoutePrefix("SVSU_CIS424")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
 
         // POST SVSU_CIS424/EnableRegister
         // Returns a list of all stores in the database
