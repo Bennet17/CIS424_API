@@ -10,7 +10,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class EditUserController : ApiController
+    public class EditUserController : BaseApiController
     {
         // POST SVSU_CIS424/EditUser
         [HttpPost]

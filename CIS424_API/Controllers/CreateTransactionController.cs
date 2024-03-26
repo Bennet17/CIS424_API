@@ -9,7 +9,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class CashCountController : ApiController
+    public class CashCountController : BaseApiController
     {
 
         // POST SVSU_CIS424/CreateCashCount
