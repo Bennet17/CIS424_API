@@ -9,7 +9,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class DisableController : ApiController
+    public class DisableController : BaseApiController
     {
         // POST SVSU_CIS424/DisableUser
         // Disables a user in the database

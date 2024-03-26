@@ -10,7 +10,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class CreateStoreController : ApiController
+    public class CreateStoreController : BaseApiController
     {
         // POST SVSU_CIS424/CreateStore
         // Creates a store location in the database

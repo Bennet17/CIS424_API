@@ -10,7 +10,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class CreateRegisterController : ApiController
+    public class CreateRegisterController : BaseApiController
     {
         // POST SVSU_CIS424/CreateRegister
         [HttpPost]

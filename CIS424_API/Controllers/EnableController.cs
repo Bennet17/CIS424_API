@@ -9,7 +9,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class EnableUserController : ApiController
+    public class EnableController : BaseApiController
     {
         // POST SVSU_CIS424/EnableUser
         // Enables a user in the database
@@ -50,12 +50,11 @@ namespace CIS424_API.Controllers
             }
 
         }
-    }
+    
 
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class EnableStoreController : ApiController
-    {
+
         // POST SVSU_CIS424/EnableStore
         // Enables a store in the database
         [HttpPost]
@@ -95,12 +94,11 @@ namespace CIS424_API.Controllers
             }
 
         }
-    }
+    
 
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class EnableRegisterController : ApiController
-    {
+
         // POST SVSU_CIS424/EnableRegister
         // Returns a list of all stores in the database
         [HttpPost]

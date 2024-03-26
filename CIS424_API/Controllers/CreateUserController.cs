@@ -10,7 +10,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class CreateUserController : ApiController
+    public class CreateUserController : BaseApiController
     {
         // POST SVSU_CIS424/CreateUser
         // Creates a user in the database

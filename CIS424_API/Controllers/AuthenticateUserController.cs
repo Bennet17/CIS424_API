@@ -10,7 +10,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class AuthenticateUserController : ApiController
+    public class AuthenticateUserController : BaseApiController
     {
         // SVSU_CIS424/AuthenticateUser
         [HttpPost]
