@@ -50,7 +50,7 @@ namespace CIS424_API.Controllers
                                 // Populate the VarianceResponse object for each row in the result set.
                                 VarianceResponse response = new VarianceResponse
                                 {
-                                    Date = Convert.ToDateTime(reader["Date"]),
+                                    Date = Convert.ToDate(reader["Date"]),
                                     POSName = reader["POSName"].ToString(),
                                     OpenerName = reader["OpenerName"].ToString(),
                                     OpenExpected = Convert.ToDecimal(reader["OpenExpected"]),

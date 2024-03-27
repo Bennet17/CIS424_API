@@ -8,7 +8,7 @@ namespace CIS424_API.Models
     public class VarianceResponse
     {
 
-        public DateTime Date {  get; set; }
+        public Date Date {  get; set; }
         public string POSName { get; set; }
         public string OpenerName { get; set; }
         public decimal OpenExpected { get; set; }
