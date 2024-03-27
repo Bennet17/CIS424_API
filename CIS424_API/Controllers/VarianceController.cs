@@ -15,7 +15,7 @@ namespace CIS424_API.Controllers
         // POST SVSU_CIS424/RegisterVariance
         [HttpGet]
         [Route("RegisterVariance")]
-        public IHttpActionResult RegisterVariance([FromUri] int registerID, [FromUri] String startDate, [FromUri] String endDate)
+        public IHttpActionResult RegisterVariance([FromUri] int registerID, [FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
         {
              //if (!AuthenticateRequest(Request))
            // {
@@ -30,12 +30,13 @@ namespace CIS424_API.Controllers
                     connection.Open();
 
                     // Create a SqlCommand object for the stored procedure.
-                    using (SqlCommand command = new SqlCommand("sp_GetRegister7DayVariance", connection))
+                    using (SqlCommand command = new SqlCommand("sp_GetRegisterVariance", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
                         command.Parameters.AddWithValue("@registerID", registerID);
+                        command.Parameters.AddWithValue("@storeID", storeID);
                         command.Parameters.AddWithValue("@startDate", startDate);
                         command.Parameters.AddWithValue("@endDate", endDate);
 
@@ -49,10 +50,22 @@ namespace CIS424_API.Controllers
                                 // Populate the VarianceResponse object for each row in the result set.
                                 VarianceResponse response = new VarianceResponse
                                 {
-                                    amountExpected = Convert.ToSingle(reader["amountExpected"]),
-                                    total = Convert.ToDecimal(reader["total"]),
-                                    Variance = Convert.ToSingle(reader["Variance"]),
-                                    Date = Convert.ToDateTime(reader["Date"])
+                                    Date = Convert.ToDateTime(reader["Date"]),
+                                    POSName = reader["POSName"].ToString(),
+                                    OpenerName = reader["OpenerName"].ToString(),
+                                    OpenExpected = Convert.ToDecimal(reader["OpenExpected"]),
+                                    OpenActual = Convert.ToDecimal(reader["OpenActual"]),
+                                    CloserName = reader["CloserName"].ToString(),
+                                    CloseExpected = Convert.ToDecimal(reader["CloseExpected"]),
+                                    CloseActual = Convert.ToDecimal(reader["CloseActual"]),
+                                    CashToSafe = Convert.ToDecimal(reader["CashToSafe"]),
+                                    CloseCreditActual = Convert.ToDecimal(reader["CloseCreditActual"]),
+                                    CloseCreditExpected = Convert.ToDecimal(reader["CloseCreditExpected"]),
+                                    OpenVariance = Convert.ToDecimal(reader["OpenVariance"]),
+                                    CloseVariance = Convert.ToDecimal(reader["CloseVariance"]),
+                                    TotalCashVariance = Convert.ToDecimal(reader["TotalCashVariance"]),
+                                    CreditVariance = Convert.ToDecimal(reader["CreditVariance"]),
+                                    TotalVariance = Convert.ToDecimal(reader["TotalVariance"])
                                 };
 
                                 // Add the response object to the list

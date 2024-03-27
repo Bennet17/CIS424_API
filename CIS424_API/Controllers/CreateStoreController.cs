@@ -18,7 +18,11 @@ namespace CIS424_API.Controllers
         [Route("CreateStore")]
         public IHttpActionResult CreateStore([FromBody] Store store)
         {
-
+                         //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
