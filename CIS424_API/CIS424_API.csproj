@@ -209,8 +209,6 @@
     <Compile Include="Models\cashCount.cs" />
     <Compile Include="Models\ConnectionString.cs" />
     <Compile Include="Models\CreateRegister.cs" />
-    <Compile Include="Models\Deposit.cs" />
-    <Compile Include="Models\FundsTransferResponse.cs" />
     <Compile Include="Models\FundTransfer.cs" />
     <Compile Include="Models\MaximumDenominations.cs" />
     <Compile Include="Models\MaxThreshold.cs" />

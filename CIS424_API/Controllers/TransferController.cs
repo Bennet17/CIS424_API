@@ -23,7 +23,6 @@ namespace CIS424_API.Controllers
                 // Return unauthorized response with custom message
            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
            // }
-
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
@@ -41,14 +40,14 @@ namespace CIS424_API.Controllers
                         command.Parameters.AddWithValue("@endDate", endDate);
 
                         // Modify your response object to hold a list of Funds Transfer objects
-                        List<FundsTransferResponse> responseList = new List<FundsTransferResponse>();
+                        List<FundTransfer> responseList = new List<FundTransfer>();
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 // Populate the VarianceResponse object for each row in the result set.
-                                FundsTransferResponse response = new FundsTransferResponse
+                                FundTransfer response = new FundTransfer
                                 {
                                     fID = Convert.ToInt16(reader["fundTransferID"]),
                                     name = Convert.ToString(reader["name"]),
@@ -56,24 +55,7 @@ namespace CIS424_API.Controllers
                                     origin = Convert.ToString(reader["origin"]),
                                     destination = Convert.ToString(reader["destination"]),
                                     status = Convert.ToString(reader["status"]),
-                                    total = Convert.ToDecimal(reader["total"]),
-                                    hundred = Convert.ToInt16(reader["hundred"]),
-                                    fifty = Convert.ToInt16(reader["fifty"]),
-                                    twenty = Convert.ToInt16(reader["twenty"]),
-                                    ten = Convert.ToInt16(reader["ten"]),
-                                    five = Convert.ToInt16(reader["five"]),
-                                    two = Convert.ToInt16(reader["two"]),
-                                    one = Convert.ToInt16(reader["one"]),
-                                    dollarCoin = Convert.ToInt16(reader["dollarCoin"]),
-                                    halfDollar = Convert.ToInt16(reader["halfDollar"]),
-                                    quarter = Convert.ToInt16(reader["quarter"]),
-                                    dime = Convert.ToInt16(reader["dime"]),
-                                    nickel = Convert.ToInt16(reader["nickel"]),
-                                    penny = Convert.ToInt16(reader["penny"]),
-                                    quarterRoll = Convert.ToInt16(reader["quarterRoll"]),
-                                    dimeRoll = Convert.ToInt16(reader["dimeRoll"]),
-                                    nickelRoll = Convert.ToInt16(reader["nickelRoll"]),
-                                    pennyRoll = Convert.ToInt16(reader["pennyRoll"])
+                                    total = Convert.ToDecimal(reader["total"])
                                 };
 
                                 // Add the response object to the list
@@ -133,7 +115,7 @@ namespace CIS424_API.Controllers
                         // Add parameter for the stored procedure.
                         command.Parameters.AddWithValue("@fID", fundTransfer.ID);
 
-                        FundsTransferResponse response = new FundsTransferResponse();
+                        FundTransfer response = new FundTransfer();
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -206,7 +188,7 @@ namespace CIS424_API.Controllers
                         // Add parameter for the stored procedure.
                         command.Parameters.AddWithValue("@fID", fundTransfer.ID);
 
-                        FundsTransferResponse response = new FundsTransferResponse();
+                        FundTransfer response = new FundTransfer();
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
