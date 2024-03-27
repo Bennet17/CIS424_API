@@ -113,7 +113,7 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@fID", fundTransfer.ID);
+                        command.Parameters.AddWithValue("@fID", fundTransfer.fID);
 
                         FundTransfer response = new FundTransfer();
 
@@ -186,7 +186,7 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@fID", fundTransfer.ID);
+                        command.Parameters.AddWithValue("@fID", fundTransfer.fID);
 
                         FundTransfer response = new FundTransfer();
 
