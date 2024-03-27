@@ -49,11 +49,17 @@
       <HintPath>..\packages\BCrypt.Net-Core.1.6.0\lib\net452\BCrypt.Net-Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -180,14 +186,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AuthenticateUserController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\CreateRegisterController.cs" />
     <Compile Include="Controllers\CreateStoreController.cs" />
     <Compile Include="Controllers\CreateUserController.cs" />
     <Compile Include="Controllers\DisableController.cs" />
-    <Compile Include="Controllers\EnableUserController.cs" />
-    <Compile Include="Controllers\EnableRegisterController.cs" />
-    <Compile Include="Controllers\EnableStoreController.cs" />
+    <Compile Include="Controllers\EnableController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MoveController.cs" />
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\CreateTransactionController.cs" />
@@ -244,6 +250,7 @@
     <Folder Include="Data\" />
     <Folder Include="Views\AuthenticateEmployee\" />
     <Folder Include="Views\AuthenticateUser\" />
+    <Folder Include="Views\BaseApi\" />
     <Folder Include="Views\CreateRegister\" />
     <Folder Include="Views\CreateStore\" />
     <Folder Include="Views\CreateUser\" />

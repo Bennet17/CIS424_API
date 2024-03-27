@@ -10,18 +10,17 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class EditUserController : ApiController
+    public class EditUserController : BaseApiController
     {
         // POST SVSU_CIS424/EditUser
         [HttpPost]
         [Route("EditUser")]
         public IHttpActionResult EditUser([FromBody] User user)
         {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 
@@ -66,11 +65,10 @@ namespace CIS424_API.Controllers
         [Route("UpdateMaximums")]
         public IHttpActionResult UpdateStoreAndTotals([FromBody] MaximumDenominations data)
         {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 

@@ -10,7 +10,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE RPOCEDURE [dbo].[sp_MoveUser]
-    @EmpID INT
+    @EmpID INT,
     @LocID INT
 AS
 BEGIN

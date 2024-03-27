@@ -10,7 +10,7 @@ namespace CIS424_API.Controllers
 {
     [RoutePrefix("SVSU_CIS424")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class TransferController : ApiController
+    public class TransferController : BaseApiController
     {
         [HttpGet]
         [Route("GetFundTransfersForStore")]
@@ -18,11 +18,15 @@ namespace CIS424_API.Controllers
         //GET GetTransferForStore
         public IHttpActionResult GetFundTransfersForStore([FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
         {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 
@@ -109,11 +113,15 @@ namespace CIS424_API.Controllers
         //GET GetTransferForStore
         public IHttpActionResult UpdateDepositStatus([FromBody] FundTransfer fundTransfer)
         {
-            string connectionString = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+             //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
                     connection.Open();
 
@@ -130,6 +138,79 @@ namespace CIS424_API.Controllers
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while(reader.Read())
+                            {
+                                //Only populate the necessary information instead of making a whole new object
+                                response.fID = Convert.ToInt16(reader["fundTransferID"]);
+                                response.name = Convert.ToString(reader["name"]);
+                                response.date = Convert.ToDateTime(reader["date"]);
+                                response.origin = Convert.ToString(reader["origin"]);
+                                response.destination = Convert.ToString(reader["destination"]);
+                                response.status = Convert.ToString(reader["status"]);
+                                response.total = Convert.ToDecimal(reader["total"]);
+
+                            }
+                        }
+
+                        if (response != null)
+                        {
+                            // Return the list of response objects as JSON.
+                            return Ok(response);
+                        }
+                        else if (response == null)
+                        {
+                            //If the request was valid but no data was found, return a custom message.
+                            return Ok("Deposit status could not be updated");
+                        }
+                        else
+                        {
+                            // Return 404 if the request fails for any other reason.
+                            return NotFound();
+                        }
+
+
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during database operations.
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("AbortDeposit")]
+        //Route
+        //GET GetTransferForStore
+        public IHttpActionResult AbortDeposit([FromBody] FundTransfer fundTransfer)
+        {
+            //if (!AuthenticateRequest(Request))
+            // {
+            // Return unauthorized response with custom message
+            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            // }
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
+                {
+                    connection.Open();
+
+                    // Create a SqlCommand object for the stored procedure.
+                    using (SqlCommand command = new SqlCommand("sp_AbortDeposit", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add parameter for the stored procedure.
+                        command.Parameters.AddWithValue("@fID", fundTransfer.ID);
+
+                        FundsTransferResponse response = new FundsTransferResponse();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
                             {
                                 //Only populate the necessary information instead of making a whole new object
                                 response.fID = Convert.ToInt16(reader["fundTransferID"]);
