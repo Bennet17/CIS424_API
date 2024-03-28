@@ -4,6 +4,7 @@ using System.Data;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
+using System.Net;
 
 // CreateUser Controller route
 namespace CIS424_API.Controllers
@@ -71,5 +72,63 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
+        [HttpPost]
+        [Route("GetQuestionAndAnswerByUsername")]
+        public IHttpActionResult GetQuestionAndAnswerByUsername([FromBody] User user)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand("sp_GetQuestionAndAnswerByUsername", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add parameters for the stored procedure.
+                        command.Parameters.AddWithValue("@username", user.username);
+
+                        // Output parameters
+                        command.Parameters.Add("@question", SqlDbType.VarChar, -1).Direction = ParameterDirection.Output;
+                        command.Parameters.Add("@answer", SqlDbType.VarChar, -1).Direction = ParameterDirection.Output;
+                        command.Parameters.Add("@ResultMessage", SqlDbType.VarChar, 255).Direction = ParameterDirection.Output;
+
+                        // Execute the command
+                        command.ExecuteNonQuery();
+
+                        // Retrieve output parameters
+                        string question = command.Parameters["@question"].Value.ToString();
+                        string answer = command.Parameters["@answer"].Value.ToString();
+                        string resultMessage = command.Parameters["@ResultMessage"].Value.ToString();
+
+                        if (!string.IsNullOrEmpty(resultMessage))
+                        {
+                            // Username not found
+                            var response = new
+                            {
+                                Response = resultMessage
+                            };
+                            return Content(HttpStatusCode.NotFound, response);
+                        }
+                        else
+                        {
+                            // Success, return question and answer
+                            var response = new
+                            {
+                                Question = question,
+                                Answer = answer
+                            };
+                            return Ok(response);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, e);
+            }
+        }
+
     }
 }
