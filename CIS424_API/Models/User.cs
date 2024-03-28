@@ -14,5 +14,9 @@ namespace CIS424_API.Models
         public string position { get; set; }
         public string storeCSV { get; set; }
         public bool enabled { get; set; }
+
+        public string question { get; set; }
+
+        public string answer { get; set; }
     }
 }

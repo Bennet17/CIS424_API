@@ -43,6 +43,8 @@ namespace CIS424_API.Controllers
                         Console.WriteLine(user);
                         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
                         command.Parameters.AddWithValue("@hashPassword", hashedPassword);
+                        command.Parameters.AddWithValue("@question", user.question);
+                        command.Parameters.AddWithValue("@answer", user.answer);
 
 
                         // Add output parameter
