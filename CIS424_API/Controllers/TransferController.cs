@@ -56,9 +56,17 @@ namespace CIS424_API.Controllers
                                     destination = Convert.ToString(reader["destination"]),
                                     status = Convert.ToString(reader["status"]),
                                     total = Convert.ToDecimal(reader["total"]),
-                                    verifiedBy = Convert.ToString(reader["verifiedBy"]),
-                                    verifiedOn = Convert.ToDateTime(reader["verifiedOn"])
+                                    
                                 };
+
+                                //If verifiedBy is null, it should be set to null
+                                //When returning null from a database, the datatype is DBNull, we get the DBNull value by using DBNull.value
+                                if (reader["verifiedBy"] == DBNull.Value) response.verifiedBy = null;
+                                else response.verifiedBy = Convert.ToString(reader["verifiedBy"]);
+
+                                //Same with verifiedOn
+                                if (reader["verifiedOn"] == DBNull.Value) response.verifiedOn = null;
+                                else response.verifiedOn = Convert.ToDateTime(reader["verifiedOn"]);
 
                                 // Add the response object to the list
                                 responseList.Add(response);
