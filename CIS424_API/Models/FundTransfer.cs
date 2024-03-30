@@ -13,6 +13,6 @@ namespace CIS424_API.Models
         public string status { get; set; }
         public decimal total { get; set; }
         public string verifiedBy { get; set; } //When this object is returned, it represents the name of the user who verified the deposit.
-        public DateTime verifiedOn { get; set; }
+        public DateTime? verifiedOn { get; set; } //Use DateTime? instead of DateTime because null values can be returned from the database for dates 
     }
 }

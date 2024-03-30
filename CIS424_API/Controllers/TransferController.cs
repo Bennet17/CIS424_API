@@ -55,8 +55,18 @@ namespace CIS424_API.Controllers
                                     origin = Convert.ToString(reader["origin"]),
                                     destination = Convert.ToString(reader["destination"]),
                                     status = Convert.ToString(reader["status"]),
-                                    total = Convert.ToDecimal(reader["total"])
+                                    total = Convert.ToDecimal(reader["total"]),
+                                    
                                 };
+
+                                //If verifiedBy is null, it should be set to null
+                                //When returning null from a database, the datatype is DBNull, we get the DBNull value by using DBNull.value
+                                if (reader["verifiedBy"] == DBNull.Value) response.verifiedBy = null;
+                                else response.verifiedBy = Convert.ToString(reader["verifiedBy"]);
+
+                                //Same with verifiedOn
+                                if (reader["verifiedOn"] == DBNull.Value) response.verifiedOn = null;
+                                else response.verifiedOn = Convert.ToDateTime(reader["verifiedOn"]);
 
                                 // Add the response object to the list
                                 responseList.Add(response);
@@ -93,7 +103,7 @@ namespace CIS424_API.Controllers
         [Route("VerifyDeposit")]
         //Route
         //GET GetTransferForStore
-        public IHttpActionResult VerifyDeposit([FromBody] FundTransfer fundTransfer)
+        public IHttpActionResult VerifyDeposit([FromBody] int fID, [FromBody] int vID)
         {
              //if (!AuthenticateRequest(Request))
            // {
@@ -113,8 +123,8 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@fID", fundTransfer.fID);
-                        command.Parameters.AddWithValue("@vID", fundTransfer.vID);
+                        command.Parameters.AddWithValue("@fID", fID);
+                        command.Parameters.AddWithValue("@vID", vID);
 
                         FundTransfer response = new FundTransfer();
 
