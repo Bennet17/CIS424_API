@@ -96,6 +96,7 @@ namespace CIS424_API.Controllers
                         command.Parameters.AddWithValue("@dimeRoll", data.DimeRoll);
                         command.Parameters.AddWithValue("@nickelRoll", data.NickelRoll);
                         command.Parameters.AddWithValue("@pennyRoll", data.PennyRoll);
+                        command.Parameters.AddWithValue("@location", data.location);
 
                         command.ExecuteNonQuery();
                     }

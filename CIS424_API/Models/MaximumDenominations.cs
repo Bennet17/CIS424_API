@@ -24,5 +24,6 @@ namespace CIS424_API.Models
         public int DimeRoll { get; set; }
         public int NickelRoll { get; set; }
         public int PennyRoll { get; set; }
+        public string location { get; set; }
     }
 }
