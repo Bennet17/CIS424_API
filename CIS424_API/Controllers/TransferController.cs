@@ -90,10 +90,10 @@ namespace CIS424_API.Controllers
         }
 
         [HttpPost]
-        [Route("UpdateDepositStatus")]
+        [Route("VerifyDeposit")]
         //Route
         //GET GetTransferForStore
-        public IHttpActionResult UpdateDepositStatus([FromBody] FundTransfer fundTransfer)
+        public IHttpActionResult VerifyDeposit([FromBody] FundTransfer fundTransfer)
         {
              //if (!AuthenticateRequest(Request))
            // {
@@ -108,12 +108,13 @@ namespace CIS424_API.Controllers
                     connection.Open();
 
                     // Create a SqlCommand object for the stored procedure.
-                    using (SqlCommand command = new SqlCommand("sp_UpdateDepositStatus", connection))
+                    using (SqlCommand command = new SqlCommand("sp_VerifyDeposit", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
                         command.Parameters.AddWithValue("@fID", fundTransfer.fID);
+                        command.Parameters.AddWithValue("@vID", fundTransfer.verifiedBy);
 
                         FundTransfer response = new FundTransfer();
 
@@ -129,7 +130,8 @@ namespace CIS424_API.Controllers
                                 response.destination = Convert.ToString(reader["destination"]);
                                 response.status = Convert.ToString(reader["status"]);
                                 response.total = Convert.ToDecimal(reader["total"]);
-
+                                response.verifiedBy = Convert.ToInt16(reader["verifiedBy"]);
+                                response.verifiedOn = Convert.ToDateTime(reader["verifiedOn"]);
                             }
                         }
 
