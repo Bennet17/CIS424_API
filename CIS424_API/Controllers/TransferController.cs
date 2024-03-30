@@ -55,7 +55,9 @@ namespace CIS424_API.Controllers
                                     origin = Convert.ToString(reader["origin"]),
                                     destination = Convert.ToString(reader["destination"]),
                                     status = Convert.ToString(reader["status"]),
-                                    total = Convert.ToDecimal(reader["total"])
+                                    total = Convert.ToDecimal(reader["total"]),
+                                    verifiedBy = Convert.ToString(reader["verifiedBy"]),
+                                    verifiedOn = Convert.ToDateTime(reader["verifiedOn"])
                                 };
 
                                 // Add the response object to the list
@@ -93,7 +95,7 @@ namespace CIS424_API.Controllers
         [Route("VerifyDeposit")]
         //Route
         //GET GetTransferForStore
-        public IHttpActionResult VerifyDeposit([FromBody] FundTransfer fundTransfer)
+        public IHttpActionResult VerifyDeposit([FromBody] int fID, [FromBody] int vID)
         {
              //if (!AuthenticateRequest(Request))
            // {
@@ -113,8 +115,8 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@fID", fundTransfer.fID);
-                        command.Parameters.AddWithValue("@vID", fundTransfer.vID);
+                        command.Parameters.AddWithValue("@fID", fID);
+                        command.Parameters.AddWithValue("@vID", vID);
 
                         FundTransfer response = new FundTransfer();
 
