@@ -114,7 +114,7 @@ namespace CIS424_API.Controllers
 
                         // Add parameter for the stored procedure.
                         command.Parameters.AddWithValue("@fID", fundTransfer.fID);
-                        command.Parameters.AddWithValue("@vID", fundTransfer.verifiedBy);
+                        command.Parameters.AddWithValue("@vID", fundTransfer.vID);
 
                         FundTransfer response = new FundTransfer();
 
@@ -123,14 +123,14 @@ namespace CIS424_API.Controllers
                             while(reader.Read())
                             {
                                 //Only populate the necessary information instead of making a whole new object
-                                response.fID = Convert.ToInt16(reader["fundTransferID"]);
+                                response.fID = Convert.ToInt32(reader["fundTransferID"]);
                                 response.name = Convert.ToString(reader["name"]);
                                 response.date = Convert.ToDateTime(reader["date"]);
                                 response.origin = Convert.ToString(reader["origin"]);
                                 response.destination = Convert.ToString(reader["destination"]);
                                 response.status = Convert.ToString(reader["status"]);
                                 response.total = Convert.ToDecimal(reader["total"]);
-                                response.verifiedBy = Convert.ToInt16(reader["verifiedBy"]);
+                                response.verifiedBy = Convert.ToString(reader["verifiedBy"]);
                                 response.verifiedOn = Convert.ToDateTime(reader["verifiedOn"]);
                             }
                         }
