@@ -162,6 +162,7 @@ namespace CIS424_API.Controllers
                                 register.name = reader["name"].ToString();
                                 register.opened = Convert.ToBoolean(reader["opened"]);
                                 register.enabled = Convert.ToBoolean(reader["enabled"]);
+                                register.alias = Convert.ToString(reader["alias"]);
                                 registers.Add(register);
                             }
                             return Ok(registers);

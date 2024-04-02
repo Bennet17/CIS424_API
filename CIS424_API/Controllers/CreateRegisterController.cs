@@ -15,7 +15,7 @@ namespace CIS424_API.Controllers
         // POST SVSU_CIS424/CreateRegister
         [HttpPost]
         [Route("CreateRegister")]
-        public IHttpActionResult CreateRegister([FromBody] CreateRegister register)
+        public IHttpActionResult CreateRegister([FromBody] Register register)
         {
                          //if (!AuthenticateRequest(Request))
            // {
@@ -35,6 +35,14 @@ namespace CIS424_API.Controllers
 
                         // Add parameters for the stored procedure.
                         command.Parameters.AddWithValue("@storeID", register.storeID);
+
+                        //If the value is null, convert to dbnull and pass that in for the alias
+                        if (register.alias == null)
+                        {
+                            command.Parameters.AddWithValue("@alias", DBNull.Value);
+                        } else {
+                            command.Parameters.AddWithValue("@alias", register.alias);
+                        }
 
                         // Add output parameter
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);

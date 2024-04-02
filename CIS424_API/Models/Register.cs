@@ -7,6 +7,6 @@
         public int storeID { get; set; }
         public bool enabled { get; set; }
         public bool opened { get; set; }
-
+        public string alias { get; set; }
     }
 }

@@ -9,5 +9,6 @@ namespace CIS424_API.Models
     {
         public string name { get; set; }
         public int storeID { get; set; }
+        public object alias { get; internal set; }
     }
 }

@@ -103,7 +103,7 @@ namespace CIS424_API.Controllers
         [Route("VerifyDeposit")]
         //Route
         //GET GetTransferForStore
-        public IHttpActionResult VerifyDeposit([FromBody] int fID, [FromBody] int vID)
+        public IHttpActionResult VerifyDeposit([FromBody] FundTransfer fundTransfer)
         {
              //if (!AuthenticateRequest(Request))
            // {
@@ -123,8 +123,8 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@fID", fID);
-                        command.Parameters.AddWithValue("@vID", vID);
+                        command.Parameters.AddWithValue("@fID", fundTransfer.fID);
+                        command.Parameters.AddWithValue("@vID", fundTransfer.vID);
 
                         FundTransfer response = new FundTransfer();
 
