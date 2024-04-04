@@ -6,8 +6,6 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
-using Microsoft.Win32;
-using Microsoft.Ajax.Utilities;
 
 namespace CIS424_API.Controllers
 {
