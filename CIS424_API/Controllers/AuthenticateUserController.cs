@@ -81,5 +81,69 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
+        [HttpPost]
+        [Route("AuthenticateQuestion")]
+        public IHttpActionResult AuthenticateQuestion([FromBody] User user)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand("sp_GetAnswerByUsername", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@username", user.username);
+
+                        // Output parameters
+                        SqlParameter answerParam = command.Parameters.Add("@answer", SqlDbType.VarChar, -1);
+                        answerParam.Direction = ParameterDirection.Output;
+                        SqlParameter resultMessageParam = command.Parameters.Add("@ResultMessage", SqlDbType.VarChar, 255);
+                        resultMessageParam.Direction = ParameterDirection.Output;
+
+                        command.ExecuteNonQuery(); // Execute the stored procedure
+
+                        string answer = answerParam.Value?.ToString();
+                        string resultMessage = resultMessageParam.Value?.ToString();
+
+                        if (!string.IsNullOrEmpty(answer)) // If answer is not null or empty, the username exists
+                        {
+                            if (BCrypt.Net.BCrypt.Verify(user.answer, answer))
+                            {
+                                var response = new
+                                {
+                                    IsValid = true
+                                };
+                                return Ok(response);
+                            }
+                            else // Incorrect answer
+                            {
+                                var errorResponse = new
+                                {
+                                    IsValid = false,
+                                    Message = "Incorrect answer."
+                                };
+                                return Ok(errorResponse);
+                            }
+                        }
+                        else // Username not found
+                        {
+                            var errorResponse = new
+                            {
+                                IsValid = false,
+                                Message = resultMessage ?? "Username not found."
+                            };
+                            return Ok(errorResponse);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
     }
 }

@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
 using System.Net;
+using System.Net.NetworkInformation;
 
 // CreateUser Controller route
 namespace CIS424_API.Controllers
@@ -45,7 +46,9 @@ namespace CIS424_API.Controllers
                         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
                         command.Parameters.AddWithValue("@hashPassword", hashedPassword);
                         command.Parameters.AddWithValue("@question", user.question);
-                        command.Parameters.AddWithValue("@answer", user.answer);
+                        // Hash the answer
+                        string hashedAnswer = BCrypt.Net.BCrypt.HashPassword(user.answer);
+                        command.Parameters.AddWithValue("@answer", hashedAnswer);
 
 
                         // Add output parameter
@@ -73,7 +76,7 @@ namespace CIS424_API.Controllers
             }
         }
         [HttpPost]
-        [Route("GetQuestionAndAnswerByUsername")]
+        [Route("GetQuestionByUsername")]
         public IHttpActionResult GetQuestionAndAnswerByUsername([FromBody] User user)
         {
             try
@@ -82,7 +85,7 @@ namespace CIS424_API.Controllers
                 {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand("sp_GetQuestionAndAnswerByUsername", connection))
+                    using (SqlCommand command = new SqlCommand("sp_GetQuestionByUsername", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
@@ -91,7 +94,6 @@ namespace CIS424_API.Controllers
 
                         // Output parameters
                         command.Parameters.Add("@question", SqlDbType.VarChar, -1).Direction = ParameterDirection.Output;
-                        command.Parameters.Add("@answer", SqlDbType.VarChar, -1).Direction = ParameterDirection.Output;
                         command.Parameters.Add("@ResultMessage", SqlDbType.VarChar, 255).Direction = ParameterDirection.Output;
 
                         // Execute the command
@@ -99,7 +101,6 @@ namespace CIS424_API.Controllers
 
                         // Retrieve output parameters
                         string question = command.Parameters["@question"].Value.ToString();
-                        string answer = command.Parameters["@answer"].Value.ToString();
                         string resultMessage = command.Parameters["@ResultMessage"].Value.ToString();
 
                         if (!string.IsNullOrEmpty(resultMessage))
@@ -113,11 +114,10 @@ namespace CIS424_API.Controllers
                         }
                         else
                         {
-                            // Success, return question and answer
+                            // Success, return question
                             var response = new
                             {
-                                Question = question,
-                                Answer = answer
+                                Question = question          
                             };
                             return Ok(response);
                         }
