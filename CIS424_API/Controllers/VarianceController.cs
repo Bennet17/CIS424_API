@@ -158,10 +158,71 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpPost]
+        [Route("VarianceAudit")]
+        public IHttpActionResult RunVarianceAudit([FromBody] VarianceAudit varianceAudit)
+        {
+                         //if (!AuthenticateRequest(Request))
+           // {
+                // Return unauthorized response with custom message
+           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+           // }
+            decimal cashRecord = varianceAudit.cashTendered - (varianceAudit.cashBuys + varianceAudit.pettyCash);
+            decimal creditRecord = varianceAudit.mastercard + varianceAudit.visa + varianceAudit.americanExpress 
+            + varianceAudit.discover + varianceAudit.debit + varianceAudit.other;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
+                {
+                    connection.Open();
+
+                    // Create a SqlCommand object for the stored procedure.
+                    using (SqlCommand command = new SqlCommand("sp_GetVarianceAudit", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@storeID", varianceAudit.storeID);
+                        command.Parameters.AddWithValue("@cashRecordDRS", cashRecord);
+                        command.Parameters.AddWithValue("@creditRecordDRS", creditRecord);
+                        command.Parameters.AddWithValue("@startDate", varianceAudit.startDate);
+                        command.Parameters.AddWithValue("@endDate", varianceAudit.endDate);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            VarianceAuditResponse response = new VarianceAuditResponse();
+                            while (reader.Read())
+                            {
+                                // Populate the VarianceResponse object for each row in the result set.
+                                response = new VarianceAuditResponse
+                                {
+                                    cashVariance = Convert.ToDecimal(reader["cashvariance"]),
+                                    creditVariance = Convert.ToDecimal(reader["creditVariance"]),
+                                    totalVariance = Convert.ToDecimal(reader["totalVariance"])
+                                };
+                            }
+                            return Ok(response);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during database operations.
+                return InternalServerError(ex);
+            }
+        }
         private class GeneralVarianceResponse
         {
             public decimal variance { get; set; }
             public DateTime date { get; set; }
+        }
+
+        private class VarianceAuditResponse
+        {
+            public decimal cashVariance { get; set; }
+            public decimal creditVariance { get; set; }
+            public decimal totalVariance { get; set; }
         }
     }
 }
