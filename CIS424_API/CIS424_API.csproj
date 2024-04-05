@@ -220,6 +220,7 @@
     <Compile Include="Models\CreateCashCount.cs" />
     <Compile Include="Models\CreateFundTransfer.cs" />
     <Compile Include="Models\RegisterVarianceRequest.cs" />
+    <Compile Include="Models\VarianceAudit.cs" />
     <Compile Include="Models\VarianceResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
