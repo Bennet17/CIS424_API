@@ -65,6 +65,8 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
+
+
         [HttpPost]
         [Route("UpdateMaximums")]
         public IHttpActionResult UpdateStoreAndTotals([FromBody] MaximumDenominations data)

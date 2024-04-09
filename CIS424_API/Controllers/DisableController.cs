@@ -54,46 +54,6 @@ namespace CIS424_API.Controllers
 
         }
 
-        // POST SVSU_CIS424/DisableRegister
-        // Disables a register in the database
-        [HttpPost]
-        [Route("DisableRegister")]
-        public IHttpActionResult DisableRegister([FromBody] Register Register)
-        {
-            
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
-                {
-                    connection.Open();
-
-                    using (SqlCommand command = new SqlCommand("sp_DisableRegister", connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-
-                        command.Parameters.AddWithValue("@ID", Register.ID);
-
-                        SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
-                        resultMessageParam.Direction = ParameterDirection.Output;
-                        command.Parameters.Add(resultMessageParam);
-
-                        command.ExecuteNonQuery();
-
-                        string resultMessage = resultMessageParam.Value.ToString();
-
-                        return Ok(new { response = resultMessage });
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-
-        }
-
         // POST SVSU_CIS424/DisableStore
         // Disables a store in the database
         [HttpPost]
