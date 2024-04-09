@@ -18,7 +18,7 @@ namespace CIS424_API.Controllers
         // Creates a user in the database
         [HttpPost]
         [Route("CreateUser")]
-        public IHttpActionResult CreateStore([FromBody] User user)
+        public IHttpActionResult CreateUser([FromBody] User user)
         {
             //if (!AuthenticateRequest(Request))
             // {
@@ -80,7 +80,6 @@ namespace CIS424_API.Controllers
         // Enables a user in the database
         [HttpPost]
         [Route("EnableUser")]
-
         public IHttpActionResult EnableUser([FromBody] User User)
         {
             //if (!AuthenticateRequest(Request))
