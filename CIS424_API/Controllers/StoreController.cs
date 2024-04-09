@@ -221,6 +221,8 @@ namespace CIS424_API.Controllers
             }
         }
 
+        // GET SVSU_CIS424/ViewStoreThresholds
+        // Returns a list of all thresholds
         [HttpGet]
         [Route("ViewStoreThresholds")]
         public IHttpActionResult ViewStoreThresholds(int storeID)
@@ -281,6 +283,58 @@ namespace CIS424_API.Controllers
             }
         }
 
+        // Set store maximums
+        // Updates the maximums for a store and safe
+        [HttpPost]
+        [Route("UpdateMaximums")]
+        public IHttpActionResult UpdateStoreAndTotals([FromBody] MaximumDenominations data)
+        {
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand("sp_UpdateStoreAndTotals", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@storeID", data.storeId);
+                        command.Parameters.AddWithValue("@enabled", data.enabled);
+                        command.Parameters.AddWithValue("@opened", data.opened);
+                        command.Parameters.AddWithValue("@hundredMax", data.Hundred_Register);
+                        command.Parameters.AddWithValue("@fiftyMax", data.Fifty_Register);
+                        command.Parameters.AddWithValue("@twentyMax", data.Twenty_Register);
+                        command.Parameters.AddWithValue("@hundred", data.Hundred);
+                        command.Parameters.AddWithValue("@fifty", data.Fifty);
+                        command.Parameters.AddWithValue("@twenty", data.Twenty);
+                        command.Parameters.AddWithValue("@ten", data.Ten);
+                        command.Parameters.AddWithValue("@five", data.Five);
+                        command.Parameters.AddWithValue("@two", data.Two);
+                        command.Parameters.AddWithValue("@one", data.One);
+                        command.Parameters.AddWithValue("@quarterRoll", data.QuarterRoll);
+                        command.Parameters.AddWithValue("@dimeRoll", data.DimeRoll);
+                        command.Parameters.AddWithValue("@nickelRoll", data.NickelRoll);
+                        command.Parameters.AddWithValue("@pennyRoll", data.PennyRoll);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                var response = new
+                {
+                    Message = "Store and Totals updated successfully."
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        // GET SVSU_CIS424/ViewStoreObjects
+        // Returns a list of a store, if it's open, all that stores registers, and if they are open
         [HttpGet]
         [Route("ViewStoreObjects")]
         public IHttpActionResult ViewStoreObjects([FromUri] int storeID)

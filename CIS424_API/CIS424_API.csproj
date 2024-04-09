@@ -187,20 +187,15 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AuthenticateUserController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
-    <Compile Include="Controllers\CreateUserController.cs" />
-    <Compile Include="Controllers\DisableController.cs" />
-    <Compile Include="Controllers\EnableController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MoveController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\TransferController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\CreateTransactionController.cs" />
     <Compile Include="Controllers\VarianceController.cs" />
-    <Compile Include="Controllers\ViewUsersController.cs" />
     <Compile Include="Controllers\GetExpectedCount.cs" />
-    <Compile Include="Controllers\EditUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

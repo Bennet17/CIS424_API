@@ -15,6 +15,7 @@ namespace CIS424_API.Controllers
     {
 
         // POST SVSU_CIS424/CreateRegister
+        // Creates a new register for a store via it's storeID and an alias if requested
         [HttpPost]
         [Route("CreateRegister")]
         public IHttpActionResult CreateRegister([FromBody] Register register)
@@ -75,7 +76,7 @@ namespace CIS424_API.Controllers
         }
 
         // POST SVSU_CIS424/EnableRegister
-        // Returns a list of all stores in the database
+        // Takes a register ID and enables it in the database
         [HttpPost]
         [Route("EnableRegister")]
 
@@ -217,10 +218,10 @@ namespace CIS424_API.Controllers
             }
         }
 
+        // GET SVSU_CIS424/UpdateRegisterAlias
+        // Updates the alias of a register by taking in that registers ID and a new alias
         [HttpPost]
         [Route("UpdateRegisterAlias")]
-        //Route
-        //GET GetTransferForStore
         public IHttpActionResult UpdateregisterAlias([FromBody] Register register)
         {
             //if (!AuthenticateRequest(Request))

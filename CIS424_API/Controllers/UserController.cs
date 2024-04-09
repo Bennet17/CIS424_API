@@ -4,6 +4,8 @@ using System.Data;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
+using System.Net;
+using System.Collections.Generic;
 
 namespace CIS424_API.Controllers 
 {
@@ -12,83 +14,17 @@ namespace CIS424_API.Controllers
     public class UserController : BaseApiController
     {
 
-
-        // AuthenticateUserController.cs is here now
-         // SVSU_CIS424/AuthenticateUser
-        [HttpPost]
-        [Route("AuthenticateUser")]
-        public IHttpActionResult AuthenticateUser([FromBody] User user)
-        {
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
-                {
-                    connection.Open();
-
-                    using (SqlCommand command = new SqlCommand("sp_GetPasswordByUsername", connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@username", user.username);
-
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                string storedHashedPassword = reader["hashPassword"].ToString();
-                                if (BCrypt.Net.BCrypt.Verify(user.password, storedHashedPassword))
-                                {
-                                    string storedPosition = reader["position"].ToString();
-                                    string storeID_CSV = reader["StoreID_CSV"].ToString();
-
-                                    // Split CSV string into an array
-                                    string[] storeIDs = storeID_CSV.Split(',');
-
-                                    var userData = new
-                                    {
-                                        ID = (int)reader["ID"],
-                                        username = reader["username"].ToString(),
-                                        name = reader["name"].ToString(),
-                                        position = storedPosition,
-                                        enabled = Convert.ToBoolean(reader["enabled"]),
-                                        storeID_CSV = storeIDs
-                                    };
-
-                                    var response = new
-                                    {
-                                        IsValid = true,
-                                        user = userData
-                                    };
-
-                                    return Ok(response);
-                                }
-                            }
-                        }
-
-                        // If the username doesn't exist or password doesn't match
-                        var errorResponse = new
-                        {
-                            IsValid = false
-                        };
-                        return Ok(errorResponse);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-
-        // CreateUserController.cs
-         // POST SVSU_CIS424/CreateUser
+        // POST SVSU_CIS424/CreateUser
         // Creates a user in the database
         [HttpPost]
         [Route("CreateUser")]
         public IHttpActionResult CreateStore([FromBody] User user)
         {
-           
+            //if (!AuthenticateRequest(Request))
+            // {
+            // Return unauthorized response with custom message
+            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            // }
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
@@ -109,6 +45,10 @@ namespace CIS424_API.Controllers
                         Console.WriteLine(user);
                         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
                         command.Parameters.AddWithValue("@hashPassword", hashedPassword);
+                        command.Parameters.AddWithValue("@question", user.question);
+                        // Hash the answer
+                        string hashedAnswer = BCrypt.Net.BCrypt.HashPassword(user.answer);
+                        command.Parameters.AddWithValue("@answer", hashedAnswer);
 
 
                         // Add output parameter
@@ -136,14 +76,105 @@ namespace CIS424_API.Controllers
             }
         }
 
+        // POST SVSU_CIS424/EnableUser
+        // Enables a user in the database
+        [HttpPost]
+        [Route("EnableUser")]
 
-        // EditUser.cs
+        public IHttpActionResult EnableUser([FromBody] User User)
+        {
+            //if (!AuthenticateRequest(Request))
+            // {
+            // Return unauthorized response with custom message
+            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            // }
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
+                {
+                    connection.Open();
 
-         // POST SVSU_CIS424/EditUser
+                    using (SqlCommand command = new SqlCommand("sp_EnableUser", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@ID", User.ID);
+
+                        SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
+                        resultMessageParam.Direction = ParameterDirection.Output;
+                        command.Parameters.Add(resultMessageParam);
+
+                        command.ExecuteNonQuery();
+
+                        string resultMessage = resultMessageParam.Value.ToString();
+
+                        return Ok(new { response = resultMessage });
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+
+        }
+
+        // POST SVSU_CIS424/DisableUser
+        // Disables a user in the database
+        [HttpPost]
+        [Route("DisableUser")]
+        public IHttpActionResult DisableUser([FromBody] User User)
+        {
+            //if (!AuthenticateRequest(Request))
+            // {
+            // Return unauthorized response with custom message
+            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            // }
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand("sp_DisableUser", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@ID", User.ID);
+
+                        SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
+                        resultMessageParam.Direction = ParameterDirection.Output;
+                        command.Parameters.Add(resultMessageParam);
+
+                        command.ExecuteNonQuery();
+
+                        string resultMessage = resultMessageParam.Value.ToString();
+
+                        return Ok(new { response = resultMessage });
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+
+        }
+
+        // EditUser
+        // POST SVSU_CIS424/EditUser
         [HttpPost]
         [Route("EditUser")]
         public IHttpActionResult EditUser([FromBody] User user)
         {
+
+            //if (!AuthenticateRequest(Request))
+            // {
+            // Return unauthorized response with custom message
+            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            // }
 
             try
             {
@@ -188,61 +219,8 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
-        [HttpPost]
-        [Route("UpdateMaximums")]
-        public IHttpActionResult UpdateStoreAndTotals([FromBody] MaximumDenominations data)
-        {
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
-                {
-                    connection.Open();
-
-                    using (SqlCommand command = new SqlCommand("sp_UpdateStoreAndTotals", connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@storeID", data.storeId);
-                        command.Parameters.AddWithValue("@enabled", data.enabled);
-                        command.Parameters.AddWithValue("@opened", data.opened);
-                        command.Parameters.AddWithValue("@hundredMax", data.Hundred_Register);
-                        command.Parameters.AddWithValue("@fiftyMax", data.Fifty_Register);
-                        command.Parameters.AddWithValue("@twentyMax", data.Twenty_Register);
-                        command.Parameters.AddWithValue("@hundred", data.Hundred);
-                        command.Parameters.AddWithValue("@fifty", data.Fifty);
-                        command.Parameters.AddWithValue("@twenty", data.Twenty);
-                        command.Parameters.AddWithValue("@ten", data.Ten);
-                        command.Parameters.AddWithValue("@five", data.Five);
-                        command.Parameters.AddWithValue("@two", data.Two);
-                        command.Parameters.AddWithValue("@one", data.One);
-                        command.Parameters.AddWithValue("@quarterRoll", data.QuarterRoll);
-                        command.Parameters.AddWithValue("@dimeRoll", data.DimeRoll);
-                        command.Parameters.AddWithValue("@nickelRoll", data.NickelRoll);
-                        command.Parameters.AddWithValue("@pennyRoll", data.PennyRoll);
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-
-                var response = new
-                {
-                    Message = "Store and Totals updated successfully."
-                };
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-
-        // MoveUser.cs is in the MoveController.cs
-
-
-        // ViewUsersController.cs is here now
-
-         // GET SVSU_CIS424/ViewUsers
+        // GET SVSU_CIS424/ViewUsers
         // Returns a list of all users in the database
         [HttpGet]
         [Route("ViewUsers")]
@@ -296,6 +274,7 @@ namespace CIS424_API.Controllers
         [Route("ViewUsersByStoreID")]
         public IHttpActionResult ViewUsersByStoreID([FromUri] int storeID)
         {
+
             //if (!AuthenticateRequest(Request))
            // {
                 // Return unauthorized response with custom message
@@ -351,56 +330,7 @@ namespace CIS424_API.Controllers
                 }
             
         }
-        // GET SVSU_CIS424/ViewRegistersByStoreID
-        // Returns a list of all users in the database for a store by the storeID
-        [HttpGet]
-        [Route("ViewRegistersByStoreID")]
-        public IHttpActionResult ViewRegistersByStoreID([FromUri] int storeID)
-        {
-             //if (!AuthenticateRequest(Request))
-           // {
-                // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
-                {
-                    connection.Open();
-
-                    // Create a SqlCommand object for the stored procedure.
-                    using (SqlCommand command = new SqlCommand("sp_ViewRegistersByStoreID", connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-
-                        // Add parameter for the stored procedure.
-                        command.Parameters.AddWithValue("@storeID", storeID);
-
-                        // Create a SqlDataReader object
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            List<Register> registers = new List<Register>();
-                            while (reader.Read())
-                            {
-                                Register register = new Register();
-                                register.ID = Convert.ToInt32(reader["ID"]);
-                                register.storeID = Convert.ToInt32(reader["storeID"]);                 
-                                register.name = reader["name"].ToString();
-                                register.opened = Convert.ToBoolean(reader["opened"]);
-                                register.enabled = Convert.ToBoolean(reader["enabled"]);
-                                registers.Add(register);
-                            }
-                            return Ok(registers);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                return Content(HttpStatusCode.InternalServerError, e);
-            }
-        }
+        
 
         [HttpPost]
         [Route("UpdateUserPassword")]
@@ -446,40 +376,6 @@ namespace CIS424_API.Controllers
                 return InternalServerError(ex);
             }
         }
-
-        [HttpGet]
-        [Route("Test")]
-        public IHttpActionResult GetHelloWorld()
-        {
-            if (!AuthenticateRequest(Request))
-             {
-             //Return unauthorized response with custom message
-                 return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-             }
-            return Ok("Hello, FrontEnd Team!");
-        }
-
-        [HttpPost]
-        [Route("Test")]
-        public IHttpActionResult PostHelloWorld()
-        {
-            if (!AuthenticateRequest(Request))
-            {
-                //Return unauthorized response with custom message
-                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-            }
-            return Ok("Hello, FrontEnd Team!");
-        }
-
-
-
-
-
-
-
-
-
-
 
     }
 }
