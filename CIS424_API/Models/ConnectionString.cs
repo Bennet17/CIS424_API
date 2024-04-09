@@ -7,6 +7,7 @@ namespace CIS424_API.Models
 {
     public static class ConnectionString
     {
+        // public const string SQL_Conn = "Server=WIN-2CH2R040C0H\\SQLEXPRESS;Initial Catalog=capstone_db_01;Persist Security Info=False;Integrated Security=True;MultipleActiveResultSets=False;Connection Timeout=30;";
         public const string SQL_Conn = "Server=tcp:capsstone-server-01.database.windows.net,1433;Initial Catalog=capstone_db_01;Persist Security Info=False;User ID=SA_Admin;Password=Capstone424!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
     }
 
