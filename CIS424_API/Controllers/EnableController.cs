@@ -54,47 +54,7 @@ namespace CIS424_API.Controllers
             }
 
         }
-
-        // POST SVSU_CIS424/EnableStore
-        // Enables a store in the database
-        [HttpPost]
-        [Route("EnableStore")]
-
-        public IHttpActionResult EnableStore([FromBody] Store Store)
-        {
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
-                {
-                    connection.Open();
-
-                    using (SqlCommand command = new SqlCommand("sp_EnableStore", connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-
-                        command.Parameters.AddWithValue("@ID", Store.ID);
-
-                        SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
-                        resultMessageParam.Direction = ParameterDirection.Output;
-                        command.Parameters.Add(resultMessageParam);
-
-                        command.ExecuteNonQuery();
-
-                        string resultMessage = resultMessageParam.Value.ToString();
-
-                        return Ok(new { response = resultMessage });
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-
-        }
-
+                
     }
 
 }
