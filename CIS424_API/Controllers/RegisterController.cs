@@ -24,6 +24,7 @@ namespace CIS424_API.Controllers
             // Return unauthorized response with custom message
             //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
             // }
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
@@ -81,6 +82,12 @@ namespace CIS424_API.Controllers
         public IHttpActionResult EnableRegister([FromBody] Register Register)
         {
 
+            //if (!AuthenticateRequest(Request))
+            // {
+            // Return unauthorized response with custom message
+            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            // }
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
@@ -120,6 +127,11 @@ namespace CIS424_API.Controllers
         public IHttpActionResult DisableRegister([FromBody] Register Register)
         {
 
+            //if (!AuthenticateRequest(Request))
+            // {
+            // Return unauthorized response with custom message
+            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            // }
 
             try
             {
