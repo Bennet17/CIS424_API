@@ -40,7 +40,27 @@ namespace CIS424_API.Controllers
                         {
                             if (reader.Read())
                             {
-                                decimal expectedAmount = reader.GetDecimal(0); // Assuming the result is a decimal value
+                                var expectedAmount = new {
+                                    total = Convert.ToDecimal(reader["total"]),
+                                    hundred = Convert.ToInt32(reader["hundred"]),
+                                    fifty = Convert.ToInt32(reader["fifty"]),
+                                    twenty = Convert.ToInt32(reader["twenty"]),
+                                    ten = Convert.ToInt32(reader["ten"]),
+                                    five = Convert.ToInt32(reader["five"]),
+                                    two = Convert.ToInt32(reader["two"]),
+                                    one = Convert.ToInt32(reader["one"]),
+                                    dollarCoin = Convert.ToInt32(reader["dollarCoin"]),
+                                    halfDollar = Convert.ToInt32(reader["halfDollar"]),
+                                    quarter = Convert.ToInt32(reader["quarter"]),
+                                    dime = Convert.ToInt32(reader["dime"]),
+                                    nickel = Convert.ToInt32(reader["nickel"]),
+                                    penny = Convert.ToInt32(reader["penny"]),
+                                    quarterRoll = Convert.ToInt32(reader["quarterRoll"]),
+                                    dimeRoll = Convert.ToInt32(reader["dimeRoll"]),
+                                    nickelRoll = Convert.ToInt32(reader["nickelRoll"]),
+                                    pennyRoll = Convert.ToInt32(reader["pennyRoll"]),
+                                    first = Convert.ToBoolean(reader["first"])
+                                }; 
                                 return Ok(expectedAmount);
                             }
                             else
