@@ -192,7 +192,6 @@
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\CreateTransactionController.cs" />
     <Compile Include="Controllers\VarianceController.cs" />
     <Compile Include="Controllers\GetExpectedCount.cs" />
