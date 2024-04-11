@@ -301,6 +301,7 @@ namespace CIS424_API.Controllers
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@storeID", data.storeId);
                         command.Parameters.AddWithValue("@enabled", data.enabled);
+                        command.Parameters.AddWithValue("@location", data.location);
                         command.Parameters.AddWithValue("@opened", data.opened);
                         command.Parameters.AddWithValue("@hundredMax", data.Hundred_Register);
                         command.Parameters.AddWithValue("@fiftyMax", data.Fifty_Register);
