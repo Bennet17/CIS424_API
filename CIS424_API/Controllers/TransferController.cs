@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
+using System.Net;
 
 namespace CIS424_API.Controllers
 {
@@ -18,11 +19,11 @@ namespace CIS424_API.Controllers
         //GET GetTransferForStore
         public IHttpActionResult GetFundTransfersForStore([FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
         {
-             //if (!AuthenticateRequest(Request))
-           // {
+            if (!AuthenticateRequest(Request))
+            {
                 // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
@@ -105,11 +106,11 @@ namespace CIS424_API.Controllers
         //GET GetTransferForStore
         public IHttpActionResult VerifyDeposit([FromBody] FundTransfer fundTransfer)
         {
-             //if (!AuthenticateRequest(Request))
-           // {
+            if (!AuthenticateRequest(Request))
+            {
                 // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
 
             try
             {

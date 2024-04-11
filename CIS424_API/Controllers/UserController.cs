@@ -20,11 +20,11 @@ namespace CIS424_API.Controllers
         [Route("CreateUser")]
         public IHttpActionResult CreateUser([FromBody] User user)
         {
-            //if (!AuthenticateRequest(Request))
-            // {
-            // Return unauthorized response with custom message
-            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-            // }
+            if (!AuthenticateRequest(Request))
+            {
+                // Return unauthorized response with custom message
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
@@ -82,11 +82,11 @@ namespace CIS424_API.Controllers
         [Route("EnableUser")]
         public IHttpActionResult EnableUser([FromBody] User User)
         {
-            //if (!AuthenticateRequest(Request))
-            // {
-            // Return unauthorized response with custom message
-            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-            // }
+            if (!AuthenticateRequest(Request))
+            {
+                // Return unauthorized response with custom message
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
@@ -125,11 +125,11 @@ namespace CIS424_API.Controllers
         [Route("DisableUser")]
         public IHttpActionResult DisableUser([FromBody] User User)
         {
-            //if (!AuthenticateRequest(Request))
-            // {
-            // Return unauthorized response with custom message
-            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-            // }
+            if (!AuthenticateRequest(Request))
+            {
+                // Return unauthorized response with custom message
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
@@ -169,11 +169,11 @@ namespace CIS424_API.Controllers
         public IHttpActionResult EditUser([FromBody] User user)
         {
 
-            //if (!AuthenticateRequest(Request))
-            // {
-            // Return unauthorized response with custom message
-            //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-            // }
+            if (!AuthenticateRequest(Request))
+            {
+                // Return unauthorized response with custom message
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
 
             try
             {
@@ -225,11 +225,11 @@ namespace CIS424_API.Controllers
         [Route("ViewUsers")]
         public IHttpActionResult ViewUsers()
         {
-             //if (!AuthenticateRequest(Request))
-           // {
+            if (!AuthenticateRequest(Request))
+            {
                 // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
 
             try
             {
@@ -274,13 +274,13 @@ namespace CIS424_API.Controllers
         public IHttpActionResult ViewUsersByStoreID([FromUri] int storeID)
         {
 
-            //if (!AuthenticateRequest(Request))
-           // {
+            if (!AuthenticateRequest(Request))
+            {
                 // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
-            
-                try
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
+
+            try
                 {
                     using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                     {
@@ -335,12 +335,12 @@ namespace CIS424_API.Controllers
         [Route("UpdateUserPassword")]
         public IHttpActionResult UpdateUserPassword([FromBody] User user)
         {
-             //if (!AuthenticateRequest(Request))
-           // {
+            if (!AuthenticateRequest(Request))
+            {
                 // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
-            
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))

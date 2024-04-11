@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
+using System.Net;
 
 namespace CIS424_API.Controllers
 {
@@ -17,11 +18,11 @@ namespace CIS424_API.Controllers
         [Route("RegisterVariance")]
         public IHttpActionResult RegisterVariance([FromUri] int registerID, [FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
         {
-             //if (!AuthenticateRequest(Request))
-           // {
+            if (!AuthenticateRequest(Request))
+            {
                 // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
 
             try
             {
@@ -99,11 +100,11 @@ namespace CIS424_API.Controllers
         [Route("GeneralVariance")]
         public IHttpActionResult GeneralVariance([FromUri] int storeID, [FromUri] String startDate, [FromUri] String endDate)
         {
-             //if (!AuthenticateRequest(Request))
-           // {
+            if (!AuthenticateRequest(Request))
+            {
                 // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
 
             try
             {
@@ -163,11 +164,11 @@ namespace CIS424_API.Controllers
         [Route("VarianceAudit")]
         public IHttpActionResult RunVarianceAudit([FromBody] VarianceAudit varianceAudit)
         {
-                         //if (!AuthenticateRequest(Request))
-           // {
+            if (!AuthenticateRequest(Request))
+            {
                 // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
             decimal cashRecord = varianceAudit.cashTendered - (varianceAudit.cashBuys + varianceAudit.pettyCash);
             decimal creditRecord = varianceAudit.mastercard + varianceAudit.visa + varianceAudit.americanExpress 
             + varianceAudit.discover + varianceAudit.debit + varianceAudit.other;

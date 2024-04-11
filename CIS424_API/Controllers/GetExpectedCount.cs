@@ -4,6 +4,7 @@ using System.Data;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CIS424_API.Models;
+using System.Net;
 
 // EditUser Controller route
 namespace CIS424_API.Controllers
@@ -18,11 +19,11 @@ namespace CIS424_API.Controllers
         //For get requests using ASP.NET Framework 4.8, simple datatypes are implicitly read from the URI
         public IHttpActionResult GetOpenCount(int storeID, int registerID)
         {
-             //if (!AuthenticateRequest(Request))
-           // {
+            if (!AuthenticateRequest(Request))
+            {
                 // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
 
             try
             {
@@ -83,11 +84,11 @@ namespace CIS424_API.Controllers
         [Route("GetCloseCount")]
         public IHttpActionResult GetCloseCount([FromUri] int storeID)
         {
-             //if (!AuthenticateRequest(Request))
-           // {
+            if (!AuthenticateRequest(Request))
+            {
                 // Return unauthorized response with custom message
-           //     return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
-           // }
+                return Content(HttpStatusCode.Unauthorized, "Unauthorized: Invalid or missing API key.");
+            }
 
             try
             {
