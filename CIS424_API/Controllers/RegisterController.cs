@@ -93,20 +93,21 @@ namespace CIS424_API.Controllers
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
+                    //open connection
                     connection.Open();
 
                     using (SqlCommand command = new SqlCommand("sp_EnableRegister", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-
+                        //set params. 
                         command.Parameters.AddWithValue("@ID", Register.ID);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
                         command.Parameters.Add(resultMessageParam);
-
+                        //execute query
                         command.ExecuteNonQuery();
-
+                        //return response
                         string resultMessage = resultMessageParam.Value.ToString();
 
                         return Ok(new { response = resultMessage });
@@ -138,18 +139,19 @@ namespace CIS424_API.Controllers
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
+                    //open connection
                     connection.Open();
 
                     using (SqlCommand command = new SqlCommand("sp_DisableRegister", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-
+                        //add param
                         command.Parameters.AddWithValue("@ID", Register.ID);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
                         command.Parameters.Add(resultMessageParam);
-
+                        //execute query
                         command.ExecuteNonQuery();
 
                         string resultMessage = resultMessageParam.Value.ToString();

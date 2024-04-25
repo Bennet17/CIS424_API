@@ -94,18 +94,19 @@ namespace CIS424_API.Controllers
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
+                    //open connection
                     connection.Open();
 
                     using (SqlCommand command = new SqlCommand("sp_EnableStore", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-
+                        //add param
                         command.Parameters.AddWithValue("@ID", Store.ID);
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
                         command.Parameters.Add(resultMessageParam);
-
+                        //execute query
                         command.ExecuteNonQuery();
 
                         string resultMessage = resultMessageParam.Value.ToString();
@@ -137,19 +138,20 @@ namespace CIS424_API.Controllers
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString.SQL_Conn))
                 {
+                    //open connection
                     connection.Open();
 
                     using (SqlCommand command = new SqlCommand("sp_DisableStore", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-
+                        //add param
                         command.Parameters.AddWithValue("@ID", Store.ID);
 
 
                         SqlParameter resultMessageParam = new SqlParameter("@ResultMessage", SqlDbType.VarChar, 255);
                         resultMessageParam.Direction = ParameterDirection.Output;
                         command.Parameters.Add(resultMessageParam);
-
+                        //execute query
                         command.ExecuteNonQuery();
 
                         string resultMessage = resultMessageParam.Value.ToString();
